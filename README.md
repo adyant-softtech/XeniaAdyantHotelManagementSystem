@@ -1,0 +1,2 @@
+# XeniaAdyantHotelManagementSystem
+Multitenant project
