@@ -1,0 +1,46 @@
+
+{% extends 'admin/index.html' %}
+{% load admintemplates %}
+{% load tz %}
+{% block content %}
+<style >
+    .linkButton{
+        background-color: #c97303;
+        color:#fff;
+        padding:3px;
+        border-radius: 4px;
+    }
+    .linkButton:hover{
+        background-color: #e3a759;
+        color:#fff;
+    }
+    .linkButtonGreen{
+        background-color: #92d050;
+        color:#fff;
+        padding:3px;
+        border-radius: 4px;
+    }
+    .linkButtonGreen:hover{
+        background-color: #7caa4a;
+        color:#fff;
+    }
+    .linkButtonBlue{
+        background-color: #004376;
+        color:#fff;
+        padding:3px;
+        border-radius: 4px;
+    }
+    .linkButtonBlue:hover{
+        background-color: #266da4;
+        color:#fff;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    {% block sidebar  %}
+    {% endblock %}
+    <div>
+   </div>
+
+
+{% endblock %}

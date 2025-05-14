@@ -1,0 +1,240 @@
+/**Creation by Tejasve Gupta on 20-06-2024*/
+/* // Modification and addition by Om Shrivastava on 21-08-2024 */
+
+.pageFrame {
+  /* background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  min-height: var(--page-min-height);
+  /* background: linear-gradient(to bottom right, #f3f3f3, #ffffff); */
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--page-margin-top);
+  padding-bottom: var(--page-padding-bottom);
+}
+
+.header {
+  background-color: #0077b6;
+  color: #ffffff;
+     /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  background-color: white;
+  color:black;
+  font-weight: 700;
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--page-title-font-family);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-size: 18px;
+}
+
+.pageContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  /* background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding-bottom: var(--page-margin-bottom); */
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.divContainer {
+  display: flex;
+  justify-content: space-around;
+  /* margin-top: 20px; */
+}
+
+.childContainer1,
+.childContainer2 {
+  width: 40%;
+}
+
+/* Form Styles */
+.expForm {
+  /* padding: 20px; */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expDetailsTitle {
+  margin-bottom: 10px;
+  padding-left: 2%;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0077b6;
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.labelColon {
+  display: flex;
+  align-items: center;
+  width: 40%;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+}
+
+.mandatoryField {
+  color: #e63946;
+  margin-right: 5px;
+}
+
+.inputContainer {
+  width: 60%;
+}
+
+.inputSection {
+  width: 64.5%;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  /* font-size: 16px; */
+  transition: border-color 0.3s ease-in-out;
+}
+
+.inputSection:focus {
+  border-color: black;
+  outline: none;
+}
+
+.button {
+  padding: 5px 10px;
+  background-color: #0077b6;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  /* font-size: 1px; */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-left: 1%;
+  font-size: 11px;
+}
+
+.button:hover {
+  background-color: #005f87;
+}
+.submitButton {
+  padding: 8px 16px;
+  background-color: #0077b6;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+.submitButton:hover {
+  background-color: #005f87;
+}
+.formInputError {
+  color: #e63946;
+  font-size: 0.9em;
+  margin-top: 3px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pageContainer,
+.expForm,
+.header {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* .table {
+  padding: 2px;
+}
+
+.th,
+.td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  background-color: rgb(255, 255, 255);
+
+} */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center; /* Change this to center */
+  font-size: var(--page-content-font-size);
+
+}
+/* modified by akanksha on 19-10-2024, Reason: to change the thead bg color and arrange the column properly */
+.table th {
+  /* background-color: #e6e4e4;
+  background-color: #ffd95e;
+  background-color: var(--table-head-background-color); */
+  background-color: #edf7f6;
+  font-weight: 500;
+  font-size: var(--page-content-font-size);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.thData {
+  width: 150px;
+  max-width: 210px;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/*end of modified by akanksha on 19-10-2024, Reason: to change the thead bg color and arrange the column properly */
+.thQtyData {
+  width: 50px;
+  max-width: 50px;
+  border: 1px solid #ddd;
+  background-color: rgb(255, 255, 255);
+}
+.th, .thData, .thQtyData {
+  background-color: #f2f2f2;
+}

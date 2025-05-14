@@ -1,0 +1,556 @@
+<!-- Created by Om on 04-05-23 for print the bill-->
+{% load admintemplates %}
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Invoice</title>
+</head>
+<style>
+  .billingContainer {
+    font-family: monospace;
+    letter-spacing: 0.6px;
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 2px 0;
+    padding-bottom: 150px;
+    border: 1px solid black;
+  }
+
+  .inLineContainer {
+    {% comment %} Modified by Rohan Kansari - 13/5/23 {% endcomment %}
+    max-width: 96%;
+    min-height: 10px;
+    margin: 4px 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap:4px;
+    {% comment %} End of code Rohan kansari- 13/5/23 {% endcomment %}
+  }
+
+  .Hotellabel {
+    min-width: 100%;
+    font-size: 17px;
+    font-weight: 900;
+    padding: 0 3%;
+    text-align: center;
+  }
+
+  .centerLabel {
+    min-width: 100%;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .label {
+    min-width: 25%;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: start;
+    white-space: nowrap;
+    display: flex;
+  }
+
+  {% comment %} Added by ROhankansari - 13/5/23 {% endcomment %}
+  .label1 {
+    min-width: 18%;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: start;
+    white-space: nowrap;
+    display: flex;
+  }
+  {% comment %} ENd of code Rohan kansari- 13/5/23 {% endcomment %}
+
+  .text {
+    min-width: 22%;
+    word-break: break-all;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: left;
+    margin-top: 2px;
+  }
+
+  .tableHeader {
+    height: 30px;
+    width: 95%;
+    margin: auto;
+    border-top: 1px solid black;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+    display: flex;
+    gap: 8px;
+  }
+
+  .titleHeading {
+    font-size: 10px;
+    width: 40%;
+    padding: 2% 0% 2% 4%;
+
+    font-weight: 600;
+    text-align: start;
+  }
+
+  .quantityHeading {
+    font-size: 10px;
+    width: 20%;
+    padding: 2% 0% 2% 12%;
+    font-weight: 600;
+  }
+
+  .rateHeading {
+    font-size: 10px;
+    width: 20%;
+    padding: 2% 4%;
+    font-weight: 600;
+  }
+
+  .totalHeading {
+    font-size: 10px;
+    width: 20%;
+    padding: 2% 0% 4% 7%;
+    font-weight: 600;
+  }
+
+  .tableContents {
+    min-height: 30px;
+    width: 95%;
+    margin: 0 auto;
+    margin: 1px 0 !important;
+    display: flex;
+    gap: 4px;
+  }
+
+  .titleText {
+    font-size: 10px;
+    width: 58% !important;
+    padding: 0.5% 4%;
+    font-weight: 600;
+  }
+
+  .quantityText {
+    font-size: 10px;
+    width: 5%;
+    padding: 2% 2%;
+    font-weight: 600;
+  }
+
+  .rateText {
+    font-size: 10px;
+    width: 30%;
+    padding: 2% 0% 2% 0%;
+    font-weight: 600;
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  .totalText {
+    font-size: 10px;
+    width: 30%;
+    padding: 2% 0% 2% 0%;
+    font-weight: 600;
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  .CalculationBoxContainer {
+    width: 100%;
+    /* modified by :- Parineeta Gedam on 12-05-2023 */
+    min-height: auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .calculationBox {
+    width: 75%;
+    margin-right: 4%;
+    margin-bottom: 2%;
+    height: auto;
+  }
+
+  .calculationLine {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+  }
+
+  .calculationLabel {
+    font-size: 10px;
+    width: 20%;
+    padding: 2% 2%;
+    font-weight: 600;
+    width: 100%;
+    white-space: nowrap;
+    /* Modified by :- Parineeta Gedam on 12-05-2023 */
+    /* text-align: center */
+    display: flex;
+  }
+
+  .calculationText {
+    width: 50%;
+    text-align: end;
+    font-size: 10px;
+    white-space: nowrap;
+    padding: 2% 0 0 4%;
+    font-weight: 600;
+  }
+
+  .TotalBoxContainer {
+    width: 100%;
+    height: auto;
+    padding: 0 0;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+
+  }
+
+  /* Add css by Om on 05-05-23 */
+  .column1 {
+    min-width: 48%;
+    display: flex;
+  }
+
+  /* End of addition */
+</style>
+
+<body>
+  <div class="billingContainer">
+    <div class="inLineContainer">
+      <div class="Hotellabel" style="text-align:center;">
+
+        {{ restaurant_details.name }}
+
+      </div>
+    </div>
+    <div class="inLineContainer" style="text-align:center;">
+      <div class="centerLabel">{{ restaurant_details.address }} </div>
+    </div>
+
+    {% for settings in restaurant_settings %}
+    <div class="inLineContainer">
+      {% if settings.gstin %}
+      <div class="centerLabel">GSTIN :- {{ settings.gstin }}</div>
+      {% endif %}
+    </div>
+    <div class="inLineContainer">
+      {% if settings.fssaino %}
+      <div class="centerLabel">FSSAI NO :- {{ settings.fssaino }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <hr>
+<!-- Changes apply by Om on 05-05-23 for fix the alignment in bill section-->
+    <!-- <div class="inLineContainer">
+      <div class="label">Date </div>
+      <div class="text"> {{ order.date|date:"d/m/y" }}</div>
+      <div class="label">Time </div>
+      <div class="text"> {{ order.date|date:"H:i" }}</div>
+
+    </div> -->
+
+    {% comment %} Added and modified by ROhankansari - 12/5/23
+                  Reason - To apply new labbel {% endcomment %}
+
+    <div class="inLineContainer">
+      <div class = "column1">
+        <div class="label1">
+          <div style = "width:90%">Name  </div>
+          <div>:</div>
+        </div>
+        <div class="text">
+          {% comment %} Modified by ROhankansari - 13/5/23 {% endcomment %}
+          <!-- if else condition added by Om Shrivastava 
+          Reason : When Customer name is not show there than show only "---"  -->
+          {% if customer.last_customer_name %}
+           {{customer.last_customer_name}}
+           {% else %}
+           ---
+           {% endif %}
+           <!-- End of addition by Om Shrivastava on 17-05-23 -->
+           {% comment %} End of modification - ROhankansari - 13/5/23 {% endcomment %}
+        </div>
+      </div>
+
+      <div class = "column1">
+        <div class="label">
+          <div style = "width:90%">Phone  </div>
+          <div>:</div>
+        </div>
+        
+        <div class="text"> {{ customer.contact_number }}</div>
+      </div>
+    </div>
+
+
+    <div class="inLineContainer">
+      <div class = "column1">
+
+        <div class="label1">
+          <div style = "width:90%">Bill  </div>
+          <div>:</div>
+        </div>
+        <div class="text"> {{ order.order_id }}</div>
+      </div>
+      
+      <div class = "column1">
+        <div class="label">
+          <div style = "width:90%">Payment  </div>
+          <div>:</div>
+        </div>
+        <div class="text"> {{ order.payment_mode }}</div>
+      </div>
+    
+    </div>
+
+    <!-- <div class="inLineContainer">
+      <div class="label">Bill </div>
+      <div class="text"> {{ order.order_id }}</div>
+      <div class="label">Table </div>
+      <div class="text"> {{ order.table_number }}</div>
+
+    </div> -->
+    <!-- <div class="inLineContainer">
+      <div class="label">Pax </div>
+      <div class="text"> {{ order.pax }}</div>
+      <div class="label">Sess </div>
+      <div class="text"> {{ order.sess }}</div>
+    </div>
+    <div class="inLineContainer">
+      <div class="label">Dshr </div>
+      <div class="text"> {{ order.dshr }}</div>
+      <div class="label">Capt </div>
+      <div class="text"> {{ order.capt }}</div>
+    </div> -->
+    <div class="inLineContainer">
+      <div class = "column1">
+        <div class="label1">
+          <div style = "width:90%">Date  </div>
+          <div>:</div>
+        </div>
+        <div class="text"> {{ order.payment_confirmation_date_time|slice:"0:10"}}</div>
+      </div>
+      
+      <div class = "column1">
+        <div class="label">
+          <div style = "width:90%">Table  </div>
+          <div>:</div>
+        </div>
+        <div class="text"> {{ order.table_number }}</div>
+      </div>
+      
+    </div>
+    <!-- <div class="inLineContainer">
+      <div class="label">Payment </div>
+      <div class="text"> {{ order.payment_mode }}</div>
+      <div class="label">Status </div>
+      <div class="text"> {{ order.payment_status }}</div>
+    </div> -->
+    <div class="inLineContainer">
+      <div class = "column1">
+        <div class="label1">
+          <div style = "width:90%">Time  </div>
+          <div>:</div>
+        </div>
+        
+        <div class="text"> {{ order.payment_confirmation_date_time|slice:"11:18" }}</div>
+      </div>
+
+      {% comment %} <div class = "column1">
+        <div class="label">
+          <div style = "width:90%">Status  </div>
+          <div>:</div>
+        </div>
+        <div class="text"> {{ order.payment_status }}</div>
+      </div> {% endcomment %}
+    </div>
+    <!-- End of addition -->
+
+    {% comment %} End of code addition and modification - Rohan Kansari- 12/5/23  {% endcomment %}
+
+    
+    <div class="tableHeader">
+      <div class="titleHeading"> Item Name</div>
+      <div class="quantityHeading">Qty</div>
+      <!-- Modifed and added by Om on 07-05-23
+      Reason :  Show the rupees sign from using another file -->
+      <!-- <div class="rateHeading">Rate(₹) </div> -->
+      <div class="rateHeading">Rate({{restaurant_details.rupee_symbol}}) </div>
+      <!-- End of addition by Om on 07-05-23-->
+
+      <!-- Modifed and added by Om on 07-05-23
+      Reason :  Show the rupees sign from using another file -->
+      <!-- <div class="totalHeading">Amt(₹)</div> -->
+      <div class="totalHeading">Amt({{restaurant_details.rupee_symbol}})</div>
+      <!-- End of addition by Om on 07-05-23-->
+      
+
+    </div>
+
+    {% for item in order_items %}
+    <div class="tableContents">
+      <!-- Modified by Parineeta Gedam on 01-06-2023 
+          reason :- to not show the cancelled item
+      -->
+      {% if item.item_status != 'Cancelled' %}
+      <div class="titleText">{{ item.item_id.name }} ({{ item.serving_size }})</div>
+      <div class="quantityText">{{ item.quantity }}</div>
+      <!-- Modification and addition by Om Shrivastava on 15-05-23
+      Reason: Need to show the two zeros of rate and quantity -->
+      <!-- <div class="rateText">{{ item.price|divide:item.quantity }}</div> -->
+      <div class="rateText">{{ item.price|divide:item.quantity|floatformat:2 }}</div>
+      <!-- End of modification and addition by Om Shrivastava on 15-05-23 -->
+      <!-- Modification and addition by Om Shrivastava on 15-05-23
+      Reason: Need to show the two zeros of rate and quantity -->
+      <!-- <div class="totalText">{{ item.price }}</div> -->
+      <div class="totalText">{{ item.price|floatformat:2 }}</div>
+      <!-- End of modification and addition by Om Shrivastava on 15-05-23 -->
+      {% endif %}
+      <!-- End of modified code by Parineeta Gedam on 01-06-2023 -->
+
+    </div>
+    {% endfor %}
+
+
+    <hr>
+
+      <!-- Added by :- PArineeta Gedam on 07-06-2023
+            Reason :- change the flow of discount
+      -->
+
+      <div class='CalculationBoxContainer'>
+        <div class="calculationBox">
+          {% if order.discount_rupees > 0 %}
+          <div class="calculationLine">
+            <div class="calculationLabel">
+              <div style="width:98%">Sub-Total</div>
+              <div>:</div>
+            </div>
+            <div class="calculationText">{{restaurant_details.rupee_symbol}}{{ sub_total|floatformat:2 }}</div>
+          </div>
+
+          <div class="calculationLine">
+            <div class="calculationLabel">
+              <div style="width:98%">Discount</div>
+              <div>:</div>
+            </div>
+            <div class="calculationText">{{restaurant_details.rupee_symbol}}{{ order.discount_rupees|floatformat:2 }}
+            </div>
+          </div>
+        
+          <div class="calculationLine">
+            <div class="calculationLabel">
+              <div style="width:98%">Total</div>
+              <div>:</div>
+            </div>
+            <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.total|floatformat:2}}</div>
+          </div>
+
+          <div class="calculationLine">
+            <div class="calculationLabel">
+              <div style="width:60%">CGST </div>
+              <div>({{ order.cgst | divide:order.total | multiply:100 |floatformat:2 }}%):</div>
+            </div>
+            <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.cgst|floatformat:2}} </div>
+          </div>
+
+          <div class="calculationLine">
+            <div class="calculationLabel">
+              <div style="width:60%">SGST </div>
+              <div>({{ order.sgst | divide:order.total | multiply:100 |floatformat:2 }}%):</div>
+            </div>
+            <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.sgst|floatformat:2}} </div>
+          </div>
+          <hr>
+          <div class="calculationLine">
+            <div class="calculationLabel">
+              <div style="width:98%">Grand Total</div>
+              <div>:</div>
+            </div>
+            <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.final_amount|floatformat:2}}</div>
+          </div>
+        </div>
+
+      {% else %}
+
+      {% if order.cgst or order.sgst %}
+      <div class="calculationLine">
+        <div class="calculationLabel">
+          <div style="width:98%">Sub-Total</div>
+          <div>:</div>
+        </div>
+        <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.sub_total|floatformat:2 }}</div>
+      </div>
+      {% endif %}
+
+      <div class="calculationLine">
+        {% if order.cgst %}
+        <div class="calculationLabel">
+          <div style="width:62%">CGST</div>
+          <div>({{ order.cgst }}%):</div>
+        </div>
+        <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.cgst|floatformat:2}} </div>
+        {% endif %}
+      </div>
+
+      <div class="calculationLine">
+        {% if order.sgst %}
+        <div class="calculationLabel">
+          <div style="width:62%">SGST</div>
+          <div>({{ order.sgst }}%):</div>
+        </div>
+        <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.sgst|floatformat:2}} </div>
+        {% endif %}
+      </div>
+
+      {% if order.cgst or order.sgst %}
+      <hr>{% endif %}
+
+      <div class="calculationLine">
+        <div class="calculationLabel">
+          <div style="width:98%">Total</div>
+          <div>:</div>
+        </div>
+        <div class="calculationText">{{restaurant_details.rupee_symbol}}{{order.final_amount|floatformat:2}}</div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <!-- End of added code on 11-05-2023 -->
+
+
+  <hr>
+  <!-- Commented by :- Parineeta Gedam on 11-05-2023 -->
+  <!-- <div class="TotalBoxContainer"> -->
+  <!-- Modifed and added by Om on 07-05-23
+      Reason :  Show the rupees sign from using another file -->
+  <!-- Total: ₹{{ total_amount|floatformat:2 }} -->
+  <!-- Total: {{restaurant_details.rupee_symbol}}{{ total_amount|floatformat:2 }} -->
+  <!-- End of addition by Om on 07-05-23-->
+  <!-- </div> -->
+  <!-- End of commented code on 11-05-2023 -->
+
+  <!-- Added by :- Parineeta Gedam on 11-05-2023 -->
+  <div class="TotalBoxContainer">
+    Total: {{restaurant_details.rupee_symbol}}{{order.final_amount|floatformat:2 }}
+  </div>
+  <!-- End of commented code on 11-05-2023 -->
+
+
+  <hr>
+  <div class="calculationLine">
+    <div class="calculationLabel">
+      ********* THANK YOU VISIT AGAIN *********
+    </div>
+  </div>
+
+  </div>
+</body>
+
+</html>
+</div>

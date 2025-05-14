@@ -1,0 +1,91 @@
+/**
+  * Created by - Ashish Dewangan on 24-05-2024
+  * Reason - For styling of footer section
+  */
+
+.footerContainer {
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  height: 4vh;
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: var(--footer-background-color);
+  left: 0;
+  bottom: 0;
+  color: var(--header-footer-text-color);
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 10px;
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  width: 100%;
+}
+
+.poweredText {
+  /* width: 100%; */
+  /* margin-right: 20px; */
+  justify-content: flex-end;
+  /**Code Addition by Tejasve Gupta on 14-06-2024
+     Reason - Style Modified as suggested by Tester   */
+  display: flex;
+  /**End of Code Addition by Tejasve Gupta on 14-06-2024
+     Reason - Style Modified as suggested by Tester   */
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  /**Code Addition by Tejasve Gupta on 20-06-2024
+reason - Style Adjusted as Suggested by tester*/
+  font-size: 14px;
+  /* text-decoration: underline; */
+  text-decoration: none;
+  /* color: #f5b618; */
+  color: var(--header-footer-text-color);
+  font-weight: bold;
+}
+
+.hotelName{
+  font-size: 14px;
+
+}
+
+/**Code addition by Tejasve Gupta on 18-06-2025
+Reason - styles for footer text*/
+.copyRight {
+  /* width: 100%; */
+  /* margin-left: 20px; */
+  font-size: 14px;
+  /**End of Code Addition by Tejasve Gupta on 20-06-2024
+reason - Style Adjusted as Suggested by tester*/
+}
+
+/**End of Code additin by Tejasve Gupta on 18-06-2024
+Reason - styles for footer text*/
+
+/* Added by - Om Shrivastava on 03-01-2025
+Reason - For styling in whatsapp icon */
+/* .whatsAppIcon{
+  position: absolute;
+  bottom: 10px;
+} */
+.whatsAppIcon {
+  position: fixed;  /* Fixes position relative to viewport */
+  bottom: 10px;     /* Keeps it at the bottom */
+  left: 20px;       /* Moves it to the left side */
+  z-index: 1000;    /* Ensures it's above other elements */
+}
+
+/* End of code addition by - Om Shrivastava on 03-01-2025
+Reason - For styling in whatsapp icon */
+
+@media screen and (max-width: 720px) {
+  .footerContainer {
+    /* flex-direction: column; */
+    align-items: center;
+    height: 4vh;
+  }
+}

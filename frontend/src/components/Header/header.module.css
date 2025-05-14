@@ -1,0 +1,590 @@
+/**
+  * Created by - Ashish on 24-05-2024
+  * Reason - To have styling for header section
+  */
+
+* {
+  margin: 0%;
+  padding: 0%;
+  /* box-sizing: border-box; */
+}
+
+.mainHeaderContainer {
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  /* height: 12vh; */
+  height: 8vh;
+
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 9999;
+  background-color: var(--header-background-color);
+}
+
+/**Code Modification by Tejasve Gupta on 26/06/2024
+	Reason - style fixed as suggested by Tester*/
+/* .upperHeader {
+  display: flex;
+  width: 100%;
+  height: 30%;
+  background-color: #013870;
+  z-index: 10000;
+  color: white;
+  justify-content: center;
+  align-items: center;
+} */
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  /* position: fixed; */
+  width: 100%;
+  height: 100%;
+  /* height: 100%; */
+}
+
+/**End of Code Modification by Tejasve Gupta on 26/06/2024
+	Reason - style fixed as suggested by Tester*/
+.section1 {
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  /* width: 100%; */
+  /* height: 100%; */
+  /* align-self: flex-start;*/
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fixed
+*/
+  /* margin-top: 10px; */
+}
+
+/**Code Modification by Tejasve Gupta on 26/06/2024
+	Reason - style fixed as suggested by Tester*/
+.sec2Module {
+  /* border: 1px solid black;  */
+  padding-left: 10px;
+  padding-right: 10px;
+  /* border: 0.1px solid black; */
+  /* border-radius: 50px; */
+  border-radius: 4px;
+
+  margin: 3px;
+  font-weight: 500;
+  font-size: 17px;
+  padding-bottom: 3px;
+  color: var(--header-footer-text-color);
+  /* background-color: whitesmoke; */
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.sec2Module:hover {
+  /* border: 1px solid black; */
+  /* color: #000000; */
+  background-color: rgb(203, 203, 203);
+  /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - To apply different color
+  */
+
+  color: var(--header-background-color);
+
+  background-color: var(--header-footer-text-color);
+  border: 1px solid var(--header-footer-text-color);
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - To apply different color
+  */
+  transform: scale(1.05); /* Example transformation */
+}
+
+/**
+  * Added by - Ashish Dewangan on 13-10-2024
+  * Reason - To show dropdown where user info will be shown
+  */
+.profileIcon{
+  position: relative;
+}
+.profileContainer{
+  display: none;
+  position: absolute;
+  top:100%;
+  right: 0;
+  /* translate: 50%; */
+  color: var(--header-background-color);
+  background-color: var(--header-footer-text-color);
+  /* outline: 1px solid var(--header-footer-text-color); */
+  /* border: 1px solid var(--header-background-color); */
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  /* border-radius: 4px; */
+  transform: 1s all;
+  /* height: 50px; */
+  padding: 10px 10px;
+  box-shadow: 1px 1px 3px grey;
+  /* width: 100%; */
+  text-align: center;
+  font-size: 17px;
+}
+.sec2Module:hover .profileContainer{
+  display: block;
+}
+.sec2Module:hover .logoutIcon{
+  color: var(--header-background-color);;
+}
+/**
+  * End of addition by - Ashish Dewangan on 13-10-2024
+  * Reason - To show dropdown where user info will be shown
+  */
+
+/**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - To apply different color
+  */
+.logoutIcon {
+  border-radius: 4px;
+
+  margin: 3px;
+  font-weight: 500;
+  font-size: 22px;
+  padding-bottom: 3px;
+  color: white;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/**
+  * Modified by - Ashish Dewangan on 13-10-2024
+  * Reason - To apply different color
+  */
+/* .logoutIcon:hover {
+  color: #000000;
+  background-color: rgb(203, 203, 203);
+  color: var(--header-background-color);
+  background-color: white;
+  border: 1px solid white;
+  transform: scale(1.05); 
+} */
+
+.logoutIcon:hover {
+  color: var(--header-background-color);;
+}
+/**
+  * End of modification by - Ashish Dewangan on 13-10-2024
+  * Reason - To apply different color
+  */
+/**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - To apply different color
+  */
+
+.sec2Module:active {
+  background-color: #84a7c0;
+  text-decoration: none;
+}
+
+.section1 {
+  display: flex;
+  /* flex-direction: column; */
+  /* margin-top: 15px; */
+  width: 14%;
+
+  /**
+  * Modified by - Ashish Dewangan on 11-10-2024
+  * Reason - To remove white background from logo and align logo to center
+  */
+  /* border-radius: 0px 50px 50px 0px;
+  background-color: whitesmoke; */
+  align-items: center;
+  /**
+  * End of modification by - Ashish Dewangan on 11-10-2024
+  * Reason - To remove white background from logo and align logo to center
+  */
+}
+
+.sec2sec3 {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Commented by akanksha on 24th Oct 24,
+Reason to adjust header link which where coming in two lines */
+  /**Justified Right By Tejasve Gupta on 27-05-2024*/
+/* .section2 {
+  display: flex;
+  width: 70%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 1%;
+} */
+/* Commented by akanksha on 24th Oct 24,
+Reason to adjust header link which where coming in two lines */
+
+
+/* Added by akanksha on 24th Oct 24,
+Reason to adjust header link which where coming in two lines */
+.section2 {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 1%;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow: hidden;
+}
+/* End by akanksha on 24th Oct 24,
+Reason to adjust header link which where coming in two lines */
+
+
+.section3 {
+  display: flex;
+  width: 8%;
+  justify-content: space-between;
+  margin-right: 30px;
+}
+
+.headerIcon {
+  width: 24px;
+  height: 24px;
+  /* margin-right: 8px; */
+  vertical-align: middle;
+}
+
+.roomHeaderIcon {
+  width: 28px;
+  height: 28px;
+  /* margin-right: 8px; */
+  vertical-align: middle;
+}
+
+/* Code Modified By Tejasve Gupta on 27-05-2024 */
+.headerFont {
+  /**Color Changed By Tejasve Gupta on 27-05-2024*/
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+}
+
+.headerItem {
+  /**Height Justified By Tejasve Gupta on 27-05-2024*/
+  /* height: 80%; */
+  /* padding-left: 15px; */
+  /* padding-right: 15px; */
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  /**Code added by Tejasve Gupta on 27-05-2024
+     Reason - Colour of Item and Active */
+  /* color: rgb(255, 255, 255); */
+}
+/* Addition by Om Shrivastava on 15-10-2024
+Reason : Add css property  */
+.profileContainer {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #e0e0e0; /* Light grey border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 9px; /* Space inside the container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  width: 200px; /* Adjust the width as needed */
+  text-align: center; /* Center-align text */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.profileContainer:hover {
+  transform: translateY(-5px); /* Slightly move the container upwards on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+.profileContainer div {
+  margin-bottom: 8px; /* Space between the elements */
+  font-size: var(--page-content-font-size); /* Adjust font size */
+  color: #333; /* Darker text color */
+  border-bottom: 1px solid #e0e0e0; 
+  padding-bottom: 8px; 
+}
+
+.profileContainer div:last-child {
+  border-bottom: none; /* Remove bottom border from the last div */
+  margin-bottom: 0; /* Remove bottom margin from the last div */
+}
+/* End of addition by Om Shrivastava on 15-10-2024
+Reason : Add css property  */
+
+.hoverData {
+  text-decoration: none;
+  background-color: #fff;
+  border-radius: 4px;
+  color: var(--header-background-color);
+}
+
+.headerItem:hover {
+  /* color: #ffffff; */
+  /* background-color: #003b4d; */
+  cursor: pointer;
+  text-decoration: none;
+  /* text-decoration:underline; */
+}
+
+.headerItem:hover > .icon {
+  color: #ffffff;
+  cursor: pointer;
+  /**End of Code added by Tejasve Gupta on 27-05-2024
+     Reason - Colour of Item and Active */
+}
+
+.link {
+  /* display: flex; */
+  /**Code unCommented By Tejasve Gupta on 27-05-2024*/
+  /* gap: 20px; */
+  text-decoration: none;
+  /* color: #ffffff; */
+  /**
+  * Modified by - Ashish Dewangan on 05-09-2024
+  * Reason - applied different color
+  */
+  /* color: var(--header-footer-text-color); */
+  color: var(--header-drawer-text-color);
+  /**
+  * End of modification by - Ashish Dewangan on 05-09-2024
+  * Reason - applied different color
+  */
+  font-size: 28px;
+}
+
+.logo {
+  /* font-weight: bold;
+  color: rgb(48, 25, 8);
+  font-size: 10px;
+  padding-left: 60%;
+  padding-top: 4px;
+  font-family: initial;
+  width: 90px;
+  height: 50px; */
+  font-weight: bold;
+  color: rgb(48, 25, 8);
+  /* padding-left: 15%; */
+  /**
+  * Commented by - Ashish Dewangan on 11-10-2024
+  * Reason - Removed unnecessary padding
+  */
+  /* padding-top: 2%; */
+  /**
+  * End of modification by - Ashish Dewangan on 11-10-2024
+  * Reason - Removed unnecessary padding
+  */
+
+  font-family: initial;
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+/**
+  * Added by - Ashish Dewangan on 11-10-2024
+  * Reason - to fit image to it's parent container
+  */
+.logoImage {
+  height: 100%;
+}
+/**
+  * End of addition by - Ashish Dewangan on 11-10-2024
+  * Reason - to fit image to it's parent container
+  */
+
+/**End of Code Modification by Tejasve Gupta on 26/06/2024
+	Reason - style fixed as suggested by Tester*/
+
+.button {
+  display: none;
+}
+
+.drawerContainer {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-white);
+}
+
+.drwHeader {
+  height: 10vh;
+  width: 100%;
+  align-items: flex-start;
+  color: var(--color-prime);
+}
+
+.drawerMenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+.horizontalLine {
+  color: rgb(242, 98, 41);
+  margin: var(--horizontal-line-drawer-margin);
+  padding: 1px;
+  margin: 1px;
+}
+
+@media screen and (max-width: 1150px) {
+  /**Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+  .section3 {
+    display: none;
+  }
+
+  /**End of Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+  .mainHeaderContainer {
+    display: flex;
+    height: 7vh;
+  }
+
+  .logo {
+    /* height: 6%; */
+    /* display: contents; */
+  }
+
+  .button {
+    /**Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+    display: block;
+    /**End of Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+    height: 30px;
+    width: 30px;
+  }
+
+  .show {
+    display: flex;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .hamburgerDrawer {
+    width: 100%;
+  }
+
+  .link {
+    text-decoration: none;
+    /**Code Deleted by Tejasve Gupta on 06-06-2024*/
+    /* text-underline-position: below; */
+    /**Code Deleted by Tejasve Gupta on 06-06-2024*/
+    padding-left: 3%;
+    padding-top: 2%;
+    font-size: 15px;
+  }
+
+  .li {
+    display: flex;
+    align-items: center;
+    padding-bottom: 3px;
+  }
+
+  .section2 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .mainHeaderContainer {
+    display: flex;
+    height: 7vh;
+  }
+
+  /**Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+  /* .button {
+    display: block;
+    height: 30px;
+    width: 30px;
+  } */
+  /**End of Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+
+  .show {
+    display: flex;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .logo {
+    /* height: 5vh;
+    border-radius: 0% 50% 50% 0%; */
+  }
+
+  .li {
+    display: flex;
+    align-items: center;
+    padding-bottom: 3px;
+  }
+
+  .hamburgerDrawer {
+    width: 100%;
+  }
+
+  .ant-drawer-body {
+    width: 100%;
+  }
+
+  .ant-drawer-wrapper-body {
+    background-color: yellow !important;
+  }
+
+  .drawerMenu {
+    list-style: none;
+    text-decoration: none;
+  }
+
+  /**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Responsive*/
+  .section2 {
+    display: none;
+  }
+
+  /**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Responsive*/
+}
+
+@media screen and (max-width: 480px) {
+  .logo {
+    font-weight: bold;
+    color: rgb(48, 25, 8);
+    /* padding-left: 15%; */
+    padding-top: 2%;
+    font-family: initial;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .logo {
+    font-weight: bold;
+    color: rgb(48, 25, 8);
+    /* padding-left: 15%; */
+    padding-top: 2%;
+    font-family: initial;
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+  }
+}

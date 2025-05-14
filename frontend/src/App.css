@@ -1,0 +1,432 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(230, 27, 27);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+:root {
+  /* Code Addition and modification of code by Tejasve Gupta on 25-07-2024
+Reason - global variable addition */
+  /**Code Modified by Tejasve Gupta on 27-05-2024
+Reason - Colour Adjusted of header and footer and Margin also*/
+  /* Code Modification by Tejasve Gupta on 26-07-2024
+  Reason - Header color adjusted as suggested by Tester */
+  /* --header-background-color: #3f3a58; */
+  /* --header-background-color: #b2aec7; */
+  /* --header-background-color: #a8acb7; */
+  --header-background-color: #dbe0e6;
+  --header-footer-text-color: black;
+
+  /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - applied different color
+  */
+  --header-background-color: #00897b;
+  --header-footer-text-color: white;
+
+  --header-drawer-text-color: #00897b;
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - applied different color
+  */
+
+  /* --header-background-color: #a691c6; */
+  /* End of Code Modification by Tejasve Gupta on 26-07-2024
+  Reason - Header color adjusted as suggested by Tester */
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+  /* --footer-background-color: #8bb4d1; */
+  /* --footer-background-color: #453e66; */
+  /* --footer-background-color: #bebebe; */
+  --footer-background-color: #dbe0e6;
+  /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - applied different color
+  */
+  --footer-background-color: #00897b;
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - applied different color
+  */
+
+  /**End of Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+
+  --page-margin-left: 30px;
+  --page-margin-right: 30px;
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+  --page-margin-top: 8vh;
+  /* --page-margin-top: 12vh; */
+
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+
+  /**End of Code Modified by Tejasve Gupta on 27-05-2024
+Reason - Colour Adjusted of header and footer and Margin also*/
+  --page-margin-bottom: 0;
+  --page-padding-top: 0.4vh;
+  --page-padding-bottom: 2vh;
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+  /* --page-min-height: 84vh;
+   */
+  --page-min-height: 86vh;
+
+  --page-title-height: 35px;
+  --page-title-width: 100%;
+  /* --page-title-background-color: white; */
+
+  --page-title-font-size: 18px;
+  /* Modification and addition by Om Shrivastava on 11-10-2024
+  Reason : Set the font family  */
+  /* --page-title-font-family: fangsong; */
+  --page-title-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  /* End of modification and addition by Om Shrivastava on 11-10-2024
+  Reason : Set the font family  */
+
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+  --page-title-font-color: black;
+  --page-title-font-weight: bold;
+  --page-title-text-align: center;
+  --page-title-margin-bottom: 10px;
+  --page-title-flex-wrap: wrap;
+  /* End of Code Addition and modification of code by Tejasve Gupta on 25-07-2024
+Reason - global variable addition */
+  /* --page-background-image: url("../public/bluredBgImage.jpeg"); */
+  --page-background-color: rgba(255, 255, 255, 0.7);
+
+  --page-subTitle-font-size: 16px;
+  --page-subTitle-font-color: black;
+  --page-subTitle-font-weight: bold;
+  --page-subTitle-text-align: left;
+
+  --page-content-title-font-size: 18px;
+  --page-content-title-font-color: black;
+  --page-content-title-font-weight: bold;
+  --page-content-title-text-align: left;
+
+  --page-content-subTitle-font-size: 16px;
+  --page-content-subTitle-font-color: black;
+  --page-content-subTitle-font-weight: bold;
+  --page-content-subTitle-text-align: left;
+
+  --bottom-margin-between-contents: 30px;
+
+  --page-content-font-size: 14px;
+  --page-content-font-color: black;
+  --page-content-font-weight: 400;
+  --page-content-text-align: left;
+  --page-content-margin-left: 70px;
+  --page-content-margin-right: 70px;
+
+  --page-content-not-found-margin-top: 1rem;
+  --page-content-not-found-margin-bottom: 0rem;
+  --page-content-not-found-text-align: center;
+  --page-content-not-found-font-size: 14px;
+  --page-content-not-fount-font-color: black;
+  --page-content-not-found-font-weight: 400;
+  --page-validation-font-size: 11px;
+  --page-validation-padding-left: 11px;
+
+  --form-label-font-size: 14px;
+  --form-label-font-color: black;
+  --form-label-font-weight: bold;
+  /**
+  * Added by - Ashish Dewangan on 09-10-2024
+  * Reason - specified more global css variables 
+  */
+  --form-button-font-size: 12px;
+  --form-error-font-size: 14px;
+  /**
+  * End of addition by - Ashish Dewangan on 09-10-2024
+  * Reason - specified more global css variables 
+  */
+  /* Addition by Om Shrivastava on 03-01-2025
+  Reason : add button color */
+  --submit-button-background-color: #0077b6;
+  --submit-button-color: #fff;
+
+  /* End of addition by Om Shrivastava on 03-01-2025
+  Reason : add button color */
+
+  --horizontal-line-thickness: 2px;
+  --horizontal-line-background-color: #e6e6e8;
+  --horizontal-line-bottom-margin: 5px;
+
+  --vertical-line-thickness: 2px;
+  --vertical-line-background-color: #e6e6e8;
+
+  --horizontal-line-drawer-color: black;
+  --horizontal-line-drawer-margin: 0.5rem 0;
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+
+  --mandatory-field-color: red;
+  --mandatory-field-margin-right: 2px;
+  --optional-field-visibility: hidden;
+
+  --input-box-border: 1px solid #ccc;
+  --colored-background-border: 1px solid grey;
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+     reason - Style Adjusted*/
+  /* Addition by Om Shrivastava on 06-09-2024
+  Reason : Create variable for table background color */
+  --table-head-background-color: #f2f2f2;
+  /* End of addition by Om Shrivastava on 06-09-2024
+  Reason : Create variable for table background color */
+  /* Addition by Om Shrivastava on 25-09-2024
+  Reason : Create variable for button width */
+  --login-signup-button-width: 80%;
+  /* End of addition by Om Shrivastava on 25-09-2024
+  Reason : Create variable for button width */
+  /* Addition by Om Shrivastava on 24-10-2024
+  Reason : Set the font size for the invoice page  */
+  --invoice-title-font: 12px;
+  --invoice-content-font: 12px;
+  /* End of addition by Om Shrivastava on 24-10-2024
+  Reason : Set the font size for the invoice page  */
+  /* Addition by Om Shrivastava on 25-10-2024
+  Reason : Set the border for input field  */
+  --input-border-color: 1px solid #938d8d;
+  /* End of addition by Om Shrivastava on 25-10-2024
+  Reason : Set the border for input field  */
+}
+
+.ant-select-selector {
+  border: none !important;
+}
+/* Addition by Om Shrivastava on 03-01-2025
+Reason : Add css for back button  */
+.backIcon {
+  position: absolute;
+  left: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.popupActions button {
+  margin: 10px;
+  padding: 8px 16px;
+  font-size: var(--form-button-font-size);
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.popupActions button:first-child {
+  background-color: var(--submit-button-background-color);
+  color: var(--submit-button-color);
+}
+
+.popupActions button:last-child {
+  background-color: #cccccc;
+}
+/* End of code addition by Om Shrivastava on 03-01-2025
+Reason : Add css for back button  */
+
+.styles-module_whatsappChatBox__MdQ5U {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5%;
+  overflow: hidden;
+  background-color: #fff;
+  touch-action: auto;
+  position: fixed;
+  bottom: 7rem;
+  left: 4rem;
+  width: 375px;
+  opacity: 0;
+  transition: height 0.2sease-out;
+  box-shadow: 0 3px 10px 0 rgb(0 0 0 / 20%);
+  z-index: 9999;
+}
+
+@media screen and (max-width: 720px) {
+  :root {
+    --page-margin-left: 10px;
+    --page-margin-right: 10px;
+    --page-min-height: 76vh;
+    --page-content-margin-left: 0px;
+    --page-content-margin-right: 0px;
+
+    --page-margin-top: 7vh;
+    --page-margin-bottom: 0;
+
+    --horizontal-line-thickness: 2px;
+    --horizontal-line-background-color: #e6e6e8;
+  }
+}
+
+/* Code Addition by Tejasve Gupta on 24-07-2024
+  Reason - Changes in Style as suggested by Tester */
+
+.stdropdown-container {
+  /* height: 12px !important; */
+  width: 100% !important;
+  border-radius: 3px !important;
+  padding: 0px 0px !important;
+  margin-left: 4px !important;
+  border: 1px solid #cbcaca !important;
+  background-color: white !important;
+}
+
+.stdropdown-input {
+  padding: 0px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  user-select: none !important;
+}
+
+.stsearch-box input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  height: 0%;
+}
+
+/* End of Code Addition by Tejasve Gupta on 24-07-2024
+  Reason - Changes in Style as suggested by Tester */
+
+/* Addition by Om Shrivastava on 02-09-2024
+  Reason : Add globally css for button  */
+.submitButton {
+  padding: 8px 16px !important;
+  background-color: #0077b6 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease-in-out !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 1% !important;
+}
+
+.submitButton:hover {
+  background-color: #005f87 !important;
+}
+.submitButton.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* End of adition by Om Shrivastava on 02-09-2024
+  Reason : Add globally css for button  */
+
+/* Addition by Om Shrivastava on 08-10-2024
+  Reason : No need to show the dismiss icon button  */
+.notyf__dismiss {
+  display: none;
+}
+/* End of addition by Om Shrivastava on 08-10-2024
+  Reason : No need to show the dismiss icon button  */
+
+/* Commented by Om Shrivastava on 29-10-2024
+ Reason : No need to set height and width using class name  */
+/* Addition by Om Shrivastava on 19-10-2024
+Reason : Set the width of country, state and city input css */
+.css-13cymwt-control {
+  border: var(--input-border-color) !important;
+  /* min-height: 32px !important;
+  height: 27px !important; */
+}
+/* .css-t3ipsp-control {
+  min-height: 32px !important;
+  height: 27px !important;
+}
+.css-19bb58m {
+  grid-area: unset !important;
+}
+.css-1wy0on6 {
+  min-height: 32px !important;
+  height: 27px !important;
+}
+.css-1xc3v61-indicatorContainer {
+  min-height: 32px !important;
+  height: 27px !important;
+  padding-top: 8% !important;
+}
+
+.css-hlgwow {
+  min-height: 32px !important;
+  height: 27px !important;
+}
+
+.css-1dimb5e-singleValue {
+  padding-top: 11% !important;
+} */
+/* Commented by Om Shrivastava on 29-10-2024
+ Reason : No need to set height and width using class name  */
+/* End of addition by Om Shrivastava on 19-10-2024
+Reason : Set the width of country, state and city input css */
+
+/* Addition by Om Shrivastava on 21-10-2024
+Reason : Add Css for react notification */
+.notyf__toast {
+  padding: 0px 0px 0px 4px !important;
+}
+/* End of addition by Om Shrivastava on 21-10-2024
+Reason : Add Css for react notification  */
+@media screen and (max-width: 720px) {
+  .stdropdown-container {
+    width: 92% !important;
+  }
+}
+/* Added by akanksha on 19-10-2024, Reason : to remove counter arrow from inpt box of checkin page */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* End by akanksha on 19-10-2024, Reason : to remove counter arrow from inpt box of checkin page */

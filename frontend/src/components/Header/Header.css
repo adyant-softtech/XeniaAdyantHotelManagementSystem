@@ -1,0 +1,9 @@
+@media screen and (max-width: 770px) {
+  .show {
+    display: flex;
+  }
+
+  .hide {
+    display: none;
+  }
+}

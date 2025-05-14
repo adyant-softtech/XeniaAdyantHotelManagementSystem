@@ -1,0 +1,150 @@
+/* // Created by Om Shrivastava on 27-07-2024
+// Reason : Create a  Invoice page css  */
+  .pageFrame {
+    background-image: var(--page-background-image);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    color: var(--font-color);
+  }
+  
+  .pageContainer {
+    /* margin-left: var(--page-margin-left);
+    margin-right: var(--page-margin-right); */
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 5%;
+    margin-bottom: 02%;
+
+    border: 1px solid gray;
+    /* font-size: var(--page-title-font-size); */
+    /* padding-bottom: var(--page-margin-bottom);
+    margin-top: var(--page-margin-top); */
+    /* margin-bottom: var(--page-margin-bottom); */
+    min-height: var(--page-min-height);
+    background-color: var(--header-background);
+    padding: 10px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .invoiceTitle {
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .hotelInfo {
+    /* text-align: right; */
+  }
+  
+  .hotelInfo h2 {
+    margin: 0;
+    color: #f57c00;
+  }
+  
+  .hotelInfo address {
+    font-style: normal;
+  }
+  
+  .logoSection {
+    text-align: right;
+  }
+  
+  .logo {
+    max-width: 100px;
+  }
+  
+  .invoiceDate {
+    margin-top: 10px;
+  }
+  
+  .customerDetails {
+    font-size: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .invoiceNumber {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .customerDetails ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .invoiceTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 12px;
+
+  }
+  
+  .invoiceTable th, .invoiceTable td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .invoiceTable th {
+    background-color: #f7f7f7;
+  }
+  
+  .totalSection {
+    margin-top:10px;
+    font-size: 12px;
+  }
+  
+  .totals {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .totals div {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    margin-bottom: 10px;
+  }
+  
+  .grandTotal {
+    font-weight: bold;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    background-color: #f57c00;
+    color: #fff;
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .buttonContainer {
+    display: flex;
+    padding-top: 1%;
+    justify-content: center;
+  }
+  .button {
+    padding: 5px 10px;
+    background-color: brown;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  

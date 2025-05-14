@@ -1,0 +1,62 @@
+/**
+* Created by - Ashish Dewangan on 23-05-2024
+* Reason - To have css file for home page
+*/
+.pageFrame {
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #5e7c91;
+  
+}
+
+.coloredBackground {
+  background-color: var(--page-background-color);
+}
+
+.pageContainer {
+  margin-left: var(--page-margin-left);
+  margin-right: var(--page-margin-right);
+  font-size: var(--page-title-font-size);
+
+  padding-bottom: var(--page-margin-bottom);
+  margin-top: var(--page-margin-top);
+  margin-bottom: var(--page-margin-bottom);
+  min-height: var(--page-min-height);
+}
+
+.title {
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-font-color);
+  font-weight: var(--page-title-font-weight);
+  text-align: var(--page-title-text-align);
+  margin-bottom: var(--page-title-margin-bottom);
+}
+
+.content {
+  font-size: var(--page-content-font-size);
+  color: var(--page-content-font-color);
+  font-weight: var(--page-content-font-weight);
+  text-align: var(--page-content-text-align);
+
+  margin-left: var(--page-content-margin-left);
+  margin-right: var(--page-content-margin-right);
+}
+
+.noContentFoundText {
+  margin-top: var(--page-content-not-found-margin-top);
+  margin-bottom: var(--page-content-not-found-margin-bottom);
+  font-size: var(--page-content-not-found-font-size);
+  color: var(--page-content-not-fount-font-color);
+  font-weight: var(--page-content-not-found-font-weight);
+  text-align: var(--page-content-not-found-text-align);
+}
+
+.e-carousel .e-carousel-indicators .e-indicator-bars .e-indicator-bar {
+  padding: 8px;
+}
+
+@media screen and (max-width: 720px) {
+}

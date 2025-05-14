@@ -1,0 +1,477 @@
+/* // Create CSS file by Om Shrivastava on 04-06-2024  */
+
+.button-style {
+  background-color: white;
+  color: black;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.button-style:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.icon-style {
+  transition: transform 0.3s ease;
+}
+
+.button-style:hover .icon-style {
+  transform: scale(1.2);
+}
+
+.pageFrame {
+  /**Code Modification don by Tejasve Gupta on 14-06-2024*/
+  /* background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+  min-height: var(--page-min-height);
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--page-margin-top);
+  padding-bottom: var(--page-padding-bottom);
+}
+.header {
+  background-color: #0077b6;
+  
+  color: #ffffff;
+  /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  background-color: white;
+  color:black;
+  font-weight: 700;
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--page-title-font-family);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-size: 18px;
+}
+.checkinDetailSection {
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  height: 70vh;
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  min-height: auto;
+  margin: auto 10px;
+  /* width: 100%; */
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  /* box-shadow: 0 0px 25px 0 rgba(0, 0, 0, 0.1); */
+
+  border-radius: 3px;
+  /* border: 1px solid rgb(200, 200, 200); */
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px;
+  width: 100%;
+}
+
+/* .GenerateBtn {
+  padding: 5px 10px;
+  background-color: rgb(88, 146, 88);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+} */
+
+
+.checkinlistTitle {
+  /* width: 100%; */
+  background-color: var(--page-title-background-color);
+  display: flex;
+  width: var(--page-title-width);
+  height: var(--page-title-height);
+  justify-content: center;
+  font-size: var(--page-title-font-size);
+  font-family: var(--page-title-font-family);
+  font-weight: var(--page-title-font-weight);
+  align-content: var(--page-title-text-align);
+  flex-wrap: var(--page-title-flex-wrap);
+  gap: 4%;
+  align-items: center;
+}
+
+.tableContainer {
+  /* min-width: 95%; */
+  width: max-content;
+  /* padding: 4px; */
+  background-color: #efefef;
+  margin: auto;
+  border-radius: 5px;
+  border: 1px solid grey;
+  box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Code Addition and modification of code by Tejasve Gupta on 25-07-2024
+Reason - Whole style Adjustment as suggested by Tester */
+.tableHeadingContainer {
+  /*background-color: white; */
+  /* background-color: white; */
+  /* background-color: #eae2ed; */
+  background-color: #d3d5da;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid #cad0d0;
+  /* font-family: "MyFont"; */
+  /* padding: 3px; */
+  /* font-weight: bolder; */
+  font-weight: bold;
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+}
+.filterContainer{
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  width: 70%;
+}
+.dateFilterOptions{
+  /* display: flex;
+  flex-direction: row; */
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 5%;
+}
+.pageContainer,
+.header {
+  animation: fadeIn 0.8s ease-in-out;
+}
+.tableData:nth-child(even) {
+  background-color: #f2f2f2;
+  border: 1px solid rgb(237, 236, 236);
+  /* height: 32px; */
+}
+
+.tableData:nth-child(odd) {
+  background-color: #ffffff;
+  /* White for odd rows */
+  border: 1px solid rgb(237, 236, 236);
+  /* height: 45px; */
+}
+
+.tableDataContainer {
+  /* width: 100%; */
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: white;
+  border-bottom: 1px solid #f2f2f2;
+  /* padding: 3px; */
+}
+
+.tableData {
+  /* background-color: white; */
+  display: flex;
+  justify-content: center;
+  /* width: 100%; */
+  align-items: center;
+  box-shadow: var(--ds-shadow-raised, 0 1px 2px 0 rgba(9, 30, 66, 0.25));
+}
+
+.sNoColumn {
+  /* min-width: 40px; */
+  text-align: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 5%;
+}
+
+.statusColumn {
+  /* min-width: 100px; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 8%;
+
+}
+
+.roomNumberColumn {
+  /* min-width: 50px; */
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  padding: 4px 0;
+  width: 10%;
+}
+
+.tableNoColumn {
+  min-width: 70px;
+  width: 80px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.addRoomColumn {
+  /* min-width: 70px;  */
+  width: 5%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.extendColumn {
+  /* min-width: 70px;  */
+  width: 5%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.checkOutColumn {
+  /* min-width: 70px;  */
+  width: 10%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+
+.roomTypeColumn {
+  /* min-width: 50px; */
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  padding: 4px 0;
+  width: 10%;
+}
+
+.priceColumn {
+  /* min-width: 100px; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 8%;
+}
+.invoiceColumn {
+  /* min-width: 70px;  */
+  width: 5%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+
+.nameColumn {
+  /* min-width: 100px; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 10%;
+}
+.createdAtColumn{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 10%;
+}
+.mergedColumn{
+  text-align: center;
+  word-break: break-word;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 12px 0;
+  width: 230px;
+  max-width: 300px;
+}
+
+
+.dateColumn {
+  /* min-width: 110px; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 15%;
+}
+
+.timeColumn {
+  min-width: 110px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 70px;
+}
+
+.status {
+  min-width: 110px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  padding: 4px 0;
+  width: 70px;
+}
+
+.commonColumnData {
+  font-weight: 600;
+  font-size: 12px !important;
+  text-align: center;
+}
+
+.btnContainer {
+  /* min-width: 15%; */
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  padding: 4px 0;
+  gap: 1px;
+  width: 70px;
+}
+.invoiceButton{
+  background-color: #fffa5b;
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  /* padding: 5px 10px; */
+  transition: all 0.3s;
+  width: -moz-fit-content;
+  width: 28px;
+  cursor: pointer;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primaryButton {
+  background-color: #51c14b;
+  color: white;
+  border-radius: 5px;
+  /* padding: 5px 10px; */
+  transition: all 0.3s;
+  width: -moz-fit-content;
+  width: 28px;
+  cursor: pointer;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newCheckInButton {
+  background-color: #089fb2;
+  color: white;
+  border-radius: 5px;
+  /* padding: 5px 10px; */
+  transition: all 0.3s;
+  width: -moz-fit-content;
+  width: 28px;
+  cursor: pointer;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newCheckInButton:hover {
+  background-color: #016572;
+}
+
+
+/**Code Addition by Tejasve Gupta on 28-06-2024
+Reason - Addition of extend button*/
+.extendButton {
+  background-color: #089fb2;
+  /* background-color: #089fb2; */
+  color: white;
+  border-radius: 5px;
+  /* padding: 5px 10px; */
+  transition: all 0.3s;
+  width: -moz-fit-content;
+  width: 28px;
+  cursor: pointer;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.extendButton:hover {
+  cursor: pointer;
+  background-color: #016572;
+}
+.noRecords {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding: 20px;
+}
+
+
+/**End of Code Addition by Tejasve Gupta on 28-06-2024
+Reason - Addition of extend button*/
+
+.primaryButton:hover {
+  cursor: pointer;
+  background-color: #1f871b;
+}
+
+/* .newCheckInButton:hover {
+  cursor: pointer;
+  background-color: #1f871b;
+} */
+
+/* Code Addition by Tejasve Gupta on 10-06-2024
+  Reason - Style for Pagination */
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  /* End of Code Addition by Tejasve Gupta on 10-06-2024
+  Reason - Style for Pagination */
+}
+
+@media screen and (max-width: 720px) {
+  .tableDataContainer {
+    justify-content: space-around;
+  }
+}
+/* End of Code Addition and modification of code by Tejasve Gupta on 25-07-2024
+Reason - Whole style Adjustment as suggested by Tester */
+/**End of Code Modification don by Tejasve Gupta on 14-06-2024*/

@@ -1,0 +1,178 @@
+.pageFrame {
+  min-height: var(--page-min-height);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--page-padding-bottom);
+}
+
+.header {
+  background-color: white;
+  color:black;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-family: var(--page-title-font-family);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  padding: 4px;
+  font-size: 18px;
+  /* width: 100%; */
+}
+
+.pageContainer {
+  /* margin-left: var(--page-margin-left); */
+  /*margin-right: var(--page-margin-right); */
+  width: 98%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+.column {
+  flex: 1;
+  margin: 0 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  flex-direction: column;
+  margin-top: 4px;
+  
+}
+
+.formContainer {
+  margin-top: 20px;
+}
+
+.customerDetails {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+/* .personalDetails,
+.AccomodationDetails
+{
+  border:1px solid black
+} */
+
+.a5Container {
+  width: 148mm;
+  height: 210mm;
+  padding: 10mm;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  overflow: auto;
+  border: 1px solid #ccc;
+}
+
+.label {
+  display: inline-block; 
+  text-wrap: nowrap;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.personalDetails, 
+.accommodationDetails, 
+.roomDetail {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3px;
+}
+
+
+.labelHotelDetail {
+  display: inline-block;
+  text-wrap: nowrap;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between items in each section */
+}
+.detailRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px; /* Space between label, colon, and value */
+  margin-bottom: 8px;
+  white-space: nowrap; /* Prevent text wrapping to new lines */
+}
+
+.roomDetails {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.detailSection {
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  /* margin-bottom: 10px; */
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  justify-content: center; 
+  align-items: center; 
+  height: 100%; 
+}
+
+
+.rowContainer {
+  display: flex;
+  width: 100%;
+  align-content: center;
+  gap: 1rem; /* Space between columns */
+  justify-content: space-between;
+  width: 21cm;
+}
+
+.modalContent {
+  padding: 20px;
+  width: 21cm;
+}
+
+.a5Layout {
+  display: flex;
+  gap: 1rem; /* Space between columns */
+  justify-content: space-between;
+  
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+
+.detailSection {
+  width: 6.5cm; 
+}
+.modalContent h3 {
+  text-align: center;
+  background-color: #00897b12;
+}
+
+@media (max-width: 768px) {
+  .parentContainer {
+    width: 90%;
+  }
+}
+
+

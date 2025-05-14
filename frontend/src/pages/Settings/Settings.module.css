@@ -1,0 +1,227 @@
+/* Creation by Tejasve Gupta on 24-07-2024
+
+ Code Addition and Modification by Tejasve Gupta on 26-07-2024
+Reason - Style Adjustment  */
+.parentContainer {
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: var(--page-min-height);
+  /* background: linear-gradient(to bottom right, #f3f3f3, #ffffff); */
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--page-margin-top);
+  padding-bottom: var(--page-padding-bottom);
+}
+
+.header {
+  background-color: #0077b6;
+  color: #ffffff;
+     /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  background-color: white;
+  color:black;
+  font-weight: 700;
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--page-title-font-family);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 9px;
+  font-size: 18px;
+}
+
+.pageContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  /* background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding-bottom: var(--page-margin-bottom); */
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.expForm {
+  /* padding: 20px; */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.inputPair {
+  display: flex;
+  padding: 6px;
+  width: 100%;
+  align-items: center;
+  /* margin-left: 20%; */
+  justify-content: space-between;
+}
+
+.inputError {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px;
+  width: 60%;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-bottom: 1.5%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.subContainer1,
+.subContainer2 {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.saveButton {
+  width: fit-content;
+  background-color: #4965f9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 5px;
+  margin-bottom: 1%;
+}
+
+.saveButton:hover {
+  background-color: #0f2076;
+}
+
+.labelContainer {
+  font-size: 14px;
+  width: 34%;
+  font-size: var(--form-label-font-size);
+  /* margin-left: 27%; */
+}
+
+.colonContainer {
+  width: 4%;
+}
+
+.mandatoryField {
+  color: var(--mandatory-field-color);
+  margin-right: var(--mandatory-field-margin-right);
+}
+
+.optionalField {
+  visibility: var(--optional-field-visibility);
+}
+
+.listContainer {
+  margin: 20px;
+}
+
+.settingsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.settingsTable th,
+.settingsTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.settingsTable th {
+  background-color: #f4f4f4;
+}
+
+.listItem {
+  cursor: pointer;
+}
+
+.listItem:hover {
+  background-color: #f1f1f1;
+}
+
+/* input[type="text"],
+input[type="time"],
+input[type="number"],
+textarea {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: var(--page-content-not-found-font-size);
+
+} */
+
+.inputError input,
+.inputError textarea {
+  width: 60%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.expDetailsTitle {
+  margin-bottom: 10px;
+  padding-left: 2%;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0077b6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pageContainer,
+.expForm,
+.header {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@media (max-width: 720px) {
+  .labelContainer {
+    width: unset;
+    margin-left: unset;
+  }
+
+  .colonContainer {
+    display: none;
+  }
+
+  .inputPair {
+    flex-direction: column;
+  }
+}

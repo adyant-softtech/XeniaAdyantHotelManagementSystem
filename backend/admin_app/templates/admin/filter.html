@@ -1,0 +1,23 @@
+{% load i18n %}
+
+<div class="filter_panel">
+    <div class="mb-3">
+        <!-- Modification and addition by Om Shrivastava on 18-05-23
+        Reason : Change the filter label name  -->
+        <!-- <span class="h6">{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</span> -->
+        <span class="h6">By {% if title == "Date & Time" %} Date {%else%}{{title}}{% endif%}</span>
+        <!-- End of Modification and addition by Om Shrivastava on 15-05-23 -->
+    </div>
+    <ul>
+        {% for choice in choices %}
+            <li{% if choice.selected %} class="text-success selected"{% endif %}>
+                <!-- Modification and addition by Om Shrivastava on 18-05-23
+                Reason : Change the filter label name  -->
+                <!-- <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">{{ choice.display }}</a> -->
+                <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
+                    {% if choice.display == 'Any date' %}All{%else%}{{choice.display}}{%endif%}</a>
+                <!-- End of Modification and addition by Om Shrivastava on 18-05-23 -->
+            </li>
+        {% endfor %}
+    </ul>
+</div>

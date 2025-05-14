@@ -1,0 +1,59 @@
+.roomMoveContainer {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .label {
+    background-color: #00897b12;
+  }
+  
+  .heading {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .roomDetailsContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .roomBox {
+    width: 30%;
+    width: 45%;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .roomBox h3 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  .roomBox p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  .dropdownContainer {
+    width: 40%;
+    text-align: center;
+  }
+  
+  .dropdown {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  

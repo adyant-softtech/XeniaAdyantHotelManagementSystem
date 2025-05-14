@@ -1,0 +1,308 @@
+/**Created By Tejasve GUpta on 24-05-2024
+  Reason - Styles of Login module
+*/
+
+.pageFrame {
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /**Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester            
+*/
+  min-height: var(--page-min-height);
+  /* background-color: #5e7c91; */
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+*/
+  /* background: linear-gradient(to bottom right, #f3f3f3, #ffffff); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--page-margin-top);
+  padding-bottom: var(--page-padding-bottom);
+}
+
+.coloredBackground {
+  /**Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+
+*/
+  /* background-color: #dbdee6; */
+  /* background-color: #dbdee6; */
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Code shifted in CSS file*/
+  /* border: var(--colored-background-border); */
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Code shifted in CSS file*/
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+
+*/
+  display: flex;
+  border-radius: 3px;
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  box-shadow: 0 0px 25px 0 rgba(0, 0, 0, 0.3);
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  height: 70vh;
+  width: 70%;
+  width: 63%;
+
+  padding: 0px;
+  text-align: center;
+  justify-content: flex-start;
+  /* background: linear-gradient(to bottom right, #f0f8ff, #e6f7ff); */
+}
+.loginTitle {
+  font-size: var(--page-title-font-size);
+  font-weight: bold;
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  margin-bottom: 3vh;
+  /* width: 100%; */
+  /* border: 1px solid grey; */
+  margin-top: 15px;
+}
+/**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+
+.loginImage {
+  display: flex;
+  /* background-image: url("../../assets/login.jpg"); */
+  background-image: url("../../assets/login.jpeg");
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: left;
+  justify-content: center;
+  font-size: xxx-large;
+  width: 62%;
+  align-items: center;
+  border-radius: 3px 0 0 3px;
+}
+.pageContainer {
+  margin-left: var(--page-margin-left);
+  margin-right: var(--page-margin-right);
+  padding-bottom: var(--page-margin-bottom);
+  /* margin-top: var(--page-margin-top); */
+  width: 50%;
+}
+
+.formInputContainer {
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: flex-start;
+  /* flex-direction: column; */
+  justify-content: center;
+}
+
+.inputLabel {
+  /* border: 1px solid green; */
+  width: 50%;
+  /* text-align: left; */
+  /* padding-right: 10px; */
+  display: flex;
+  justify-content: flex-start;
+  font-family: revert-layer;
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  margin-top: 5px;
+  font-size: var(--form-label-font-size);
+
+}
+/**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+.eyeIcon {
+  margin-left: -30px; /* Adjust position of eye icon as needed */
+  cursor: pointer;
+  font-size: 18px;
+  color: #aaa;
+  margin-top: 5%;
+}
+.formInput {
+   /* Addition by Om shrivastava on 25-09-2024
+  Reason : Set the width globally*/
+  width: var(--login-signup-button-width);
+  /* End of addition by Om shrivastava on 25-09-2024
+  Reason : Set the width globally*/
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/**Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+
+*/
+.inputError {
+  /* padding-top: 10px; */
+  /* align-items: flex-end; */
+  width: 70%;
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+}
+/**End of Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+
+*/
+.formInputError {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 1px;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 10px;
+  align-self: baseline;
+  font-size: var(--page-validation-font-size);
+
+}
+
+.submitButton {
+  background-color: #5e7c91;
+  border-radius: 5px;
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  padding: 7px 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  /* transition: background-color 0.3s; */
+  font-size: 18px;
+}
+/**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+
+.submitButton:hover {
+  background-color: #0c2a3f;
+}
+
+.mandatoryField {
+  color: red;
+}
+
+.imageText {
+  /* width: 50%; */
+  padding: 10px;
+  text-align: center;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.imageText2 {
+  font-size: 25px;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+.textButtons {
+  display: flex;
+  flex-direction: column;
+}
+.googleSignup {
+  border: 0.5px solid rgb(168, 166, 166);
+  border-radius: 5px;
+  cursor: pointer;
+  /* width: fit-content; */
+  align-self: center;
+}
+/**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+
+.forgotPassword {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 12%;
+  font-size: var(--form-label-font-size);
+
+}
+/**
+* Code Addition by Tejasve Gupta on 25-05-2024
+  Reason -  Responsive Style*/
+
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+@media screen and (max-width: 720px) {
+  .coloredBackground {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 98%;
+    overflow-y: scroll;
+    height: 85vh;
+    margin-top: 13px;
+  }
+  .loginImage {
+    width: 95%;
+    border-radius: 5px;
+    height: 40%;
+  }
+  .formInput {
+    width: 85%;
+    height: 12px;
+  }
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  /**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+  .pageContainer {
+    display: contents;
+    width: 100%;
+  }
+  .imageText {
+    height: auto;
+    width: auto;
+  }
+  /**Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+
+*/
+  .formInputContainer {
+    display: flex;
+    /* flex-direction: column; */
+  }
+  .inputLabel {
+    width: 70%;
+    margin-left: 10px;
+    /**Code modification by Tejasve Gupta on 13-06-2024
+              reason - Style fixed as suggested by Tester
+
+*/
+    /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+    margin-top: 5px;
+    /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+  }
+  .loginTitle {
+    margin-bottom: 5vh;
+    font-size: 15px;
+  }
+}
+/**
+* Code Addition by Tejasve Gupta on 25-05-2024
+  Reason -  Responsive Style*/
+
+/**End of Creation By Tejasve GUpta on 24-05-2024
+  Reason - Styles of Login module
+*/
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+/**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/
+@media screen and (max-width: 400px) {
+  .coloredBackground {
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    overflow-y: scroll;
+    /* height: 82vh; */
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 10px; */
+  }
+}
+/**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+/**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style adjusted*/

@@ -1,0 +1,363 @@
+/**Created By Tejasve GUpta on 24-05-2024
+  Reason - Styles of signup module
+*/
+.pageFrame {
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  /* background-image: url("D:\Hotel Management\frontend\src\assets\hm.jpg"); */
+  background-size: cover;
+  /**Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: var(--page-min-height);
+  margin-top: var(--page-margin-top);
+  padding-bottom: var(--page-padding-bottom);
+  /* background-color: #5e7c91; */
+}
+.signupImage {
+  display: flex;
+  /* background-image: url("../../assets/hm.jpg"); */
+  background-image: url("../../assets/registration.jpeg");
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: left;
+  justify-content: center;
+  font-size: xxx-large;
+  width: 62%;
+  align-items: center;
+  border-radius: 3px 0 0 3px;
+}
+/**End of Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+
+.pageContainer {
+  margin-left: var(--page-margin-left);
+  margin-right: var(--page-margin-right);
+  padding-bottom: var(--page-margin-bottom);
+  /* margin-top: 5%; */
+  width: 50%;
+
+  /* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  /* margin-bottom: 10px; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+/**Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+.signupTitle {
+  /* font-size: var(--page-title-font-size);
+  font-size: var(--page-title-font-size); */
+
+  font-weight: bold;
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style Adjusted*/
+  margin-bottom: 3vh;
+  /**End of Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+  /* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+
+  margin-top: 8px;
+}
+/**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style Adjusted*/
+.title {
+  font-size: var(--page-title-font-size);
+  color: var(--page-title-font-color);
+  font-weight: var(--page-title-font-weight);
+  text-align: var(--page-title-text-align);
+
+  margin-bottom: var(--page-title-margin-bottom);
+}
+
+.formInputError {
+  color: red;
+  height: 8px;
+  font-size: 0.8em;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: var(--page-validation-font-size);
+}
+
+/* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+.mandatoryField {
+  color: red;
+}
+
+/* Code Addition by Tejasve Gupta on 12-06-2024
+Reason - Last name removed from manadatory */
+.optionalField {
+  visibility: hidden;
+}
+/* End of Code Addition by Tejasve Gupta on 12-06-2024
+Reason - Last name removed from manadatory */
+/* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+/**Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+.coloredBackground {
+  display: flex;
+  /* background-color: #ffffff; */
+  border-radius: 3px;
+  box-shadow: 0 0px 25px 0 rgba(0, 0, 0, 0.3);
+  height: auto;
+  width: 70%;
+  width: 63%;
+
+  padding: 0px;
+  /* justify-content: center; */
+  /* border: var(--colored-background-border); */
+  text-align: center;
+  justify-content: flex-start;
+  height: 76vh;
+  /* background: linear-gradient(to bottom right, #f0f8ff, #e6f7ff); */
+}
+/**End of Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+.formInputContainer {
+  display: flex;
+  /* align-items: center;  */
+  /* margin-bottom: 20px; */
+  flex-direction: column;
+}
+
+.inputPair {
+  /**Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+  align-items: flex-start;
+  /**End of Code modification by Tejasve Gupta on 15-06-2024
+              reason - Style fixed as suggested by Tester*/
+  display: flex;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.inputLabel {
+  /* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  width: 60%;
+  width: 40%;
+
+  /* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  text-align: left;
+  padding-right: 10px;
+  /* font-weight: bold; */
+  font-family: revert-layer;
+  font-size: var(--form-label-font-size);
+}
+
+.formInput {
+  /* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  /**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+  /* width: 95%; */
+  /* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 9px;
+}
+.formInput2 {
+  /* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  /**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+  width: 100% !important;
+  /* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 9px;
+}
+/* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+.inputError {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-items: flex-start;
+  justify-content: center;
+}
+.textButtons {
+  display: flex;
+  flex-direction: column;
+}
+.googleSignup {
+  /* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  border: 0.5px solid rgb(168, 166, 166);
+  border-radius: 5px;
+  cursor: pointer;
+  /* width: fit-content; */
+  align-self: center;
+}
+.submitButton {
+  background-color: #5e7c91;
+  border-radius: 5px;
+  /* Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  padding: 7px 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  /* End of Code Addition by Tejasve Gupta on 12-06-2024
+  Reason - Style Changes Asked by Tester*/
+  /* transition: background-color 0.3s; */
+  /* margin-top: 17px; */
+  font-size: 18px;
+}
+
+.submitButton:hover {
+  background-color: #0c2a3f;
+}
+.formButtonContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.imageText {
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.imageText2 {
+  font-size: 25px;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/**Code Addition by by Tejasve Gupta on 15-06-2024
+              reason - Style fixed for Eye ICon*/
+.eyeIcon {
+  margin-left: -30px; /* Adjust position of eye icon as needed */
+  cursor: pointer;
+  font-size: 18px;
+  color: #494949;
+  margin-top: 5%;
+} /**End of Code Addition by by Tejasve Gupta on 15-06-2024
+              reason - Style fixed for Eye ICon*/
+/**Code Addition by Tejasve Gupta on 25-05-2024
+  Reason - Responsive style*/
+@media screen and (max-width: 720px) {
+  .inputPair {
+    display: flex;
+
+    /**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+    /* flex-direction: column; */
+  }
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style Adjusted*/
+  .coloredBackground {
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    overflow-y: scroll;
+    height: 86vh;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .signupImage {
+    width: 95%;
+    border-radius: 5px;
+    height: 45vh;
+    /* margin-top: 30px; */
+  }
+  .imageText {
+    width: auto;
+    height: auto;
+  }
+  .pageContainer {
+    width: 95%;
+    /* padding: auto; */
+    margin: auto;
+    /* height: auto; */
+    /* overflow-y: scroll; */
+  }
+  .inputLabel {
+    width: 79%;
+    text-align: left;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .inputError {
+    width: 100%;
+  }
+  .signupTitle {
+    margin-bottom: 3vh;
+    font-size: 21px;
+  }
+  .formInput {
+    width: 85%;
+    height: 12px;
+  }
+  .formInput2 {
+    width: 85% !important;
+    height: 12px;
+  }
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - Style Adjusted*/
+}
+/**End of Code Addition by Tejasve Gupta on 25-05-2024
+  Reason - Responsive style*/
+@media screen and (max-width: 1200px) {
+  .imageText {
+    font-size: 30px;
+  }
+  .imageText2 {
+    font-size: 15px;
+  }
+}
+/**Code Addition by Tejave Gupta on 20-06-2024
+            reason - Style Adjusted for responsive design*/
+
+@media screen and (max-width: 360px) { 
+.signupImage {
+  border:2px solid red;
+  margin-top: 0%;
+  }}
+
+
+/**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+
+@media screen and (max-width: 400px) {
+  .coloredBackground {
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    overflow-y: scroll;
+    /* height: 85vh; */
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 13px; */
+  }
+}
+
+/**End of Code Addition by Tejave Gupta on 20-06-2024
+            reason - Style Adjusted for responsive design*/
+
+

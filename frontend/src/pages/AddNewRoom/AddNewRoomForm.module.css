@@ -1,0 +1,410 @@
+.parentContainer {
+  /**Code Modification don by Tejasve Gupta on 14-06-2024*/
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: var(--page-min-height);
+  /* background: linear-gradient(to bottom right, #f3f3f3, #ffffff); */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+ align-items: center; */
+  margin-top: var(--page-margin-top);
+  padding-bottom: var(--page-padding-bottom);
+}
+.header {
+  background-color: #0077b6;
+  color: #ffffff;
+     /**
+  * Added by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  background-color: white;
+  color:black;
+  font-weight: 700;
+  /**
+  * End of addition by - Ashish Dewangan on 05-09-2024
+  * Reason - Applied different color
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--page-title-font-family);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 9px;
+  font-size: 18px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Define the header style */
+.listHeader {
+  display: flex;
+  flex-direction: row;
+  /*added by akanksha on 19th oct, to arrange column data*/
+  /*font-weight: bold;*/
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  background-color: #edf7f6;
+  /* background-color: #d3d5da;
+  background-color: var(--table-head-background-color); */
+  height: 20px;
+  align-items: center;
+  color: #1976d2;
+  /* font-size: var(--form-label-font-size); */
+  font-size: var(--page-content-font-size);
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  text-transform: uppercase;
+
+  /*end by akanksha on 19th oct, to arrange column data*/
+}
+
+/* Define the row style */
+  /*modification by akanksha on 19th oct, to arrange column data*/
+.row:nth-child(odd) {
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #cad0d0;
+  background-color: #ffffff;
+  border: 1px solid rgb(237, 236, 236);
+  height: 10px;
+  align-items: center;
+  box-shadow: var(--ds-shadow-raised, 0 1px 2px 0 rgba(9, 30, 66, 0.25));
+  font-size: var(--form-label-font-size);
+}
+.row:nth-child(even) {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+  height: 20px;
+  border-bottom: 1px solid #cad0d0;
+  background-color: #ffffff;
+  border: 1px solid rgb(237, 236, 236);
+  height: 10px;
+  align-items: center;
+  box-shadow: var(--ds-shadow-raised, 0 1px 2px 0 rgba(9, 30, 66, 0.25));
+  font-size: var(--form-label-font-size);
+}
+  /*end of modification by akanksha on 19th oct, to arrange column data*/
+
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Define the column styles */
+.idColumn,
+/* Added by akanksha on 19-10-2024, Reason : to add serial no column */
+.serialColumn,
+/* End by akanksha on 19-10-2024, Reason : to add serial no column */
+.numberColumn,
+.typeColumn,
+.priceColumn,
+.actionColumn {
+  flex: 1;
+  text-align: center;
+}
+
+/* Add some custom width to each column */
+.idColumn {
+  flex-basis: 10%;
+}
+
+
+/* Added by akanksha on 19-10-2024, Reason : to add serial no column */
+.serialColumn {
+  flex-basis: 10%;
+}
+/* end by akanksha on 19-10-2024, Reason : to add serial no column */
+
+.numberColumn {
+  flex-basis: 20%;
+}
+
+.typeColumn {
+  flex-basis: 20%;
+}
+
+.priceColumn {
+  flex-basis: 20%;
+}
+
+.actionColumn {
+  flex-basis: 10%;
+  display: flex;
+  gap: 1%;
+  justify-content: center;
+}
+
+.editButton {
+  width: 20%;
+  background-color: rgb(132, 255, 132);
+  border-radius: 3px;
+  font-size: large;
+  /* & :hover {
+    background-color: #0f2076;
+  } */
+  cursor: pointer;
+}
+.editButton :hover {
+  background-color: #0f2076;
+  /* width: 30%; */
+  /* font-size: large; */
+}
+
+.deleteButton {
+  width: 20%;
+  background-color: rgb(255, 98, 98);
+  border-radius: 3px;
+  font-size: large;
+  cursor: pointer;
+}
+
+/* .columnButtons{
+  display: flex;
+  gap: 1%;
+} */
+/* @media (max-width: 768px) {
+  .table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  th,
+  td {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  th {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+} */
+
+.bodyContainer {
+  /* display: flex; */
+  width: 100%;
+}
+
+.formContainer {
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  /* justify-content: space-around; */
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  /* Added by - Ashlekh on 04-10-2024
+  Reason - To add gap in room details form */
+  /* Commented by Om Shrivastava on 26-10-2024 */
+  /* column-gap: 3%; */
+  gap: 40px;
+  /* End of code - Ashlekh on 04-10-2024
+  Reason - To add gap in room details form */
+}
+
+.createButton {
+  width: fit-content;
+  background-color: #4965f9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 5px;
+  margin-bottom: 1%;
+}
+
+.createButton:hover {
+  background-color: #0f2076;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.inputPair {
+  display: flex;
+  padding: 6px;
+  /* Commented by - Ashlekh on 04-10-2024
+  Reason - To handle positioning of input fields in room details form */
+  /* width: 22%; */
+  /* End of comment - Ashlekh on 04-10-2024
+  Reason - To handle positioning of input fields in room details form */
+  /* flex-direction: column; */
+}
+
+.inputError {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-bottom: 1.5%;
+  display: flex;
+  flex-direction: row-reverse;
+  /* margin-left: 8px; */
+}
+
+.mandatoryField {
+  color: var(--mandatory-field-color);
+  margin-right: var(--mandatory-field-margin-right);
+}
+
+.optionalField {
+  visibility: var(--optional-field-visibility);
+}
+
+.labelContainer {
+  font-size: 16px;
+  font-size: var(--form-label-font-size);
+  font-family: sans-serif;
+  align-items: center;
+  display: flex;
+}
+/* Added by - Ashlekh on 04-10-2024
+Reason - For styling of room variety */
+.roomVarietyLabel{
+  /* width: 65%; */
+  width: 40%;
+}
+/* End of code - Ashlekh on 04-10-2024
+Reason - For styling of room variety */
+
+.inputContainer {
+  height: 12px;
+  width: 90%;
+  border-radius: 3px;
+  padding: 5px 5px;
+  /**
+  * Commented by - Ashish Dewangan on 07-09-2024
+  * Reason - To align error messages with text box
+  */
+  /* margin-left: 11px; */
+  /**
+  * End of comment by - Ashish Dewangan on 07-09-2024
+  * Reason - To align error messages with text box
+  */
+  border: none;
+  background-color: white;
+  height: 18px;
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+  border: var(--input-border-color);
+}
+
+.selectRoomTypeContainer {
+  /* Code changed by - Ashlekh on 04-10-2024
+  Reason - To handle input box size */
+  /* width: 43.5%; */
+  width: 53%;
+  /* End of code - Ashlekh on 04-10-2024
+  Reason - To handle input box size */
+  border-radius: 3px;
+  padding: 5px 5px;
+  border: var(--input-box-border);
+  margin-left: 8px;
+  border: none;
+  border: 1px solid #cbcaca;
+  background-color: white;
+  border-radius: 3px !important;
+  margin-left: 10px !important;
+  background-color: white !important;
+  width: 65%;
+}
+
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.inputBox {
+  width: 100%;
+  padding: 6px;
+  margin-top: 5px;
+}
+
+.submitBtn,
+.closeBtn {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.submitBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+.closeBtn {
+  background-color: #dc3545;
+  color: white;
+}

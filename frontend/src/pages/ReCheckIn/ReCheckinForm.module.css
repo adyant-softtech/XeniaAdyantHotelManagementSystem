@@ -1,0 +1,1375 @@
+/**Code Addition by Tejasve Gupta on 1-06-2024
+Reason - Whole style asked to change*/
+.pageFrame {
+  margin-top: var(--page-margin-top);
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  /* background-image: url("D:\Hotel Management\frontend\src\assets\hm.jpg"); */
+  background-size: cover;
+  /* height: 98vh; */
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  /**Code Modification by Tejasve Gupta on 16-06-2024
+            Reason - Style adjusted*/
+  background: linear-gradient(to bottom right, #f3f3f3, #ffffff);
+  /**End of Code Modification by Tejasve Gupta on 16-06-2024
+            Reason - Style adjusted*/
+  align-items: center;
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  min-height: var(--page-min-height);
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  height: auto;
+}
+
+/**Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+.coloredBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/**End of Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+.pageContainer {
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+  /* background-image: url(D:Hotel Managementrontendsrc ssetsheck-In.jpg);  */
+  /* filter: blur(1px); */
+  background-size: cover;
+  background-position: center;
+  /* padding-bottom: var(--page-margin-bottom); */
+  margin-top: 3%;
+  width: 90%;
+  border: 1px solid #ececec;
+  background: linear-gradient(to bottom right, #f9f9f9, #f0f8ff);
+  display: flex;
+  border-radius: 3px;
+  /* height: 70%; */
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
+  /* overflow: hidden; */
+  margin-bottom: 10px;
+}
+
+/**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+
+/**Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted for Title*/
+.checkinTitle {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  /* font-size: var(--page-title-font-size); */
+  font-family: var(--page-title-font-family);
+}
+
+/**End of Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted for Title*/
+.form {
+  /* height: 80vh; */
+  display: flex;
+  flex-direction: column;
+  /* z-index: 3; */
+  /* border-radius: 5%; */
+  /* border: 1px solid black; */
+  /* padding: 0.5%; */
+  align-items: center;
+  /* height: 70vh; */
+  /* overflow-y: scroll; */
+  /**Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+  width: 100%;
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  /* margin-top: 10px; */
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  /**End of Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+}
+
+.secionHeading {
+  /* margin-left: 5%;  */
+  font-weight: bold;
+  width: 100%;
+}
+
+.formContainer {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-evenly;
+  /* Code Added by Tejasve Gupta */
+  /* text-shadow: 5px 5px 5px rgb(0 0 0 / 50%); */
+  /* z-index: 2; */
+  /* border: 1px solid red; */
+  /* margin: 1%; */
+  width: 100%;
+  /* justify-content: center; */
+
+  /* gap: 1%; */
+}
+
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  /* margin: 1%; */
+  /**Code Commentede by Tejasve Gupta on 06-06-2024*/
+  /* width: 25%; */
+}
+
+/**Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+.personalDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Code Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  width: 98%;
+  /* End of Code Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+}
+
+/**End of Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+
+.nameContainer,
+.contactContainer,
+.addressContainer,
+.charges,
+.discount,
+.gstTotal,
+.advDue,
+.idContainer {
+  /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  /* display: flex; */
+  /**Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+  /* justify-content: flex-start; */
+  /* gap: 60px; */
+  /* width: 100%; */
+
+  display: flex;
+  justify-content: flex-start;
+  gap: 60px;
+  width: 100%;
+  /* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+}
+
+/* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+.arrival,
+.departure {
+  /*End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  display: flex;
+  /**Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+  justify-content: flex-start;
+  gap: 30px;
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  width: 98%;
+  /* End of Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+
+}
+
+/**End of Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+
+.dateTimeInput {
+  display: flex;
+  /* gap: 5px; */
+}
+
+/**Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+.dateTimeContainer {
+  /* border-radius: 3px; */
+  /* border: 1px solid #ececec; */
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px;
+  /* height: -webkit-fill-available;
+  /* height: -webkit-fill-available; */
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*End of Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  display: flex;
+  justify-content: center;
+  /* End of Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+}
+
+/**Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+.dateTime {
+  color: black;
+  /* width: 96%; */
+  display: flex;
+  /* display: none; */
+  margin-right: 40px;
+  margin-left: 40px;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+}
+
+.paymentDetails,
+.billingSummary,
+.availability {
+  /* border-radius: 3px; */
+  /* border: 1px solid #ececec; */
+  background-color: rgb(255, 255, 255);
+  /* margin-top: 10px; */
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px;
+  /* height: 20vh; */
+  width: 100%;
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*End of Code Addition by Tejasve Gupta on 22-07-2024
+      Reason - Asked by tester */
+}
+
+/**End of Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+
+/**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+
+.paymentForm {
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  /* margin: 1%; */
+  width: 100%;
+  /* row-gap: 5px; */
+}
+
+.paymentContainer {
+  display: flex;
+  /**Code added by Tejasve Gupta on 02-06-2024*/
+  padding: 2px;
+  /**End of Code added by Tejasve Gupta on 02-06-2024*/
+  /* flex-direction: column; */
+}
+
+.roomContainer {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  /* margin: 1%; */
+  width: 100%;
+}
+
+.roomButton {
+  /* Any additional styles for the room button */
+  border: 1px solid black;
+  padding: 2px;
+  /* margin: 2px; */
+
+  /* width: "8%", */
+  /* borderRadius: "50px", */
+  color: white;
+  font-weight: bold;
+
+  font-size: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 60px;
+  border-radius: 10px;
+}
+
+.buttonText {
+  /* Center the text within the button */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Code Modification by Tejasve Gupta on 19-07-2024
+Reason - Font Weight maximised */
+.roomNumber {
+  font-size: 20px;
+  font-weight: bolder;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.roomType {
+  font-size: 10px;
+  color: #000000;
+  font-weight: bolder;
+}
+
+/*End of Code Modification by Tejasve Gupta on 19-07-2024
+Reason - Font Weight maximised */
+
+.inputPair {
+  /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  /* display: flex; */
+  /* margin: 1%; */
+  /* padding: 2px; */
+  /* width: 100%; */
+  /* width: 24%; */
+  /* flex-direction: column; */
+  /* border: 1px solid red; */
+  display: flex;
+  /* margin: 1%; */
+  padding: 6px;
+  /* width: 100%; */
+  width: 17%;
+  flex-direction: column;
+  /* border: 1px solid red; */
+}
+
+/* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+
+.ImageInputPair {
+  display: flex;
+  /* margin: 1%; */
+  padding: 2px;
+  /* width: 100%; */
+  width: 100%;
+  flex-direction: column;
+
+}
+
+.days {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  /* gap: 30px; */
+}
+
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+.starInput {
+  /* display: flex;
+  width: 50%; */
+}
+
+.labelContainer {
+  /* //Code modification by Tejasve Gupta on 14-06-2024
+  					// Reason - style changed as suggested by tester */
+  /* width: 90%; */
+  /* //End of Code modification by Tejasve Gupta on 14-06-2024
+  					// Reason - style changed as suggested by tester */
+}
+
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+.labelContainer1 {
+  width: 100%;
+  display: flex;
+}
+
+/**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+
+
+/* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+
+/* .AddressInputContainer {
+  width: 90%;
+  border-radius: 3px;
+  padding: 5px 5px;
+  border: none;
+  background-color: #f8f8f8;
+  margin-left: 8px;
+
+} */
+/*End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+
+.inputContainer,
+.AddressInputContainer {
+  /* margin-bottom: 2%; */
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+  /* width: -moz-fit-content; */
+  /**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  /* margin-bottom: 2%; */
+  /* width: -moz-fit-content; */
+  /* width: fit-content; */
+  width: 90%;
+  /* border: none; */
+  border-radius: 3px;
+  padding: 5px 5px;
+  /* outline: none; */
+  border: none;
+  background-color: #f8f8f8;
+  /* border: var(--input-box-border); */
+
+  /* width: fit-content; */
+  /* border: none; */
+  /* border-radius: 3px; */
+  /* padding: 5px 5px; */
+  /* outline: none; */
+
+  /**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+  margin-left: 8px;
+
+}
+
+.inputContainer::placeholder {}
+
+.selectInputContainer {
+  width: fit-content;
+  border-radius: 3px;
+  padding: 5px 5px;
+  /* padding: 2px 3px; */
+  border: none;
+  background-color: #f8f8f8;
+  border: var(--input-box-border);
+  margin-left: 8px;
+  border: none;
+
+}
+
+.ZipInputContainer {
+  width: 70%;
+  border-radius: 3px;
+  padding: 5px 5px;
+  /* padding: 2px 3px; */
+  border: none;
+  background-color: #f8f8f8;
+  border: var(--input-box-border);
+  margin-left: 8px;
+  border: none;
+}
+
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+.inputContainer1 {
+  width: 96%;
+  border-radius: 3px;
+  padding: 5px 5px;
+  /* padding: 2px 3px; */
+  border: none;
+  background-color: #f8f8f8;
+  border: var(--input-box-border);
+  margin-left: 8px;
+  border: none;
+}
+
+/**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+/* Code Addition by Tejasve Gupta on 22-07-2024
+Reason - Style Updation as suggested by tester */
+.inputContainer::placeholder,
+.AddressInputContainer::placeholder,
+.ZipInputContainer::placeholder,
+.inputContainer1::placeholder {
+  color: rgba(109, 109, 109, 0.5);
+  /* Adjust color as needed */
+  filter: blur(0.0px);
+  /* Adjust the blur radius as needed */
+  font-size: 11px;
+}
+
+/*End of Code Addition by Tejasve Gupta on 22-07-2024
+Reason - Style Updation as suggested by tester */
+
+
+
+/* .idContainer {
+  display: flex;
+  flex-direction: column;
+} */
+
+.idTypeImage {
+  display: flex;
+}
+
+.inputError {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+/* .starLabelColon {
+  width: 50%;
+  display: flex;
+} */
+.starLabelColonAddress {
+  /* width: 50%; */
+  display: flex;
+}
+
+.starLabelColonImage {
+  width: 50%;
+  display: flex;
+}
+
+/**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+.mandatoryField {
+  color: red;
+}
+
+.optionalField {
+  visibility: hidden;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-bottom: 1.5%;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-left: 8px;
+}
+
+.roomsTable {
+  width: 100%;
+  border-collapse: collapse;
+  /* margin-top: 10px; */
+}
+
+.roomsTable th,
+.roomsTable td {
+  border: 1px solid #ececec;
+  padding: 2px;
+  text-align: center;
+  font-size: small;
+}
+
+.validationError {
+  color: red;
+  font-size: 0.9em;
+}
+
+.roomsTable th {
+  background-color: #f2f2f2;
+}
+
+.roomsTable td button {
+  padding: 5px 5px;
+  border: none;
+  background-color: #ffffff;
+  color: red;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.roomsTable td button:hover {
+  color: orange;
+}
+
+.selectedRoomsContainer h6 {
+  margin-top: 1px;
+}
+
+/* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+button[type="submit"] {
+  /* background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer; */
+  /* width: 100%; */
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  /* width: 20%; */
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  /* align-self: center;
+  margin-top: 5px;
+  margin-bottom: 1%; */
+}
+
+/* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+/* button[type="submit"]:hover {
+  background-color: #45a049;
+} */
+
+/**Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+.guestContainer {
+  /* border-radius: 3px; */
+  /* border: 1px solid #ececec; */
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px;
+
+  /**Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  width: 100%;
+  /* Code Addition by Tejasve Gupta on 21-07-2024
+    Reason - Style Adjustment */
+  display: flex;
+  justify-content: center;
+  /* End of Code Addition by Tejasve Gupta on 21-07-2024
+    Reason - Style Adjustment */
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*End of Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+}
+
+/**End of Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+/**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+/* Code Addition by Tejasve Gupta on 04-06-2024
+    Reason -  Creation of Room Card Status */
+.roomStatusContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rightContainer {
+  /* width: 39%; */
+  width: 34%;
+  /* row-gap: 5px; */
+  display: flex;
+  flex-direction: column;
+  background-color: aliceblue;
+}
+
+.inOutPair,
+.amountPair {
+  display: flex;
+  justify-content: space-around;
+}
+
+.amountSummary {
+  display: flex;
+  flex-direction: column;
+}
+
+.roomCard {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  width: 200px;
+}
+
+/* End of Code Addition by Tejasve Gupta on 04-06-2024
+    Reason -  Creation of Room Card Status */
+
+/**Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+/**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style Added for Room Details Container*/
+.roomDetails {
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  /* padding: 2px; */
+  height: auto;
+  max-height: 25vh;
+  overflow-y: auto;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  /**Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  /* margin-top: 10px; */
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px;
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*End of Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+}
+
+/**End of Code Addition by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+/**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style Added for Room Details Container*/
+.paymentRoomContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /**Code Commented by Tejasve Gupta on 06-06-2024
+  Reason - width adjustment*/
+
+  /* width: 50%; */
+  /* Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /*End of Code Addition by Tejasve Gupta on 22-07-2024
+    Reason - Asked by tester */
+}
+
+.availability {
+  /* //Code modification by Tejasve Gupta on 14-06-2024
+  					// Reason - style changed as suggested by tester */
+  /* border: 1px solid #ececec;
+  width: 100%;
+  border-radius: 3px;
+
+  padding: 0.5%;
+  background-color: rgb(255, 255, 255);*/
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 3px; 
+  display: flex;
+  flex-direction: column;
+  /* //End of Code modification by Tejasve Gupta on 14-06-2024
+  					// Reason - style changed as suggested by tester */
+}
+
+.availabilityContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /**Code Commented by Tejasve Gupta on 06-06-2024
+  Reason - width adjustment*/
+  width: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  width: 100%;
+  /* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+}
+
+
+/* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+.submitButton {
+  width: fit-content;
+  background-color: #4965f9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* width: 100%; */
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  /* width: 20%; */
+  /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  align-self: center;
+  margin-top: 5px;
+  margin-bottom: 1%;
+}
+
+/* .submitButton :hover {
+  background-color: #45a049;
+} */
+
+/* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+/**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - width adjustment*/
+/* .dateContainer {
+  width: 99%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+} */
+
+.roomNumberTypeButtons {
+  display: flex;
+  justify-content: center;
+}
+
+/**End of Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - width adjustment*/
+
+.personsContainer {
+  display: flex;
+  /* flex-direction: row-reverse; */
+  /* justify-content: flex-end; */
+  width: 100%;
+  gap: 60px;
+}
+
+/**End of Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+/**Code Modification by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+/**Code modification by Tejasve Gupta on 27-06-2024
+Reason - modal Created*/
+/* .modal{
+  background-color: #ffebdaee
+} */
+
+.modalFields {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalLabel {
+  display: flex;
+  width: 30%;
+}
+
+.modalInputPair {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modalInput {
+  width: 60%;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.checkinTitle {
+  width: 100%;
+  background-color: #d9d9d9;
+}
+
+/**End of Code modification by Tejasve Gupta on 27-06-2024
+Reason - modal Created*/
+/**Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+.inputContainer::placeholder {
+  font-weight: lighter;
+}
+
+/**End of Code Modification By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+@media screen and (max-width: 720px) {
+
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    /* flex-direction: column; */
+  }
+
+  .pageContainer {
+    width: auto;
+  }
+
+  .inputPair {
+    display: flex;
+    /* flex-direction: column; */
+  }
+
+  .form {
+    /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+    /* overflow-y: scroll; */
+    /* height: 76vh; */
+    height: 89vh;
+    /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+    /* margin-top: 60px; */
+  }
+
+  .inputError {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .inputContainer {
+    width: 90%;
+    /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+    /* height: 30px; */
+  }
+
+  /* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  /**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+  .inputContainer1 {
+    width: 90%;
+    height: 30px;
+  }
+
+  /**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+  .idTypeImage {
+    flex-direction: column;
+  }
+
+  .leftContainer,
+  .paymentForm,
+  .roomContainer {
+    width: 100%;
+  }
+
+  .pageFrame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /**Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+    height: 89vh;
+    overflow: auto;
+    /**End of Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+    /**Code Commented by Tejasve Gupta on 06-06-2024
+  Reason - width adjustment*/
+    /* background-color: #d43f3f; */
+  }
+}
+
+/**Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+.leftContainer {
+  display: flex;
+  align-items: center;
+  /* width: 55%; */
+  width: 60%;
+
+  /* row-gap: 5px; */
+  background-color: aliceblue;
+}
+
+/**End of Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+/**End of Code Addition by Tejasve Gupta on 1-06-2024
+Reason - Whole style asked to change*/
+/**Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+
+/**Code Modification by Tejasve Gupta on 06-06-2024
+  Reason - styles adjustment*/
+@media screen and (max-width: 1000px) {
+  .formContainer {
+    display: flex;
+    /* flex-direction: column-reverse; */
+    /**Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+    flex-direction: column;
+    /**End of Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .rightContainer {
+    display: flex;
+    /* flex-direction: column; */
+  }
+
+  /**End of Code modifition by Tejasve Gupta on 06-06-2024
+  Reason - styles adjustment*/
+  .leftContainer {
+    /* flex-direction: column; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 100% !important; */
+    /* margin-top: 5px; */
+    /**Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+    width: 100%;
+    /**End of Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+  }
+
+  .guestContainer {
+    width: 100%;
+    /* margin: 1px; */
+  }
+
+  /**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Styles adjustment*/
+  .rightContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    align-content: center;
+    flex-wrap: wrap;
+  }
+
+  .paymentRoomContainer {
+    width: 80%;
+    flex-direction: column-reverse;
+  }
+
+  /**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - styles adjustment*/
+  .availabilityContainer {
+    /**Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+
+    /* width: 80vw; */
+    /**End of Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .availability {
+    width: 100%;
+  }
+
+  button[type="submit"] {
+    /* width: 10%; */
+  }
+}
+
+/**End of Code addition by Tejasve Gupta on 05-06-2024
+           * Reason - Change in Styles
+           */
+
+/**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Styles adjustment as told by manager*/
+
+.Status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Status div {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+/* Code modification by Tejasve Gupta on 14-06-2024
+  					// Reason - style changed as suggested by tester */
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 3px;
+  /* End of Code modification by Tejasve Gupta on 14-06-2024
+  					// Reason - style changed as suggested by tester */
+}
+
+.circle_red {
+  /**Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+  background-color: red;
+}
+
+.circle_green {
+  background-color: green;
+  /**End of Code Modification by Tejasve Gupta on 15-06-2024
+            Reason - Style adjusted*/
+}
+
+.circle_yellow {
+  background-color: #e1ad01;
+}
+
+/**End of Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Styles adjustment as told by manager*/
+
+
+
+/**Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Styles adjustment as told by manager*/
+
+@media screen and (max-width: 1000px) {
+
+  .nameContainer,
+  .contactContainer,
+  .addressContainer,
+  .charges,
+  .discount,
+  .gstTotal,
+  .advDue,
+  .idContainer,
+  /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  .arrival,
+  .departure,
+  .inOutPair {
+
+    gap: 0px;
+  }
+
+  /* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+
+  .coloredBackground,
+  .pageContainer {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  /**Code Modification by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  .pageContainer {
+    height: 90%;
+  }
+
+  /**End of Code Modification by Tejave Gupta on 20-06-2024
+            reason - style adjusted*/
+  /* .formContainer {
+    gap: 1%;
+  } */
+  .rightContainer {
+    gap: 1%;
+
+    /**Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /**End of Code Modification by Tejasve Gupta on 19-07-2024
+  Reason - styles adjustment*/
+  }
+
+  .radioButton {
+    display: flex;
+    /* flex-direction: column; */
+    /* flex-direction: row; */
+  }
+
+  /* .dateContainer {
+    width: auto; */
+  /**Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  /* } */
+
+  /* Code Modification by Tejasve Gupta on 19-07-2024
+Reason - Font Weight maximised */
+
+  .paymentContainer {
+    justify-content: space-evenly;
+  }
+
+  /* End of Code Modification by Tejasve Gupta on 19-07-2024
+Reason - Font Weight maximised */
+  .pageContainer {
+    overflow-y: scroll;
+    /**End of Code modification by Tejasve Gupta on 13-06-2024
+Reason - style fix as suggested by tester
+*/
+  }
+}
+
+/**End of Code Addition by Tejasve Gupta on 06-06-2024
+  Reason - Styles adjustment as told by manager*/
+
+/**Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+@media screen and (max-width: 360px) {
+  .inputContainer {
+    width: 70%;
+  }
+
+  .inputContainer1 {
+    width: 70%;
+    /* height: 30px; */
+  }
+
+  .availabilityContainer {
+    width: 96vw;
+  }
+
+  .datetContainer {
+    width: 96vw;
+  }
+
+  .paymentRoomContainer {
+    width: 96vw;
+    flex-direction: column-reverse;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .guestContainer {
+    width: 96vw;
+    /* margin: 1px; */
+
+  }
+
+  .inputPair {
+    width: 100%;
+  }
+
+  .starInput {
+    width: 95%;
+  }
+
+  .radioButton {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /**Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */
+  /* .inputContainer {
+    width: 70%;
+  }
+  .inputContainer1 {
+    width: 90%;
+    height: 30px;
+  }
+
+  .availabilityContainer {
+    width: 96vw;
+  } */
+
+  /* .dateContainer {
+    width: 96vw;
+  } */
+
+  /* .paymentRoomContainer {
+    width: 96vw;
+    flex-direction: column-reverse;
+    display: flex;
+    align-items: flex-start;
+  } */
+  /* .guestContainer {
+    width: 96vw;
+  }
+  .inputPair {
+    width: 100%;
+  }
+  .starInput {
+    width: 95%;
+  }
+  .radioButton {
+    display: flex;
+    flex-direction: row;
+  }
+  .labelContainer1 {
+    width: 79%;
+  }
+  .starLabelColon {
+    width: 92%;
+  }
+
+  .starLabelColonAddress {
+    width: 68%;
+  }
+  .starLabelColonImage {
+    width: 48%;
+    display: flex;
+  }
+  .datesContainer{
+    display: flex;
+    flex-direction: column;
+  } */
+
+
+  .nameContainer,
+  .contactContainer,
+  .addressContainer,
+  /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  .arrival,
+  .departure,
+  /*End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  .charges,
+  .discount,
+  .gstTotal,
+  .advDue {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .idContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+  .personsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0%
+      /* justify-content: flex-end; */
+  }
+
+  .inputPair {
+    width: 100%;
+  }
+}
+
+/**End of Code Addition and Modification by Tejasve Gupta on 18-06-2024
+Reason - Styles updated in CSS file*/
+
+
+@media screen and (max-width: 670px) {
+
+  .arrival,
+  .departure {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* End of Code commented and Addition by Tejasve Gupta on 21-07-2024
+  Reason - Style Adjustments */
+
+/**End of Code Commented and addition By Tejasve Gupta on 20-07-2024
+                  Reason - Style Updated for responsive  */

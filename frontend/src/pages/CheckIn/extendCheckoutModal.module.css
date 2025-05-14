@@ -1,0 +1,103 @@
+/* Creation by Tejasve Gupta on 05-07-2024 */
+
+
+/* Code Modification by Tejasve Gupta on 29-07-2024
+Reason - Style Adjustment */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 1px;
+  z-index: 1000;
+  border-radius: 2px;
+  width: 30%;
+}
+
+/*End of Code Modification by Tejasve Gupta on 29-07-2024
+Reason - Style Adjustment */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+/* Code Modification by Tejasve Gupta on 29-07-2024
+Reason - Style Adjustment */
+.header {
+  font-weight: 700;
+  color: #000000;
+  /* margin-bottom: 15px; */
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+  background-color: #d3d5da;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  padding-bottom: 3px;
+}
+
+/*End of Code Modification by Tejasve Gupta on 29-07-2024
+Reason - Style Adjustment */
+
+.section {
+  /* margin-bottom: 20px; */
+  margin: 22px;
+}
+
+.inputPair {
+  display: flex;
+  justify-content: left;
+  /* flex-direction: column; */
+  margin-top: 10px;
+  align-items: center;
+}
+
+.inputPair label {
+  font-weight: 600;
+}
+
+.inputPair input {
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 1em;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #38ae29;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-bottom: 7px;
+}
+
+.button:hover {
+  background-color: #25791c;
+}
+
+.colon {
+  margin-left: 5%;
+  margin-right: 5%;
+
+}
+
+.labelContainer {
+  width: 35%
+}
