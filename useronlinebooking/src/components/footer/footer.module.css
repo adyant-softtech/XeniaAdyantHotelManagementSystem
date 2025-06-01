@@ -1,0 +1,35 @@
+.footer {
+  background-color: #00795f;
+  color: white;
+  text-align: center;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.footer nav {
+  margin-bottom: 5px;
+}
+
+.footerLink,
+.footerLink:visited,
+.footerLink:active {
+  color: white;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}

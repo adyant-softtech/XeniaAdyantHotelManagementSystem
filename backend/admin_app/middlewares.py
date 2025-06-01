@@ -22,6 +22,11 @@ class MutitenantMiddleware(BaseTenantMiddleware):
         self.logger.info("hostname -----"+ hostname)
 
         path = request.path
+        
+        # if "public" in path:
+        #     self.logger.info("Matched '/public/' in path. Routing to public schema.")
+        #     from tenant_schemas.utils import get_public_schema_name
+        #     return Tenant.objects.get(schema_name=get_public_schema_name())
 
         if "media" in path:
             from tenant_schemas.utils import get_public_schema_name
@@ -61,8 +66,9 @@ class MutitenantMiddleware(BaseTenantMiddleware):
         #         return Tenant.objects.get(schema_name=schemaName)
 
 
-        if "site" in path:
+        if "filter_room_city" in path or "site" in path:
             schemaName = "public"
+            self.logger.info("Matched '/public/' or 'site' in path. Routing to public schema.")
             return Tenant.objects.get(schema_name=schemaName)
         else:
             if "/api/v1/" in path:

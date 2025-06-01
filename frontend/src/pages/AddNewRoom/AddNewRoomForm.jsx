@@ -3,6 +3,9 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import {
+  Checkbox,
+} from "@mui/material";
+import {
   postRooms,
   getRoomTypes,
   updateRoomDetail,
@@ -10,7 +13,10 @@ import {
   postRoomTypeApi,
   getRoomTypesApi,
   postRoomVarietyApi,
+  postAmenityRoomApi,
   getRoomVarietyApi,
+  getSettingsApi,
+  getAmenityData,
 } from "../../Api/services";
 import { FaPlus } from "react-icons/fa";
 import { Pagination } from "@mui/material";
@@ -38,6 +44,7 @@ import notificationObject from "../../components/Widgets/Notification/Notificati
 const AddNewRoomForm = () => {
   
   const { tenant } = useContext(GlobalContext);
+  const [setting, setSetting] = useState(null);
   const [formData, setFormData] = useState({
     room_type: "", // Initially empty
     variety: "",
@@ -53,12 +60,19 @@ const AddNewRoomForm = () => {
      * End of addition by - Ashish Dewangan on 04-09-2024
      * Reason - implemented active/inactive feature
      */
+    setting: "",  
   });
 
   const [errors, setErrors] = useState({});
   // const { tenant } = useContext(GlobalContext);
   const [isModalOpen, setModalOpen] = useState(false);
   const [newType, setNewType] = useState("");
+
+const [amenityData, setAmenityData] = useState('');
+    // const [selectedAmenities, setSelectedAmenities] = useState({});
+    // const [selectedAmenities, setSelectedAmenities] = useState(new Set());
+    const [selectedAmenities, setSelectedAmenities] = useState([]);
+
 
   const [varietyModalOpen, setVarietyModalOpen] = useState(false);
   const [newVariety, setNewVariety] = useState("");
@@ -84,6 +98,29 @@ const AddNewRoomForm = () => {
   }
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
+  const [hotelInfo, setHotelInfo] = useState(''); 
+
+  useEffect(() =>{
+      getAmenityDetails();
+  },[]);
+  const getAmenityDetails = async () => {
+      
+      try {
+          const response = await getAmenityData();
+          setAmenityData(response);
+      } catch (error) {
+          console.error("Error fetching amenities:", error);
+          
+      } 
+  };
+
+   const handleCheckboxChange = (id) => {
+    setSelectedAmenity(prev => 
+      prev.includes(id) 
+      ? prev.filter(item => item !== id) 
+      : [...prev, id]
+    );
+  };
   const handleBackClick = () => {
     setIsPopupVisible(true);
   };
@@ -124,38 +161,54 @@ const AddNewRoomForm = () => {
   
 
   // Fetch room types and variety from backend
-  useEffect(() => {
-    const fetchRoomTypes = async () => {
-      const access = localStorage.getItem("access");
-      try {
-        const data = await getRoomTypes(access, tenant);
-        setRoomTypes(data.room_types || []);
-        setRoomVariety(data.variety || []);
-        setAmenities(data.amenities || []);
-        /**
-         * Added by by - Ashish Dewangan on 04-09-2024
-         * Reason - To show room list with active/inactive data
-         */
-        setRoomData(data.room_list);
-        /**
-         * End of addition by by - Ashish Dewangan on 04-09-2024
-         * Reason - To show room list with active/inactive data
-         */
+ useEffect(() => {
+  if (!tenant) return;
 
-        if (data.room_types?.length > 0) {
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            room_type: data.room_types[0].label || "",
-            variety: data.variety[0].label || "",
-          }));
-        }
-      } catch (error) {
-        console.error("Error fetching room types:", error);
+  const fetchRoomTypes = async () => {
+    const access = localStorage.getItem("access");
+    try {
+      const data = await getRoomTypes(access, tenant);
+      setRoomTypes(data.room_types || []);
+      setRoomVariety(data.variety || []);
+      // setAmenities(data.amenities || []);
+      setRoomData(data.room_list);
+
+      if (data.room_types?.length > 0) {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          room_type: data.room_types[0].label || "",
+          variety: data.variety[0].label || "",
+        }));
       }
-    };
+    } catch (error) {
+      console.error("Error fetching room types:", error);
+    }
+  };
 
-    fetchRoomTypes();
-  }, []);
+  fetchRoomTypes();
+}, [tenant]);
+
+
+useEffect(() => {
+  const fetchHotelInfo = async () => {
+    const access = localStorage.getItem("access");
+    if (!tenant) return;
+    try {
+      const settingsData = await getSettingsApi(access, tenant);
+      if (settingsData?.id) {
+        setSetting(settingsData.id);
+      }
+    } catch (error) {
+      console.error("Error fetching hotel info:", error);
+    }
+  };
+
+  fetchHotelInfo();
+}, [tenant]);
+
+
+
+
 
   const handlePostRoomType = async (e) => {
     e.preventDefault();
@@ -266,6 +319,7 @@ const AddNewRoomForm = () => {
       price: parseFloat(formData.price),
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      amenities: selectedAmenities,
     };
 
     try {
@@ -285,6 +339,8 @@ const AddNewRoomForm = () => {
           id: null,
           is_active: true,
         });
+        setSelectedAmenities([]);
+
         /**
          * End of addition by - Ashish Dewangan on 07-09-2024
          * Reason - To reset form after submit
@@ -307,6 +363,8 @@ const AddNewRoomForm = () => {
             id: null, // Reset ID for new entries
             is_active: true,
           });
+          
+          setSelectedAmenities([]);
           /**
            * End of addition by - Ashish Dewangan on 07-09-2024
            * Reason - To reset form after submit
@@ -360,19 +418,26 @@ const AddNewRoomForm = () => {
     setFormData({
       room_type: room.room_type,
       variety: room.variety,
-      price: room.room_price,
-      number: room.room_number,
+      price: room.room_price ?? room.price ?? "",
+      number: room.room_number ?? room.number ?? "",
       id: room.id, // Set the room ID for editing
       /**
        * Added by - Ashish Dewangan on 04-09-2024
        * Reason - Implemented active/inactive feature
        */
       is_active: room.is_active,
+      amenities: selectedAmenities,
       /**
        * End of addition by - Ashish Dewangan on 04-09-2024
        * Reason - Implemented active/inactive feature
        */
     });
+    if (room.amenities) {
+      const amenitiesList = room.amenities.split(",").map(item => item.trim());
+      setSelectedAmenities(amenitiesList);
+    } else {
+      setSelectedAmenities([]);
+    }
   };
 
   const handleDelete = async (roomId) => {
@@ -407,6 +472,8 @@ const AddNewRoomForm = () => {
   };
   // **Pagination State** end by akanksha on 19th oct
 
+
+
   return (
     <div className={roomStyle.parentContainer}>
       <div className={roomStyle.header}>
@@ -429,177 +496,199 @@ const AddNewRoomForm = () => {
       {/* End of code modification and addition by Om Shrivastava on 03-01-2025
             Reason : Add back icon  */}
       <div className={roomStyle.bodyContainer}>
-        <form className={roomStyle.formContainer} onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className={roomStyle.form}>
-            <div className={roomStyle.inputPair}>
-              <label
-                className={roomStyle.labelContainer}
-                style={{ width: "100px" }}
-              >
-                <span className={roomStyle.mandatoryField}>* </span>Room Type
-              </label>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <select
-                  className={roomStyle.selectRoomTypeContainer}
-                  name="room_type"
-                  value={formData.room_type}
-                  onChange={handleChange}
-                >
-                  {roomTypes.map((type, index) => (
-                    <option key={index} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))}
-                </select>
-                <FaPlus
-                  style={{ cursor: "pointer", color: "#007bff" }}
-                  onClick={() => setModalOpen(true)}
-                />
-              </div>
-            </div>
-            {isModalOpen && (
-              <div className={roomStyle.modalOverlay}>
-                <div className={roomStyle.modalContent}>
-                  <h3>Add Room Type</h3>
-                  <label>Type Name:</label>
-                  <input
-                    type="text"
-                    value={newType}
-                    onChange={(e) => setNewType(e.target.value)}
-                    className={roomStyle.inputBox}
-                  />
-                  <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-                    <button onClick={handlePostRoomType} className={roomStyle.submitBtn}>
-                      Submit
-                    </button>
-                    <button onClick={() => setModalOpen(false)} className={roomStyle.closeBtn}>
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div className={roomStyle.inputPair}>
-              {/* Code changed by - Ashlekh on 04-10-2024
-              Reason - To apply multiple class name for styling */}
-              {/* <label className={roomStyle.labelContainer}> */}
-              <label
-                className={`${roomStyle.labelContainer} ${roomStyle.roomVarietyLabel}`}
-              >
-                {/* End of code - Ashlekh on 04-10-2024
-                Reason - To apply multiple class name for styling */}
-                <span className={roomStyle.mandatoryField}>* </span>Room Variety
-              </label>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <select
-                  className={roomStyle.selectRoomTypeContainer}
-                  name="variety"
-                  value={formData.variety}
-                  onChange={handleChange}
-                  style={{
-                    width: "150px",
-                  }}
-                >
-                  {roomVariety.map((type, index) => (
-                    <option key={index} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))}
-                </select>
-                <FaPlus
-                  style={{ cursor: "pointer", color: "#007bff" }}
-                  onClick={() => setVarietyModalOpen(true)}
-                />
-              </div>
-            </div>
-            {varietyModalOpen && (
-              <div className={roomStyle.modalOverlay}>
-                <div className={roomStyle.modalContent}>
-                  <h3>Add Room Variety</h3>
-                  <label>Variety Name:</label>
-                  <input
-                    type="text"
-                    value={newVariety}
-                    onChange={(e) => setNewVariety(e.target.value)}
-                    className={roomStyle.inputBox}
-                  />
-                  <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-                    <button onClick={handlePostRoomVariety} className={roomStyle.submitBtn}>
-                      Submit
-                    </button>
-                    <button onClick={() => setVarietyModalOpen(false)} className={roomStyle.closeBtn}>
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div className={roomStyle.inputPair}>
-              <label className={roomStyle.labelContainer}>
-                <span className={roomStyle.mandatoryField}>* </span>Price
-              </label>
-              <div className={roomStyle.inputError}>
-                <input
-                  className={roomStyle.inputContainer}
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  step="0.01"
-                />
-                {errors.price && (
-                  <span className={roomStyle.error}>{errors.price}</span>
-                )}
-              </div>
-            </div>
-            <div className={roomStyle.inputPair}>
-              <label className={roomStyle.labelContainer}>
-                <span className={roomStyle.mandatoryField}>* </span>Room Number
-              </label>
-              <div className={roomStyle.inputError}>
-                <input
-                  className={roomStyle.inputContainer}
-                  type="text"
-                  // type="number"
-                  name="number"
-                  value={formData.number}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  // Added by - Ashlekh on 04-10-2024
-                  // Reason - To add max length in room number
-                  maxLength={6}
-                  // End of code - Ashlekh on 04-10-2024
-                  // Reason - To add max length in room number
-                />
-                {errors.number && (
-                  <span className={roomStyle.error}>{errors.number}</span>
-                )}
-              </div>
-            </div>
-            {/**
-             * Added by - Ashish Dewangan on 04-09-2024
-             * Reason - Implemented active/inactive feature
-             */}
+            <div className={roomStyle.subContainer1}>
+              <div className={roomStyle.inputPair}>
+                <label className={roomStyle.labelContainer} >
+                  <span className={roomStyle.mandatoryField}>* </span>Room Type
+                </label>
 
-            <div className={roomStyle.inputPair}>
-              <label className={roomStyle.labelContainer}>Is Active</label>
-              <div className={roomStyle.inputError}>
-                <input
-                  className={roomStyle.inputContainer}
-                  type="checkbox"
-                  name="is_active"
-                  checked={formData.is_active}
-                  onChange={handleChange}
-                />
+                <div className={roomStyle.inputWithIcon}>
+                  <select
+                    className={roomStyle.selectRoomTypeContainer}
+                    name="room_type"
+                    value={formData.room_type}
+                    onChange={handleChange}
+                  >
+                    {roomTypes.map((type, index) => (
+                      <option key={index} value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  <FaPlus
+                    className={roomStyle.addIcon}
+                    onClick={() => setModalOpen(true)}
+                  />
+                </div>
+              </div>
+
+              {isModalOpen && (
+                <div className={roomStyle.modalOverlay}>
+                  <div className={roomStyle.modalContent}>
+                    <h3>Add Room Type</h3>
+                    <label>Type Name:</label>
+                    <input
+                      type="text"
+                      value={newType}
+                      onChange={(e) => setNewType(e.target.value)}
+                      className={roomStyle.inputBox}
+                    />
+                    <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                      <button onClick={handlePostRoomType} className={roomStyle.submitBtn}>
+                        Submit
+                      </button>
+                      <button onClick={() => setModalOpen(false)} className={roomStyle.closeBtn}>
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+                <div className={roomStyle.inputPair}>
+                  <label className={`${roomStyle.labelContainer} `}>
+                    <span className={roomStyle.mandatoryField}>* </span>Room Variety
+                  </label>
+
+                  <div className={roomStyle.inputWithIcon}>
+                    <select
+                      className={roomStyle.selectRoomTypeContainer}
+                      name="variety"
+                      value={formData.variety}
+                      onChange={handleChange}
+                    >
+                      {roomVariety.map((type, index) => (
+                        <option key={index} value={type.value}>
+                          {type.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    <FaPlus
+                      className={roomStyle.addIcon}
+                      onClick={() => setVarietyModalOpen(true)}
+                    />
+                  </div>
+                </div>
+
+              {varietyModalOpen && (
+                <div className={roomStyle.modalOverlay}>
+                  <div className={roomStyle.modalContent}>
+                    <h3>Add Room Variety</h3>
+                    <label>Variety Name:</label>
+                    <input
+                      type="text"
+                      value={newVariety}
+                      onChange={(e) => setNewVariety(e.target.value)}
+                      className={roomStyle.inputBox}
+                    />
+                    <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                      <button onClick={handlePostRoomVariety} className={roomStyle.submitBtn}>
+                        Submit
+                      </button>
+                      <button onClick={() => setVarietyModalOpen(false)} className={roomStyle.closeBtn}>
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+                  <div className={roomStyle.inputPair}>
+                    <label className={roomStyle.labelContainer}>
+                  <span className={roomStyle.mandatoryField}>* </span>Price
+                    </label>
+                <div className={roomStyle.inputError}>
+                    <input
+                    className={roomStyle.inputContainer}
+                      type="number"
+                      name="price"
+                      value={formData.price}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      step="0.01"
+                    />
+                  {errors.price && (
+                    <span className={roomStyle.error}>{errors.price}</span>
+                  )}
+                  </div>
+              </div>
+                  <div className={roomStyle.inputPair}>
+                    <label className={roomStyle.labelContainer}>
+                  <span className={roomStyle.mandatoryField}>* </span>Room Number
+                    </label>
+                <div className={roomStyle.inputError}>
+                    <input
+                    className={roomStyle.inputContainer}
+                      type="text"
+                    // type="number"
+                      name="number"
+                      value={formData.number}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    // Added by - Ashlekh on 04-10-2024
+                    // Reason - To add max length in room number
+                      maxLength={6}
+                    // End of code - Ashlekh on 04-10-2024
+                    // Reason - To add max length in room number
+                    />
+                  {errors.number && (
+                    <span className={roomStyle.error}>{errors.number}</span>
+                  )}
+                </div>
+                  </div>
+              {/**
+               * Added by - Ashish Dewangan on 04-09-2024
+               * Reason - Implemented active/inactive feature
+               */}
+
+                  <div className={roomStyle.inputPair}>
+                    <label className={roomStyle.labelContainer}>Is Active</label>
+                <div className={roomStyle.inputError}>
+                    <input
+                    className={roomStyle.inputContainer}
+                      type="checkbox"
+                      name="is_active"
+                      checked={formData.is_active}
+                      onChange={handleChange}
+                    />
+                  </div>
               </div>
             </div>
-            {/**
-             * End of addition by - Ashish Dewangan on 04-09-2024
-             * Reason - Implemented active/inactive feature
-             */}
+            <div className={roomStyle.subContainer2}>
+              <div className={roomStyle.inputPair1}>
+                <label className={roomStyle.labelContainer}>
+                  Select Hotel Amenities 
+                </label>
+                <div style={{ maxHeight: '157px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', borderRadius: '4px' }}>
+                  {amenityData.length > 0 ? (
+                    amenityData.map((amenity) => (
+                      <label key={amenity.id} style={{ display: 'flex', marginBottom: 8 }}>
+                        <Checkbox
+                          checked={selectedAmenities.includes(amenity.amenity_name)}
+                          onChange={(e) => {
+                            const value = amenity.amenity_name;
+                            setSelectedAmenities((prev) =>
+                              e.target.checked
+                                ? [...prev, value]
+                                : prev.filter((item) => item !== value)
+                            );
+                          }}
+                          size="small"
+                          color="primary"
+                        />
+                        <span style={{ marginLeft: 8, marginTop:8 }}>{amenity.amenity_name}</span>
+                      </label>
+                    ))
+                  ) : (
+                    <p>Loading amenities...</p>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
-          
+
           <div className={roomStyle.buttonContainer}>
             <button
               // className={roomStyle.createButton}
@@ -632,6 +721,7 @@ const AddNewRoomForm = () => {
             <div className={roomStyle.typeColumn}>Room Type</div>
             <div className={roomStyle.typeColumn}>Room Variety</div>
             <div className={roomStyle.priceColumn}>Price (₹)</div>
+            <div className={roomStyle.priceColumn}>Amenities</div>
             {/**
              * Added by - Ashish Dewangan on 04-09-2024
              * Reason - Implemented active/inactive feature
@@ -654,10 +744,17 @@ const AddNewRoomForm = () => {
                   {(currentPage - 1) * pageSize + index + 1}
                 </div>
                 {/* // **Pagination State and serial no** end by akanksha on 19th oct */}
-                <div className={roomStyle.numberColumn}>{room.room_number}</div>
+                {/* <div className={roomStyle.numberColumn}>{room.room_number}</div> */}
+                <div className={roomStyle.numberColumn}>
+                  {room.room_number ?? room.number ?? ""}
+                </div>
+
                 <div className={roomStyle.typeColumn}>{room.room_type}</div>
                 <div className={roomStyle.typeColumn}>{room.variety}</div>
-                <div className={roomStyle.priceColumn}>₹ {room.room_price}</div>
+                {/* <div className={roomStyle.priceColumn}>₹ {room.room_price}</div> */}
+                <div className={roomStyle.priceColumn}>₹ {room.room_price ?? room.price ?? ""}</div>
+                <div className={roomStyle.typeColumn}>{room.amenities ?? "NA"}</div>
+
                 {/**
                  * Added by - Ashish Dewangan on 04-09-2024
                  * Reason - Implemented active/inactive feature

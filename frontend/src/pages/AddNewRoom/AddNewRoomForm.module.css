@@ -231,22 +231,26 @@
   flex-direction: column;
 }
 
-.form {
+/* .form {
   width: 100%;
   display: flex;
-  /* justify-content: space-around; */
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  /* Added by - Ashlekh on 04-10-2024
-  Reason - To add gap in room details form */
-  /* Commented by Om Shrivastava on 26-10-2024 */
-  /* column-gap: 3%; */
   gap: 40px;
-  /* End of code - Ashlekh on 04-10-2024
-  Reason - To add gap in room details form */
+} */
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 
+.subContainer1,
+.subContainer2 {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
 .createButton {
   width: fit-content;
   background-color: #4965f9;
@@ -313,6 +317,7 @@
   font-family: sans-serif;
   align-items: center;
   display: flex;
+  width: 141px;
 }
 /* Added by - Ashlekh on 04-10-2024
 Reason - For styling of room variety */
@@ -328,20 +333,23 @@ Reason - For styling of room variety */
   width: 90%;
   border-radius: 3px;
   padding: 5px 5px;
-  /**
-  * Commented by - Ashish Dewangan on 07-09-2024
-  * Reason - To align error messages with text box
-  */
-  /* margin-left: 11px; */
-  /**
-  * End of comment by - Ashish Dewangan on 07-09-2024
-  * Reason - To align error messages with text box
-  */
+  
   border: none;
   background-color: white;
   height: 18px;
   /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
   border: var(--input-border-color);
+}
+
+.inputWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inputPair1 {
+  padding: 6px;
+  width: 80%;
+  align-items: center;
 }
 
 .selectRoomTypeContainer {
@@ -408,3 +416,4 @@ Reason - For styling of room variety */
   background-color: #dc3545;
   color: white;
 }
+

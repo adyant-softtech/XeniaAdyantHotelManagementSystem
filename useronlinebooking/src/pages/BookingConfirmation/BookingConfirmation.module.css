@@ -1,0 +1,26 @@
+/* BookingConfirmation.module.css */
+
+.confirmBox {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 2rem;
+    background-color: #e6fff2;
+    border: 2px solid #00b894;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    color: #006644;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .confirmBox h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #00b894;
+  }
+  
+  .confirmBox p {
+    font-size: 1rem;
+    color: #444;
+  }
+  

@@ -7,6 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from .authentication import *
 from django.contrib.auth.hashers import make_password
 from .models import *
+
+from itertools import combinations
 import re
 from rest_framework.pagination import PageNumberPagination
 import json
@@ -32,6 +34,11 @@ import logging
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils.timezone import now
+
+from tenant_schemas.utils import schema_context
+from admin_app.models import Tenant, ClientDetails
+
+from rest_framework.decorators import api_view
 
 logger = logging.getLogger("custom_logger")
 
@@ -1086,6 +1093,12 @@ class RoomShiftView(APIView):
                 # if checkin_detail:
                 #     checkin_detail.room_shifted = True
                 #     checkin_detail.save()
+                
+                 # Set the previous room's is_active to True and new room's is_active to False
+                previous_room.is_active = True
+                previous_room.save()
+                new_room.is_active = False
+                new_room.save()
 
                 return Response({
                     "success": "Room shifted successfully",
@@ -1225,8 +1238,11 @@ class CheckinDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, tenant):
-        amenityList = Amenity.objects.all()
-        amenitySerailizer = AmenitySerializer(amenityList, many=True)
+        # amenityList = Amenity.objects.all()
+        # amenitySerailizer = AmenitySerializer(amenityList, many=True)
+        
+        amenityList = AmenityPublic.objects.all()
+        amenitySerailizer = AmenityPublicSerializer(amenityList, many=True)
 
         amenityRoomList = AmenityRoom.objects.all()
         amenityRoomSerailizer = AmenityRoomSerializer(
@@ -1338,9 +1354,20 @@ class CheckinDetailView(APIView):
             ).exclude(departure_date=current_date, departure_time__lte=current_time).exists():
                 get_room_data["status"] = "vacant"
 
-            findAmenity = AmenityRoom.objects.filter(room_id=room_data.id)
-            get_room_data["amenity_list"] = findAmenity.values(
-                "id", "amenity_id__name")
+            # findAmenity = AmenityRoom.objects.filter(room_id=room_data.id)
+            # get_room_data["amenity_list"] = findAmenity.values(
+            #     "id", "amenity_id__name")
+            # room_list.append(get_room_data)
+            
+            # findAmenity = AmenityRoom.objects.filter(room_id=room_data.id)
+            # get_room_data["amenity_list"] = findAmenity.values(
+            #     "id", "amenity_id__amenity_name")
+            # room_list.append(get_room_data)
+
+            findAmenity = AmenityRoom.objects.filter(room_id=room_data.id).select_related("amenity_id")
+            get_room_data["amenity_list"] = list(
+                findAmenity.values("id", "amenity_id__amenity_name")
+            )
             room_list.append(get_room_data)
 
         def format_timing(arrival_date, arrival_time):
@@ -1487,11 +1514,8 @@ class CheckinDetailView(APIView):
         person_last_name = request.data.get('last_name')
         person_id_type = request.data.get('id_card_type')
         person_email = request.data.get('email')
-        # Code Uncommented by Tejasve Gupta on 05-06-2024
-        # reason - bug Fixed
         person_id_photo = request.data.get('id_card_photo')
         booking_type = request.data.get('bookingType')
-
         person_country = request.data.get('country')
         person_state = request.data.get('state')
         person_city = request.data.get('city')
@@ -1523,7 +1547,6 @@ class CheckinDetailView(APIView):
             try:
                 personal_detail = PersonalDetail.objects.get(
                     id=personal_detail_object)
-                # Update the existing record with new details
                 personal_detail.name = person_name
                 personal_detail.phone = person_phone
                 personal_detail.address = person_address
@@ -1777,6 +1800,8 @@ class CheckinDetailView(APIView):
                 room_price=price,
                 
             )
+            room_detail.is_active = False
+            room_detail.save()
 
         guest_details_data = json.loads(request.data.get('guest_details'))
 
@@ -1897,10 +1922,10 @@ class CheckinDetailView(APIView):
             ).exclude(departure_date=current_date, departure_time__lte=current_time).exists():
                 get_room_data["status"] = "vacant"
 
-            findAmenity = AmenityRoom.objects.filter(room_id=room_data.id)
-            get_room_data["amenity_list"] = findAmenity.values(
-                "id", "amenity_id__name")
-            room_list.append(get_room_data)
+            # findAmenity = AmenityRoom.objects.filter(room_id=room_data.id)
+            # get_room_data["amenity_list"] = findAmenity.values(
+            #     "id", "amenity_id__name")
+            # room_list.append(get_room_data)
 
         def format_timing(arrival_date, arrival_time):
             if arrival_date and arrival_time:
@@ -2141,6 +2166,11 @@ class CheckoutView(APIView):
                     checkin_detail.departure_date = data.get('departure_date')
                     checkin_detail.departure_time = data.get('departure_time')
                     checkin_detail.save()
+                    
+                    # Set the room to active after checkout
+                    room = checkin_detail.room_id  # Assuming room_id is a ForeignKey to RoomDetail
+                    room.is_active = True
+                    room.save()
 
                 return Response({"success": "Checkout details saved and departure date updated successfully",
                                  "is_partial_payment_confirmed": is_partial_payment_confirmed
@@ -3104,8 +3134,6 @@ class RoomDetailCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
     room_list = {}
 
-    # Code Addition by Tejasve Gupta on 21-08-2024
-    # Reason- to show room type dropdown
     def get(self, request, *args, **kwargs):
         # room_types = [{"value": rt[0], "label": rt[1]} for rt in ROOM_TYPE]
         # variety = [{"value": rt[0], "label": rt[1]} for rt in ROOM_VARIETY]
@@ -3143,6 +3171,9 @@ class RoomDetailCreateAPIView(APIView):
                 'room_price': room['price'],
                 'variety': room['variety'],
                 'is_active': room['is_active'],
+                'image': room['image'],
+                'number_of_persons': room['number_of_persons'],
+                'amenities': room['amenities'],
             } for room in all_room_details_serializer.data
         ]
 
@@ -3158,6 +3189,7 @@ class RoomDetailCreateAPIView(APIView):
     # End of Code Addition by Tejasve Gupta on 21-08-2024
     # Reason- to show room type dropdown
 
+
     def post(self, request, tenant, *args, **kwargs):
 
         # Added by - Ashish Dewangan on 07-09-2024
@@ -3170,6 +3202,15 @@ class RoomDetailCreateAPIView(APIView):
         # End of addition by - Ashish Dewangan on 07-09-2024
         # Reason - To check if room number already exists
 
+        data = request.data
+        amenities = data.get("amenities")
+
+        # If it's a list, convert to comma-separated string
+        if isinstance(amenities, list):
+            request._mutable = True  # Optional: needed if request.data is immutable (in some cases)
+            request.data["amenities"] = ", ".join(amenities)
+            request._mutable = False
+            
         serializer = RoomDetailSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -3202,6 +3243,8 @@ class RoomDetailCreateAPIView(APIView):
                     'is_active': room['is_active'],
                     # End of addition by - Ashish Dewangan on 04-09-2024
                     # Reason - to return is_active value in response
+                    'setting': room['setting'],
+                    'amenities': room['amenities'],
                 } for room in all_room_details_serializer.data
             ]
 
@@ -3213,29 +3256,78 @@ class RoomDetailCreateAPIView(APIView):
     # End of Code Addition by Tejasve Gupta on 24-07-2024
     # Reason - To post room details from frontend as well
 
-    def put(self, request,tenant, *args, **kwargs):
+    # def put(self, request,tenant, *args, **kwargs):
+    #     room_id = kwargs.get('pk')
+    #     try:
+    #         room = RoomDetail.objects.get(id=room_id)
+    #     except RoomDetail.DoesNotExist:
+    #         return Response({"error": "Room not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    #     serializer = RoomDetailSerializer(
+    #         room, data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+
+    #         # Fetch updated room list
+
+    #         # Modified by - Ashish Dewangan on 04-09-2024
+    #         # Reason - Sorted list according to room number
+    #         # all_room_details = RoomDetail.objects.all()
+    #         all_room_details = RoomDetail.objects.all().order_by("number")
+    #         # End of modification by - Ashish Dewangan on 04-09-2024
+    #         # Reason - Sorted list according to room number
+
+    #         all_room_details_serializer = RoomDetailSerializer(
+    #             all_room_details, many=True)
+
+    #         room_list = [
+    #             {
+    #                 'id': room['id'],
+    #                 'room_type': room['room_type'],
+    #                 'room_number': room['number'],
+    #                 'room_price': room['price'],
+
+    #                 'variety': room['variety'],
+    #                 # Added by - Ashish Dewangan on 04-09-2024
+    #                 # Reason - to return is_active value in response
+    #                 'is_active': room['is_active'],
+    #                 # End of addition by - Ashish Dewangan on 04-09-2024
+    #                 # Reason - to return is_active value in response
+    #                 'amenities': room['amenities'],
+    #             } for room in all_room_details_serializer.data
+
+    #         ]
+
+    #         return Response(room_list, status=status.HTTP_200_OK)
+
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, tenant, *args, **kwargs):
         room_id = kwargs.get('pk')
         try:
             room = RoomDetail.objects.get(id=room_id)
         except RoomDetail.DoesNotExist:
             return Response({"error": "Room not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = RoomDetailSerializer(
-            room, data=request.data, partial=True)
+        data = request.data
+        amenities = data.get("amenities")
+
+        # If amenities is a list, convert to comma-separated string (same as in POST)
+        if isinstance(amenities, list):
+            # If request.data is immutable, make it mutable before updating
+            if hasattr(request.data, '_mutable'):
+                request._mutable = True
+            request.data["amenities"] = ", ".join(amenities)
+            if hasattr(request.data, '_mutable'):
+                request._mutable = False
+
+        serializer = RoomDetailSerializer(room, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
 
-            # Fetch updated room list
-
-            # Modified by - Ashish Dewangan on 04-09-2024
-            # Reason - Sorted list according to room number
-            # all_room_details = RoomDetail.objects.all()
+            # Fetch updated room list sorted by number
             all_room_details = RoomDetail.objects.all().order_by("number")
-            # End of modification by - Ashish Dewangan on 04-09-2024
-            # Reason - Sorted list according to room number
-
-            all_room_details_serializer = RoomDetailSerializer(
-                all_room_details, many=True)
+            all_room_details_serializer = RoomDetailSerializer(all_room_details, many=True)
 
             room_list = [
                 {
@@ -3243,20 +3335,16 @@ class RoomDetailCreateAPIView(APIView):
                     'room_type': room['room_type'],
                     'room_number': room['number'],
                     'room_price': room['price'],
-
                     'variety': room['variety'],
-                    # Added by - Ashish Dewangan on 04-09-2024
-                    # Reason - to return is_active value in response
                     'is_active': room['is_active'],
-                    # End of addition by - Ashish Dewangan on 04-09-2024
-                    # Reason - to return is_active value in response
+                    'amenities': room['amenities'],
                 } for room in all_room_details_serializer.data
-
             ]
 
             return Response(room_list, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, tenant, *args, **kwargs):
         room_id = kwargs.get('pk')
@@ -4909,26 +4997,57 @@ class AmenityAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
     
+    # def put(self, request, tenant, id):
+    #     try:
+    #         amenity = Amenity.objects.get(id=id)
+    #     except Amenity.DoesNotExist:
+    #         return Response({"error": "Amenity not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    #     serializer = AmenitySerializer(amenity, data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def put(self, request, tenant, id):
         try:
-            amenity = Amenity.objects.get(id=id)
-        except Amenity.DoesNotExist:
-            return Response({"error": "Amenity not found."}, status=status.HTTP_404_NOT_FOUND)
+            amenity_room = AmenityRoom.objects.get(id=id)
+        except AmenityRoom.DoesNotExist:
+            return Response({"error": "AmenityRoom not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = AmenitySerializer(amenity, data=request.data, partial=True)
+        serializer = AmenityRoomSerializer(amenity_room, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            # Manually update the related fields if room or amenity name is provided
+            validated_data = serializer.validated_data
+
+            if 'room' in request.data:
+                try:
+                    room = RoomDetail.objects.get(number=request.data['room'])
+                    amenity_room.room_id = room
+                except RoomDetail.DoesNotExist:
+                    return Response({"room": "Room not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+            if 'amenity' in request.data:
+                try:
+                    amenity = AmenityPublic.objects.get(amenity_name=request.data['amenity'])
+                    amenity_room.amenity_id = amenity
+                except AmenityPublic.DoesNotExist:
+                    return Response({"amenity": "Amenity not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+            amenity_room.save()
+            return Response(AmenityRoomSerializer(amenity_room).data, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     # DELETE: Remove an existing amenity
     def delete(self, request, tenant, id):
         try:
-            amenity = Amenity.objects.get(id=id)
-            amenity.delete()
-            return Response({"message": "Amenity deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
-        except Amenity.DoesNotExist:
-            return Response({"error": "Amenity not found."}, status=status.HTTP_404_NOT_FOUND)
+            amenity_room = AmenityRoom.objects.get(id=id)
+            amenity_room.delete()
+            return Response({"message": "AmenityRoom deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+        except AmenityRoom.DoesNotExist:
+            return Response({"error": "AmenityRoom not found."}, status=status.HTTP_404_NOT_FOUND)
     
 class AmenityRoomAPIView(APIView):
     def get(self, request, tenant):
@@ -4936,11 +5055,18 @@ class AmenityRoomAPIView(APIView):
         serializer = AmenityRoomSerializer(name, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    def post(self, request, tenant):
-        serializer = AmenityRoomSerializer(data=request.data)
+    # def post(self, request, tenant):
+    #     serializer = AmenityRoomSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def post(self, request, *args, **kwargs):
+        serializer = AmenityRoomCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({"message": "Amenities added to room successfully."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request, tenant, id):
@@ -4963,3 +5089,190 @@ class AmenityRoomAPIView(APIView):
             return Response({"message": "Amenity deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
         except Amenity.DoesNotExist:
             return Response({"error": "Amenity not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+class RoomDetailAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, tenant, room_id):
+        try:
+            room = RoomDetail.objects.get(id=room_id, is_active=True)
+            data = RoomDetailSerializer(room).data
+            data['images'] = [{'id': img.id, 'image': img.image.url} for img in RoomImage.objects.filter(room=room, image__isnull=False)]
+            
+            # Add basic room info in the response
+            response_data = {
+                'room_id': room.id,
+                'room_type': room.room_type,
+                'room_detail': data,
+            }
+            return Response(response_data)
+        except RoomDetail.DoesNotExist:
+            return Response({'error': 'Room not found'}, status=404)
+
+
+class FilterAmenityRoomAPIView(APIView):
+    def get(self, request, tenant):
+        amenity_name = request.query_params.get('amenity_name', None)
+
+        if amenity_name:
+            amenity_rooms = AmenityRoom.objects.filter(amenity_id__name__iexact=amenity_name)
+        else:
+            amenity_rooms = AmenityRoom.objects.all()
+
+        serializer = AmenityRoomSerializer(amenity_rooms, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class HottelAmenityView(APIView):
+    def get(self, request, tenant):
+        name = HotelAmenity.objects.all()
+        serializer = HotelAmenitySerializer(name, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    # def post(self, request, tenant):
+    #     serializer = HotelAmenitySerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def post(self, request, tenant):
+    #     serializer = HotelAmenitySerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+
+    #         all_amenities = HotelAmenity.objects.all()
+    #         all_serializer = HotelAmenitySerializer(all_amenities, many=True)
+
+    #         return Response({
+    #             "message": "Amenity added successfully.",
+    #             "data": all_serializer.data
+    #         }, status=status.HTTP_201_CREATED)
+
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def post(self, request, tenant):
+    #     hotel_id = request.data.get('hotel')  # Expecting hotel ID in request
+    #     try:
+    #         hotel = Setting.objects.get(id=hotel_id)
+    #     except Setting.DoesNotExist:
+    #         return Response({"error": "Invalid hotel ID"}, status=status.HTTP_400_BAD_REQUEST)
+
+    #     serializer = HotelAmenitySerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save(hotel=hotel)  # Link to hotel
+
+    #         # Return all amenities of that hotel
+    #         all_amenities = HotelAmenity.objects.filter(hotel=hotel)
+    #         all_serializer = HotelAmenitySerializer(all_amenities, many=True)
+
+    #         return Response({
+    #             "message": "Amenity added successfully.",
+    #             "data": all_serializer.data
+    #         }, status=status.HTTP_201_CREATED)
+
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, tenant):
+        hotel_id = (
+            request.data[0].get('hotel') if isinstance(request.data, list)
+            else request.data.get('hotel')
+        )
+
+        try:
+            hotel = Setting.objects.get(id=hotel_id)
+        except Setting.DoesNotExist:
+            return Response({"error": "Invalid hotel ID"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # We expect a list of objects
+        serializer = HotelAmenitySerializer(data=request.data, many=True)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            all_amenities = HotelAmenity.objects.filter(hotel=hotel)
+            all_serializer = HotelAmenitySerializer(all_amenities, many=True)
+
+            return Response({
+                "message": "Amenity/amenities added successfully.",
+                "data": all_serializer.data
+            }, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class HotelAmenityMultipleView(APIView):
+    def post(self, request, tenant):
+        serializer = HotelAmenityMultipleSerializer(data=request.data)
+        if serializer.is_valid():
+            amenities = serializer.save()
+            return Response({"message": f"{len(amenities)} amenities added to hotel."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, tenant):
+        amenities = HotelAmenity.objects.all()
+        serializer = HotelAmenityReadSerializer(amenities, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class RoomFilterAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    room_list = {}
+    
+    def get(self, request, *args, **kwargs):
+        adults_param = request.query_params.get('adults')
+        children_param = request.query_params.get('children')
+        rooms_param = request.query_params.get('rooms')
+
+        room_types = [
+            {"value": rt.id, "label": rt.room_type}
+            for rt in RoomType.objects.all()
+        ]
+        variety = [
+            {"value": rv.id, "label": rv.room_variety}
+            for rv in RoomVariety.objects.all()
+        ]
+
+        room_queryset = RoomDetail.objects.filter(is_active=True)
+
+
+        if not adults_param and not children_param and not rooms_param:
+            all_rooms = room_queryset.order_by("number")
+            serialized_rooms = RoomDetailSerializer(all_rooms, many=True)
+
+            return Response({
+                'room_types': room_types,
+                'variety': variety,
+                'room_list': serialized_rooms.data,
+                'message': ''
+            })
+
+        try:
+            adults = int(adults_param or 0)
+            children = int(children_param or 0)
+            rooms_requested = int(rooms_param or 1)
+        except ValueError:
+            return Response({'error': 'Invalid query parameters.'}, status=400)
+
+        total_persons = adults + children
+
+        # Convert queryset to list here for combinations
+        available_rooms = list(room_queryset.order_by('-number_of_persons'))
+
+        suitable_combinations = []
+        for combo in combinations(available_rooms, rooms_requested):
+            total_capacity = sum([room.number_of_persons or 0 for room in combo])
+            if total_capacity >= total_persons:
+                suitable_combinations.append(combo)
+
+        selected_rooms = suitable_combinations[0] if suitable_combinations else []
+
+        serialized_filtered = RoomDetailSerializer(selected_rooms, many=True)
+
+        return Response({
+            'room_types': room_types,
+            'variety': variety,
+            'room_list': serialized_filtered.data,
+            'message': 'No rooms available for the selected configuration.' if not selected_rooms else ''
+        })

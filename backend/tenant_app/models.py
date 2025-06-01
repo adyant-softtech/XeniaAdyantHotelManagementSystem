@@ -3,6 +3,7 @@ from django.db.models import Max
 from django.contrib.auth.models import AbstractUser,AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 import datetime
+from admin_app.models import AmenityPublic
 
 
 class User(AbstractBaseUser):
@@ -71,7 +72,57 @@ Reason - To store Amenity detail
 """
 Added by - Om Shrivastava on 27-05-2024
 Reason - To store Room detail
+
+
 """
+
+
+class Setting(models.Model):
+    terms_and_conditions = models.TextField(null=True, blank=True)
+    hotel_name = models.CharField(max_length=250,)
+    city = models.CharField(max_length=250,null=True, blank=True)
+    hotel_address = models.CharField(max_length=250, null=True, blank=True)
+    logo = models.ImageField(
+        upload_to='Images/Setting/', max_length=250, null=True, blank=True)
+    standard_checkin_time = models.TimeField(null=True, blank=True)
+    standard_checkout_time = models.TimeField(null=True, blank=True)
+    # Addition by Om Shrivastava on 31-05-2024
+    # Reason : Create the availablity date and time
+    # Modified by - Ashish Dewangan on 02-09-2024
+    # Reason - To provide default value as 0
+    # vacant_info_before_hour = models.IntegerField(
+    #     null=True, blank=True, verbose_name='Vacant info hour')
+    vacant_info_before_hour = models.IntegerField(
+        null=True, blank=True, verbose_name='Vacant info hour', default=0)
+    # End of modification by - Ashish Dewangan on 02-09-2024
+    # Reason - To provide default value as 0
+    # End of addition by Om Shrivastava on 31-05-2024
+    # Reason : Create the availablity date and time
+    # Addition by Om Shrivastava on 03-06-2024
+    # Reason : Add gst field
+    gst = models.CharField(
+        max_length=10, null=True, blank=True)
+    # End of addition by Om Shrivastava on 03-06-2024
+    # Reason : Add gst field
+
+    # Added by - Ashish Dewangan on 18-09-2024
+    # Reason - Added more columns to setting model
+    contact_number = models.CharField(max_length=13, null=True, blank=True)
+    email = models.EmailField(max_length=250, null=True, blank=True)
+    tin = models.CharField(max_length=11, null=True, blank=True)
+    gstin = models.CharField(max_length=15, null=True, blank=True)
+    # End of addition by - Ashish Dewangan on 18-09-2024
+    # Reason - Added more columns to setting model
+    # Addition by Om Shrivastava on 03-01-2025
+    # Reason : Add contact no field 
+    whatsapp_number = models.CharField(max_length=13, null=True, blank=True)
+    # End of addition by Om Shrivastava on 03-01-2025
+    # Reason : Add contact no field 
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.hotel_name} - {self.city}"
 
 # Code Modification by Tejasve Gupta on 22-08-2024
 # Reason - Changes in Room Type and Addition of Variety
@@ -101,43 +152,41 @@ class RoomVariety(models.Model):
         return self.room_variety or "Unnamed Room Variety"
 
 class RoomDetail(models.Model):
-    # room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE, null=True, blank=True)
-    # variety = models.ForeignKey(RoomVariety, on_delete=models.CASCADE, null=True, blank=True)
+    room_description = models.CharField(max_length=250, null=True, blank=True)
     room_type = models.CharField(max_length=250, null=True, blank=True)
     variety = models.CharField(max_length=250, null=True, blank=True)
-    # room_type = models.CharField(max_length=250,choices=ROOM_TYPE, default="Standard(Non AC)")
     price = models.DecimalField(max_digits=12, decimal_places=2)
     number = models.CharField(max_length=250, verbose_name="Room number")
-    # Code Addition by Tejasve Gupta on 21-08-2024
-    # Reason - Addition of Room Variety filed
-    # variety = models.CharField(max_length=250,choices=ROOM_VARIETY, default='Single')
-    # End of Code Addition by Tejasve Gupta on 21-08-2024
-    # Reason - Addition of Room Variety filed
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-    # Addition by Om Shrivastava on 28-05-2024
-    # Reason : Add the amentiy field for choose the Amenity type
-    # amenity_id = models.ForeignKey(Amenity, on_delete=models.CASCADE, null=True,blank=True)
-    # amenities = models.ManyToManyField(Amenity, blank=True)
-    # End of addition by Om Shrivastava on 28-05-2024
-    # Reason : Add the amentiy field for choose the Amenity type
-
-    # amenity = models.ForeignKey(Amenity, on_delete=models.CASCADE, null=True, blank=True)
-    # Added by - Ashish Dewangan on 04-09-2024
-    # Reason - added active/inactive column
     is_active = models.BooleanField(default=True)
-    # End of addition by - Ashish Dewangan on 04-09-2024
-    # Reason - added active/inactive column
-
-    # Addition by Om Shrivastava on 28-05-2024
-    # Reason : After saving the table giving the name.
-    # def __str__(self):
-    #     return str(self.number)
-
-    # End of addition by Om Shrivastava on 28-05-2024
-    # Reason : After saving the table giving the name.
+    setting = models.ForeignKey(Setting, on_delete=models.CASCADE, null=True, blank=True, related_name='rooms')
+    number_of_persons = models.PositiveIntegerField(
+        null=True, blank=True, verbose_name="Number of Persons"
+    )
+    amenities =  models.CharField(max_length=500, null=True, blank=True)
+    image = models.ImageField(
+        upload_to="room_images/", null=True, blank=True, verbose_name="Room Image"
+    )
     def __str__(self):
         return f"{self.number}"
+    
+    
+class RoomImage(models.Model):
+    image = models.ImageField(
+        upload_to="room_images/", null=True, blank=True, verbose_name="Room Image"
+    )
+    room = models.ForeignKey(
+        RoomDetail, 
+        related_name="images",  
+        on_delete=models.CASCADE, 
+        null=True,
+        blank=True 
+    )
+    
+    def __str__(self):
+        return f"Room ID: {self.room.id}, Image: {self.image.name if self.image else 'No Image'}"
+    
 """
 End of addition by - Om Shrivastava on 27-05-2024
 Reason - To store Room detail
@@ -150,13 +199,13 @@ Reason - To store Amenity room detail
 
 
 class AmenityRoom(models.Model):
-    amenity_id = models.ForeignKey(Amenity, on_delete=models.CASCADE)
+    amenity_id = models.ForeignKey(AmenityPublic, on_delete=models.CASCADE)
     room_id = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.room_id.number} - {self.amenity_id.name}"
+        return f"{self.room_id.number} - {self.amenity_id.amenity_name}"
 
 """
 End of addition by - Om Shrivastava on 27-05-2024
@@ -173,7 +222,7 @@ class PersonalDetail(models.Model):
     # Modification and addition by Om Shrivastava on 29-10-2024
     # Reason : Add textfield to store name 
     # name = models.CharField(max_length=250, verbose_name='First name')
-    name = models.TextField(verbose_name='First name')
+    name = models.CharField(max_length=250, verbose_name='First name')
     # End of modification and addition by Om Shrivastava on 29-10-2024
     # Reason : Add textfield to store name 
     # Addition by Om Shrivastava on 31-05-2024
@@ -181,7 +230,7 @@ class PersonalDetail(models.Model):
     # Modification and addition by Om Shrivastava on 29-10-2024
     # Reason : Add textfield to store name 
     # last_name = models.CharField(max_length=250, null=True, blank=True)
-    last_name = models.TextField(null=True, blank=True)
+    last_name = models.CharField(max_length=250, null=True, blank=True)
     # End of modification and addition by Om Shrivastava on 29-10-2024
     # Reason : Add textfield to store name 
 
@@ -273,7 +322,7 @@ def validate_discount_precentage(value):
 class BillingDetail(models.Model):
     # Addition by Akanksha on 23-01-2025
     # Reason: To store transaction ID and image receipt
-    transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    transaction_id = models.CharField(max_length=250, null=True, blank=True)
     payment_proof = models.ImageField(upload_to='payment_receipts/', null=True, blank=True)
     is_partial_payment_confirmed = models.BooleanField(default=False)
     new_room_charges = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -709,50 +758,6 @@ Reason - To store app details fields like logo, t&c etc.
 """
 
 
-class Setting(models.Model):
-    terms_and_conditions = models.TextField(null=True, blank=True)
-    hotel_name = models.CharField(max_length=250,)
-    hotel_address = models.CharField(max_length=250, null=True, blank=True)
-    logo = models.ImageField(
-        upload_to='Images/Setting/', max_length=250, null=True, blank=True)
-    standard_checkin_time = models.TimeField(null=True, blank=True)
-    standard_checkout_time = models.TimeField(null=True, blank=True)
-    # Addition by Om Shrivastava on 31-05-2024
-    # Reason : Create the availablity date and time
-    # Modified by - Ashish Dewangan on 02-09-2024
-    # Reason - To provide default value as 0
-    # vacant_info_before_hour = models.IntegerField(
-    #     null=True, blank=True, verbose_name='Vacant info hour')
-    vacant_info_before_hour = models.IntegerField(
-        null=True, blank=True, verbose_name='Vacant info hour', default=0)
-    # End of modification by - Ashish Dewangan on 02-09-2024
-    # Reason - To provide default value as 0
-    # End of addition by Om Shrivastava on 31-05-2024
-    # Reason : Create the availablity date and time
-    # Addition by Om Shrivastava on 03-06-2024
-    # Reason : Add gst field
-    gst = models.CharField(
-        max_length=10, null=True, blank=True)
-    # End of addition by Om Shrivastava on 03-06-2024
-    # Reason : Add gst field
-
-    # Added by - Ashish Dewangan on 18-09-2024
-    # Reason - Added more columns to setting model
-    contact_number = models.CharField(max_length=13, null=True, blank=True)
-    email = models.EmailField(max_length=250, null=True, blank=True)
-    tin = models.CharField(max_length=11, null=True, blank=True)
-    gstin = models.CharField(max_length=15, null=True, blank=True)
-    # End of addition by - Ashish Dewangan on 18-09-2024
-    # Reason - Added more columns to setting model
-    # Addition by Om Shrivastava on 03-01-2025
-    # Reason : Add contact no field 
-    whatsapp_number = models.CharField(max_length=13, null=True, blank=True)
-    # End of addition by Om Shrivastava on 03-01-2025
-    # Reason : Add contact no field 
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-
-
 """
 End of addition by - Om Shrivastava on 27-05-2024
 Reason - To store app details fields like logo, t&c etc.
@@ -1015,4 +1020,10 @@ class BalanceSheet(models.Model):
     expense_name = models.CharField(max_length=100, null=True, blank=True)
     expense_quantity = models.CharField(max_length=100, null=True, blank=True)
  
-    
+class HotelAmenity(models.Model):
+    # amenity_name = models.CharField(max_length=100, unique=True, null=True, blank=True) 
+    amenity_name = models.ForeignKey(AmenityPublic, on_delete=models.CASCADE, null=True, blank=True)
+    hotel = models.ForeignKey(Setting, on_delete=models.CASCADE, related_name='amenities', null=True, blank=True)
+
+    def __str__(self):
+        return str(self.amenity_name) if self.amenity_name else "Unnamed Amenity"

@@ -1,0 +1,10 @@
+/**
+ * Created by - Ashish Dewangan on 24-05-2024
+ * Reason - To have styling of vertical line
+ */
+
+.verticalLine {
+  width: var(--vertical-line-thickness);
+  background-color: var(--vertical-line-background-color);
+  min-height: 100%;
+}

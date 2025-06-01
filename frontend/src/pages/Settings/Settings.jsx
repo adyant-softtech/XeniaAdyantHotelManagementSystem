@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { postSettings, getSettingsApi } from "../../Api/services";
+import { postSettings, getSettingsApi, postHotelApi, getAmenityData, getAmenity } from "../../Api/services";
 //  Code Addition by Tejasve Gupta on 25-07-2024
 //   Reason - Addition of validation
 import settingStyle from "./Settings.module.css";
@@ -51,6 +51,7 @@ const SettingsForm = () => {
      * End of addition by - Ashish Dewangan on 18-09-2024
      * Reason - To store data for below metioned fields
      */
+    
   });
   //  Code Addition by Tejasve Gupta on 25-07-2024
   //   Reason - Addition of validation
@@ -67,6 +68,85 @@ const SettingsForm = () => {
       Reason : Add back icon  */
   }
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+const [isAmenityModalOpen, setIsAmenityModalOpen] = useState(false);
+const [amenityName, setAmenityName] = useState("");
+const [amenitiesList, setAmenitiesList] = useState([]);
+const [amenityData, setAmenityData] = useState('');
+const [selectedAmenities, setSelectedAmenities] = useState([]);
+const [selectedAmenity, setSelectedAmenity] = useState([]);
+const [hotelId, setHotelId] = useState('');
+
+  useEffect(() =>{
+      getAmenityDetails();
+  },[]);
+  const getAmenityDetails = async () => {
+      
+      try {
+          const response = await getAmenityData();
+          setAmenityData(response);
+      } catch (error) {
+          console.error("Error fetching amenities:", error);
+          
+      } 
+  };
+
+  useEffect(() =>{
+      getAmenities();
+  },[]);
+  const getAmenities = async () => {
+      
+      try {
+          const access = localStorage.getItem("access");
+          const response = await getAmenity(access, tenant);
+          setAmenitiesList(response);
+      } catch (error) {
+          console.error("Error fetching amenities:", error);
+          
+      } 
+  };
+  const handleCheckboxChange = (id) => {
+    setSelectedAmenity(prev => 
+      prev.includes(id) 
+      ? prev.filter(item => item !== id) 
+      : [...prev, id]
+    );
+  };
+
+  const openAmenityModal = () => setIsAmenityModalOpen(true);
+  const closeAmenityModal = () => {
+    handleAmenitySubmit();
+    setAmenityName("");
+    setIsAmenityModalOpen(false);
+  };
+
+  const handleAmenitySubmit = async () => {
+    // e.preventDefault();
+
+    console.log("Amenity Name Submitted:", amenityName);
+
+    const payload = {
+      amenity_ids: selectedAmenity,
+      hotel : formData.id,
+    };
+
+    try {
+      const access = localStorage.getItem("access");
+      const response = await postHotelApi(access, payload ,tenant);
+      console.log("API Response:", response);
+      console.log("Raw API Response:", response);
+
+      // Handle success response as needed
+    } catch (error) {
+      console.error("API Error:", error);
+      // Handle error state here
+    }
+
+    setIsAmenityModalOpen(false);
+    setAmenityName("");
+    setSelectedAmenity("");
+    getAmenities();
+  };
+
 
   const handleBackClick = () => {
     setIsPopupVisible(true);
@@ -93,6 +173,11 @@ const SettingsForm = () => {
       Reason : Add back icon  */
   }
 
+  const handleClick = async (e) => {
+  e.preventDefault();
+  handleAmenitySubmit();
+  handleSubmit(e);
+};
   useEffect(() => {
     getSettingDetails();
   }, []);
@@ -182,43 +267,7 @@ const SettingsForm = () => {
         }
 
         break;
-      // case "hotel_address":
-      //   if (checkIsEmpty(value)) {
-      //     validationErrors[name] = "Hotel address cannot be empty.";
-      //   }
-      //   break;
-      // case "standard_checkin_time":
-      //   if (checkIsEmpty(value)) {
-      //     validationErrors[name] = "Standard check-in time cannot be empty.";
-      //   }
-      //   break;
-      // case "standard_checkout_time":
-      //   if (checkIsEmpty(value)) {
-      //     validationErrors[name] = "Standard checkout time cannot be empty.";
-      //   }
-      //   break;
-      /**Code Commented by Tejasve Gupta on 22-08-2024
-       * Reason - To remove vacant
-       */
-      // case "vacant_info_before_hour":
-      //   if (checkIsEmpty(value)) {
-      //     validationErrors[name] = "Vacant info before hour cannot be empty.";
-      //   }
-      //   break;
-      /**End of Code Commented by Tejasve Gupta on 22-08-2024
-       * Reason - To remove vacant
-       */
-      // case "gst":
-      //   if (checkIsEmpty(value)) {
-      //     validationErrors[name] = "GST cannot be empty.";
-      //   }
-      //   break;
-      // default:
-      //   break;
-      /**
-       * Added by - Ashish Dewangan on 18-09-2024
-       * Reason - Added validations for contact number and email
-       */
+      
       case "contact_number":
         if (!checkIsEmpty(value)) {
           if (checkIfSmallerThanMinLength(value, 10)) {
@@ -234,10 +283,7 @@ const SettingsForm = () => {
           }
         }
         break;
-      /**
-       * End of addition by - Ashish Dewangan on 18-09-2024
-       * Reason - Added validations for contact number and email
-       */
+      
     }
 
     setErrors((prevErrors) => ({
@@ -249,45 +295,12 @@ const SettingsForm = () => {
   const isValidOnSubmit = () => {
     const validationErrors = {};
 
-    // if (checkIsEmpty(formData.terms_and_conditions)) {
-    //   validationErrors.terms_and_conditions =
-    //     "Terms and conditions cannot be empty.";
-    // }
     if (checkIsEmpty(formData.hotel_name)) {
       validationErrors.hotel_name = "Hotel name cannot be empty.";
     } else if (checkIfGreaterThanMaxLength(formData.hotel_name, 100)) {
       validationErrors.hotel_name = "Hotel name cannot exceed 100 characters.";
     }
 
-    // if (checkIsEmpty(formData.hotel_address)) {
-    //   validationErrors.hotel_address = "Hotel address cannot be empty.";
-    // }
-    // if (checkIsEmpty(formData.standard_checkin_time)) {
-    //   validationErrors.standard_checkin_time =
-    //     "Standard check-in time cannot be empty.";
-    // }
-    // if (checkIsEmpty(formData.standard_checkout_time)) {
-    //   validationErrors.standard_checkout_time =
-    //     "Standard checkout time cannot be empty.";
-    // }
-    /**Code Commented by Tejasve Gupta on 22-08-2024
-     * Reason - To remove vacant
-     */
-    // if (checkIsEmpty(formData.vacant_info_before_hour)) {
-    //   validationErrors.vacant_info_before_hour =
-    //     "Vacant info before hour cannot be empty.";
-    // }
-    /**End of Code Commented by Tejasve Gupta on 22-08-2024
-     * Reason - To remove vacant
-     */
-    // if (checkIsEmpty(formData.gst)) {
-    //   validationErrors.gst = "GST cannot be empty.";
-    // }
-
-    /**
-     * Added by - Ashish Dewangan on 18-09-2024
-     * Reason - Added validations for contact number and email
-     */
     if (!checkIsEmpty(formData.contact_number)) {
       if (checkIfSmallerThanMinLength(formData.contact_number, 10)) {
         validationErrors.contact_number =
@@ -300,10 +313,6 @@ const SettingsForm = () => {
         validationErrors.email = "Email format is invalid.";
       }
     }
-    /**
-     * End of addition by - Ashish Dewangan on 18-09-2024
-     * Reason - Added validations for contact number and email
-     */
 
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
@@ -332,58 +341,22 @@ const SettingsForm = () => {
     try {
       const response = await postSettings(access, formData, tenant);
       console.log("Settings saved successfully:", response);
-      // Clear form fields
-      // setFormData({
-      //   id: "",
-      //   terms_and_conditions: "",
-      //   hotel_name: "",
-      //   hotel_address: "",
-      //   logo: null,
-      //   standard_checkin_time: "",
-      //   standard_checkout_time: "",
-      //   vacant_info_before_hour: "",
-      //   gst: "",
-      // });
+      
       notificationObject.success(response.success);
-      /**
-       * Added by - Ashish Dewangan on 02-09-2024
-       * Reason - To clear selected image on form submit
-       */
-      // setLogo();
-      // const previewDiv = document.getElementById("imagePreview");
-      // previewDiv.innerHTML = ""; // Clear previous content
-      /**
-       * End of addition by - Ashish Dewangan on 02-09-2024
-       * Reason - To clear selected image on form submit
-       */
-      // getSettingDetails();
-      // navigate("/settings");
+      
       window.location.reload();
     } catch (error) {
       console.error("Error saving settings:", error);
     }
   };
-  //  End of Code Addition by Tejasve Gupta on 25-07-2024
-  //   Reason - Addition of validation
-
-  /**
-   * Added by - Ashish Dewangan on 18-09-2024
-   * Reason - To allow only number to be entered
-   */
+  
   const onlyAllowNumberOnInput = (e) => {
     // e.target.value= e.target.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');
     e.target.value = e.target.value
       .replace(/[^0-9]/g, "")
       .replace(/(\..*?)\..*/g, "$1");
   };
-  /**
-   * End of addition by - Ashish Dewangan on 18-09-2024
-   * Reason - To allow only number to be entered
-   */
-
-  // const handleRowClick = (settings) => {
-  //   setFormData(settings);
-  // };
+  
   return (
     // Code Addition by Tejasve Gupta on 26-07-2024
     //  Reason - Adjustment of style by Adding classname
@@ -413,7 +386,7 @@ const SettingsForm = () => {
             Setting &nbsp;
           </legend>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleClick}>
             <div className={settingStyle.form}>
               <div className={settingStyle.subContainer1}>
                 <div className={settingStyle.inputPair}>
@@ -682,156 +655,158 @@ const SettingsForm = () => {
                     </div>
                   </div>
                 </div>
-                {/* End of addition by - Ashish Dewangan on 18-09-2024
-                Reason - Added tin number field */}
+                
+                {amenitiesList.length > 0 && (
+                  <div className={settingStyle.inputPair}>
+                    <label className={settingStyle.labelContainer}>
+                      Hotel Amenities
+                    </label>
+                    <div className={settingStyle.colonContainer}>:</div>
 
-                {/**End of Code Addition by Tejasve Gupta on 22-08-2024
-                Reason - Split IGST in sgst and cgst */}
-                {/* <div className={settingStyle.inputPair}>
-                  <label className={settingStyle.labelContainer}>
-                    Standard Check-in Time
-                  </label>
-                  <div className={settingStyle.colonContainer}>:</div>
-
-                  <div className={settingStyle.inputError}>
-                    <input
-                      type="time"
-                      name="standard_checkin_time"
-                      value={formData.standard_checkin_time}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    <div className={settingStyle.error}>
-                      {errors.standard_checkin_time && (
-                        <span className={settingStyle.error}>
-                          {errors.standard_checkin_time}
-                        </span>
-                      )}
+                    <div className={settingStyle.inputError}>
+                      <textarea
+                        readOnly
+                        // value={amenitiesList.join(", ")}
+                         value={amenitiesList
+                        .map(item => item.amenity_name?.amenity_name || '')
+                        .filter(name => name)
+                        .join(", ")}
+                        style={{
+                          width: '63%',
+                          resize: 'none',
+                          border: '1px solid #ccc',
+                          padding: '4px',
+                          borderRadius: '4px',
+                          fontFamily: 'inherit',
+                          fontSize: 'inherit',
+                          minHeight: '40px',
+                          whiteSpace: 'normal',
+                          overflowWrap: 'break-word',
+                        }}
+                      />
                     </div>
                   </div>
-                </div> */}
-                {/* <div className={settingStyle.inputPair}>
-                  <label className={settingStyle.labelContainer}>
-                    Standard Checkout Time
-                  </label>
-                  <div className={settingStyle.colonContainer}>:</div>
+                )}
 
-                  <div className={settingStyle.inputError}>
-                    <input
-                      type="time"
-                      name="standard_checkout_time"
-                      value={formData.standard_checkout_time}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    <div className={settingStyle.error}>
-                      {errors.standard_checkout_time && (
-                        <span className={settingStyle.error}>
-                          {errors.standard_checkout_time}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div> */}
-                {/**Code Commented by Tejasve Gupta on 22-08-2024
-                 * Reason - To remove vacant
-                 */}
-                {/* <div className={settingStyle.inputPair}>
-                          <label className={settingStyle.labelContainer}>
-                          <span className={settingStyle.mandatoryField}>* </span>Vacant Info
-                        Before Hour
-                            </label>
-                          <div className={settingStyle.colonContainer}>:</div>
 
-                        <div className={settingStyle.inputError}>
-                          <input
-                            type="number"
-                            name="vacant_info_before_hour"
-                            value={formData.vacant_info_before_hour}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
-                          <div className={settingStyle.error}>
-                            {errors.vacant_info_before_hour && (
-                              <span className={settingStyle.error}>
-                                {errors.vacant_info_before_hour}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                          </div> */}
-                {/**End of Code Commented by Tejasve Gupta on 22-08-2024
-                 * Reason - To remove vacant
-                 */}
 
-                {/* <div className={settingStyle.inputPair}>
-                  <label className={settingStyle.labelContainer}>
-                    <span className={settingStyle.mandatoryField}>* </span>Terms
-                    and Conditions
-                  </label>
-                  <div className={settingStyle.colonContainer}>:</div>
-                  <div className={settingStyle.inputError}>
-                    <textarea
-                      name="terms_and_conditions"
-                      value={formData.terms_and_conditions}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    <div className={settingStyle.error}>
-                      {errors.terms_and_conditions && (
-                        <span className={settingStyle.error}>
-                          {errors.terms_and_conditions}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>  */}
               </div>
+              <div className={settingStyle.subContainer2}>
+                <div className={settingStyle.inputPair1}>
+                  <label className={settingStyle.labelContainer}>
+                    Select Hotel Amenities 
+                  </label>
+                  <div style={{ maxHeight: '295px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', borderRadius: '4px' }}>
+                    {amenityData.length > 0 ? (
+                      amenityData.map((amenity) => (
+                        <label key={amenity.id} style={{ display: 'flex', marginBottom: 8 }}>
+                          <input
+                            type="checkbox"
+                            value={amenity.id}
+                            checked={selectedAmenity.includes(amenity.id)}
+                            onChange={() => handleCheckboxChange(amenity.id)}
+                          />
+                          <span style={{ marginLeft: 8 }}>{amenity.amenity_name}</span>
+                        </label>
+                      ))
+                    ) : (
+                      <p>Loading amenities...</p>
+                    )}
+                    {/* <div className={settingStyle.buttonContainer}>
+                      <button
+                        type="button"
+                        className={`${settingStyle.saveButton} submitButton`}
+                        
+                        // onClick={() => setIsAmenityModalOpen(true)}
+                        onClick={handleAmenitySubmit}
+                      >
+                        Add Amenity
+                      </button>
+                    </div> */}
+                  </div>
+                </div>
+                
+              </div>
+              
             </div>
+            
 
-            <div className={settingStyle.buttonContainer}>
+
+            <div className={settingStyle.buttonContainer}
+            style={{gap: "10px"}}>
               <button
                 // className={settingStyle.saveButton}
                 className={`${settingStyle.saveButton} submitButton`}
+                
                 type="submit"
               >
                 Save Settings
               </button>
+               {/* <button
+                  type="button"
+                  className={`${settingStyle.saveButton} submitButton`}
+                  
+                  // onClick={() => setIsAmenityModalOpen(true)}
+                  onClick={openAmenityModal}
+                >
+                  Add Amenity
+                </button> */}
+              
             </div>
           </form>
+
+         
+          
         </fieldset>
       </div>
-
-      {/* <div className={settingStyle.listContainer}>
-        <table className={settingStyle.settingsTable}>
-          <thead>
-            <tr>
-              <th>Hotel Name</th>
-              <th>Hotel Address</th>
-              <th>Standard Check-in Time</th>
-              <th>Standard Checkout Time</th>
-              <th>Terms and Conditions</th>
-              <th>Vacant Info Before Hour</th>
-            </tr>
-          </thead>
-          <tbody>
-            {settingsList.map((settings, index) => (
-              <tr
-                key={index}
-                onClick={() => handleRowClick(settings)}
-                className={settingStyle.listItem}
+      {/* {isAmenityModalOpen && (
+        <div className={settingStyle.modalOverlay}>
+          <div className={settingStyle.modalContainer}>
+            <div className={settingStyle.modalHeader}>
+              <h3>Add Amenity</h3>
+              <span
+                className={settingStyle.closeIcon}
+                onClick={() => setIsAmenityModalOpen(false)}
               >
-                <td>{settings.hotel_name}</td>
-                <td>{settings.hotel_address}</td>
-                <td>{settings.standard_checkin_time}</td>
-                <td>{settings.standard_checkout_time}</td>
-                <td>{settings.terms_and_conditions}</td>
-                <td>{settings.vacant_info_before_hour}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
+                &times;
+              </span>
+            </div>
+            <form onSubmit={handleAmenitySubmit}>
+              <div className={settingStyle.modalForm}>
+                <label className={settingStyle.modalLabel}>Amenity Name</label>
+                
+                <select
+                    id="amenity"
+                    name="amenity"
+                    className={settingStyle.inputSelect}
+                    value={selectedAmenity}
+                    onChange={(e) => setSelectedAmenity(e.target.value)}
+                >
+                    <option value="">Select Amenity</option>
+                    
+                    {amenityData.length === 0 ? (
+                        <option>Loading amenity...</option>
+                    ) : (
+                        amenityData.map((item, index) => (
+                            <option key={index} value={item.amenity_name}>
+                                {item.amenity_name}
+                            </option>
+                        ))
+                    )}
+                </select>
+                
+              </div>
+              <div className={settingStyle.buttonContainer} style={{marginTop: "10px"}}>
+                <button type="submit" className={`${settingStyle.save} save`} onClick={closeAmenityModal}>
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )} */}
+
+      
     </div>
   );
 };

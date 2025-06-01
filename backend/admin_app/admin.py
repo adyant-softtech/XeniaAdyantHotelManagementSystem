@@ -25,6 +25,9 @@ class TenantAdmin(admin.ModelAdmin):
         else:
             return False
 
+@admin.register(AmenityPublic)
+class AmenityAdmin(admin.ModelAdmin):
+    list_display = ('id','amenity_name', )
 
 @admin.register(ClientDetails)
 class ClientDetailsAdmin(admin.ModelAdmin):

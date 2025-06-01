@@ -7,6 +7,7 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("filter_room_city/", include("admin_app.urls")),
     path("admin_app/", include("admin_app.urls")),
     path("api/v1/", include("tenant_app.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

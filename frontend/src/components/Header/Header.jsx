@@ -341,7 +341,7 @@ const Header = () => {
                         </div>
                       )}
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                       to="/amenity"
                       className={headerStyle.headerItem}
                     >
@@ -350,7 +350,7 @@ const Header = () => {
                           Amenity
                         </div>
                       )}
-                    </NavLink>
+                    </NavLink> */}
                     {/* Added by akanksha on 23rd Oct,
                     Reason : to add customer detail  */}
                   </>

@@ -163,7 +163,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://tenant1.xeniaindia.in', 'http://tenant1.xeniaindia.in',"http://192.168.29.185:8000"]
+    'https://tenant2.xeniaindia.in', 'http://tenant2.xeniaindia.in',"http://192.168.29.185:8000"]
 #SERVER CHANGES
 # CSRF_TRUSTED_ORIGINS = ["http://31.220.17.212/"]
 

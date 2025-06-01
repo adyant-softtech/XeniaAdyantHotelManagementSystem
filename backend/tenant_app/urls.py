@@ -119,7 +119,14 @@ urlpatterns = [
      path('<str:tenant>/amenity/', AmenityAPIView.as_view(), name='amenity'),
      path('<str:tenant>/amenity/<int:id>/', AmenityAPIView.as_view(), name='amenity'),
      path('<str:tenant>/amenityRoom/', AmenityRoomAPIView.as_view(), name='amenity'),
-     path('<str:tenant>/amenityRoom/<int:id>/', AmenityRoomAPIView.as_view(), name='amenity')
+     path('<str:tenant>/amenityRoom/<int:id>/', AmenityRoomAPIView.as_view(), name='amenity'),
+     # path('<str:tenant>/rooms/<int:room_id>/', RoomDetailAPIView.as_view(), name='room-detail'),
+     path('<str:tenant>/amenity-rooms/', FilterAmenityRoomAPIView.as_view(), name='filtered-amenity-rooms'),
+     path('<str:tenant>/hotelAmenity/', HottelAmenityView.as_view(), name='hotel-amenity'),
+     path('<str:tenant>/postHotelAmenity/', HotelAmenityMultipleView.as_view(), name='hotel-amenity'),
+     path('<str:tenant>/getHotelAmenity/', HotelAmenityMultipleView.as_view(), name='hotel-amenity'),
+     path("<str:tenant>/roomdetails/", RoomFilterAPIView.as_view(), name='Room-Details'),
+
 # End by akanksha on 07-02-2025
 # Reason to store refund amount in the backend
 

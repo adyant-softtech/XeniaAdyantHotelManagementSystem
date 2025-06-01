@@ -3,7 +3,7 @@
  * Reason - To specify API calling methods
  */
 import notificationObject from "../components/Widgets/Notification/Notification";
-import API from "./api";
+import API, { APIWithoutV1 }  from "./api";
 /**Code Commented by Tejasve on 26-05-2024
  * Reason - Code Not in use imported for trying purpose only
  */
@@ -547,13 +547,14 @@ export const postRooms = async (access, formData, tenant) => {
  * Code Addition by Tejasve Gupta on 21-08-2024
  * Reason - To get room types from backend
  */
-export const getRoomTypes = async (access, tenant) => {
+export const getRoomTypes = async (access, tenant, params={}) => {
   try {
     const response = await API.get(`${tenant}/roomdetails/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${access}`,
       },
+      params: params,
     });
     // console.log("Received Room Data:", response.data);
     return response.data;
@@ -1211,4 +1212,43 @@ export const deleteAmenityRoomDetailsApi = async (access, id, tenant) => {
   }
 };
 
+export const postHotelApi = async (accessToken, hotelAmenity, tenant) => {
+  try {
+    const response = await API.post(`${tenant}/postHotelAmenity/`, hotelAmenity, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error posting room type:', error);
+    throw error;
+  }
+};
 
+export const getAmenityData = async () => {
+  try {
+    const response = await APIWithoutV1.get(`/filter_room_city/amenities/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching balance details:", error);
+    throw error;
+  }
+};
+
+
+export const getAmenity = async (accessToken, tenant) => {
+  try {
+    const response = await API.get(`${tenant}/getHotelAmenity/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching room types:', error);
+    throw error;
+  }
+};

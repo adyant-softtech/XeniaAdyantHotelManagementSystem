@@ -1,0 +1,185 @@
+.header {
+  position: fixed; /* ?? Fixed at top */
+  top: 0;
+  left: 0;
+  width: 95%;
+  background-color: #007b5e;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  height: 80px;
+  z-index: 900; /* Above other content */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  padding-top: 80px; 
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+}
+
+.searchForm {
+  display: flex;
+  gap: 1rem;
+  gap: left;
+  flex: 2;
+  max-width: 900px;
+  width: 100%;
+  margin-left: 1rem;
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.searchBtn {
+  background-color: #0056d2;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.searchBtn:hover {
+  background-color: #003a9b;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup {
+  background-color: #f4b400;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.login {
+  background-color: #f4b400;
+  color: #007b5e;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdownBox {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid black;
+  border-radius: 6px;
+  width: 200px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+}
+
+.downArrow {
+  margin-left: 8px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid black;
+  background-color: black;
+  z-index: 10;
+  border-radius: 0 0 6px 6px;
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdownItem:hover {
+  background-color: black;
+}
+
+.guestsInput {
+  position: relative;
+}
+
+.inputBox {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  width: 250px;
+}
+
+.guestsInput .dropdownList {
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid black;
+  background-color: black;
+  z-index: 10;
+  border-radius: 0 0 6px 6px;
+}
+
+.guestsInput .dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.guestsInput .dropdownItem:hover {
+  background-color: #f0f0f0;
+}
+
+.guestsInput button {
+  padding: 5px 10px;
+  background-color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  color: white;
+}
+
+.guestsInput button:hover {
+  background-color: #222;
+}

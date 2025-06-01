@@ -8,6 +8,7 @@ import {
   Button,
   RadioGroup,
   FormControlLabel,
+  Checkbox,
   Radio,
   Paper,
   Table,
@@ -22,6 +23,8 @@ import {
 import { FiArrowLeft } from "react-icons/fi";
 import { GlobalContext } from "../../context/Context";
 import { getAmenityApi, 
+        getAmenityData,
+        getAmenity,
         postAmenityApi, 
         userDetails, 
         editAmenityDetailsApi, 
@@ -42,8 +45,9 @@ function Amenity() {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [amenity, setAmenity] = useState("");
+    const [amenitiesList, setAmenitiesList] = useState([]);
     const [amenityName, setAmenityName] = useState([]);
-    const [amenityRoom, setAmenityRoom] = useState("");
+    const [amenityRoom, setAmenityRoom] = useState([]);
     const [details, setDetails] = useState([]);
     const [noRecordsFound, setNoRecordsFound] = useState(false);
     const [user, setUser] = useState({});
@@ -51,29 +55,74 @@ function Amenity() {
     const [selectedAmenityId, setSelectedAmenityId] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedAmenity, setSelectedAmenity] = useState('');
+    const [selectedAmenities, setSelectedAmenities] = useState({});
     const [selectedRoom, setSelectedRoom] = useState('');
-    const [roomNumber, setRoomNumber] = useState('');
+    const [roomNumber, setRoomNumber] = useState([]);
+    const [amenityData, setAmenityData] = useState('');
     const handleChange = (e) => {
         setAmenity(e.target.value);
     };
     useEffect(() => {
         const fetchRoomTypes = async () => {
-        const access = localStorage.getItem("access");
-        try {
-            const data = await getRoomTypes(access, tenant);
-            const roomNumbers = data.room_list.map((room) => room.room_number);
-            setRoomNumber(roomNumbers);
-        } catch (error) {
-            console.error("Error fetching room types:", error);
-        }
+            const access = localStorage.getItem("access");
+
+            // Wait until tenant is set
+            if (!tenant) return;
+
+            try {
+                const data = await getRoomTypes(access, tenant);
+                console.log("Room data:", data);
+                setRoomNumber(data.room_list);
+            } catch (error) {
+                console.error("Error fetching room types:", error);
+            }
         };
-    
+
         fetchRoomTypes();
-    }, []);
+    }, [tenant]); // Run this effect only when 'tenant' is available
+
 
     useEffect(() =>{
-        getAmenityApiDetails();
+        // getAmenityApiDetails();
+        const access = localStorage.getItem("access");
+        if (access && tenant) {
+            getAmenityApiDetails(access, tenant);
+        } else {
+            console.error('No access token found');
+        }
     },[]);
+    useEffect(() =>{
+       getAmenityDetails();
+    },[]);
+    const getAmenityDetails = async () => {
+        
+        try {
+            const response = await getAmenityData();
+            setAmenityData(response);
+        } catch (error) {
+            console.error("Error fetching amenities:", error);
+            
+        } 
+    };
+    
+    useEffect(() => {
+        const getAmenities = async () => {
+            const access = localStorage.getItem("access");
+
+            // Wait until tenant is available
+            if (!tenant) return;
+
+            try {
+                const response = await getAmenity(access, tenant);
+                setAmenitiesList(response);
+            } catch (error) {
+                console.error("Error fetching amenities:", error);
+            }
+        };
+
+        getAmenities();
+    }, [tenant]); // Re-run when tenant is available
+
     useEffect(() => {
         const access = localStorage.getItem("access");
         if (access && tenant) {
@@ -125,36 +174,38 @@ function Amenity() {
         try {
             const response = await getAmenityRoomApi(access, tenant);
             setAmenityRoom(response);
+
             
         } catch (err) {
             console.error("Error fetching user details:", err);
         }
     };
 
+            console.log(".............", amenityRoom);
     
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
+    const handleSubmit = async (roomId) => {
+        const selectedAmenitySet = selectedAmenities[roomId];
+        if (!selectedAmenitySet || selectedAmenitySet.size === 0) {
+        notificationObject.error("Please select at least one amenity to submit.");
+        return;
+        }
+
         const payload = {
-            name : amenity
-        }
+        room_id: roomId,
+        amenities: Array.from(selectedAmenitySet), // convert Set to Array
+        };
+
         try {
-            const access = localStorage.getItem("access");
-            if (selectedAmenityId) {
-                const data = await editAmenityDetailsApi(access, selectedAmenityId, payload, tenant);
-                console.log("data of edit ", data);
-                notificationObject.success("Amenity updated successfully!");
-            } else {
-                await postAmenityApi(access, payload, tenant);
-                notificationObject.success("Amenity created successfully!");
-            }
+        const access = localStorage.getItem("access");
+        await postAmenityRoomApi(access, payload, tenant);
+        notificationObject.success("Amenities saved successfully for room " + roomId + "!");
         } catch (error) {
-            console.error("Error while adding amenity:", error);
+        console.error("Error while adding amenities:", error);
+        notificationObject.error("Failed to save amenities for room " + roomId);
         }
-        setAmenity(""); 
-        getAmenityApiDetails();
     };
+
 
     
   
@@ -182,11 +233,13 @@ function Amenity() {
         .replace(/(\..*?)\..*/g, "$1");
     };
 
-    const handleEdit = async (details) => {
+    const handleEdit = async (amenityRoom) => {
         // Scroll to top of form
         window.scrollTo(0, 0);
-        setSelectedAmenityId(details.id);
-        setAmenity(details.name);
+        setSelectedAmenityId(amenityRoom.id);
+        setAmenity(amenityRoom.id);
+        setSelectedRoom(amenityRoom.room_number); // or amenityRoom.room_number or amenityRoom.room_id, check your key
+        setSelectedAmenity(amenityRoom.amenity_name);
     };
         
         
@@ -197,7 +250,7 @@ function Amenity() {
         try {
             await deleteAmenityDetailsApi(accessToken, id, tenant);
             notificationObject.success("Amenity deleted successfully!");
-            setDetails((prevData) => Array.isArray(prevData) ? prevData.filter(item => item.id !== id) : []);
+            setAmenityRoom((prevData) => Array.isArray(prevData) ? prevData.filter(item => item.id !== id) : []);
 
 
             getAmenityApiDetails();
@@ -231,7 +284,21 @@ function Amenity() {
         setIsOpen(false);
         getAmenityRoomDetails();
     };
-    
+    const handleAmenityChange = (roomId, amenityId) => {
+        setSelectedAmenities((prev) => {
+        const amenitiesForRoom = new Set(prev[roomId] || []);
+        if (amenitiesForRoom.has(amenityId)) {
+            amenitiesForRoom.delete(amenityId);
+        } else {
+            amenitiesForRoom.add(amenityId);
+        }
+        return {
+            ...prev,
+            [roomId]: amenitiesForRoom,
+        };
+        });
+    };
+
   return (
     <div className={style.pageFrame}>
         <div className={style.header}>
@@ -250,178 +317,97 @@ function Amenity() {
             </div>
         )}
         <div className={style.pageContainer}>
-            <fieldset className={style.amenityForm}>
-                <legend className={style.formTitle}>Amenity</legend>
-                <form className={style.formContainer} onSubmit={handleSubmit}>
-                    <div className={style.divContainer}>
-                        <div className={style.childContainer1}>
-                            <div className={style.formGroup}>
-                                <div className={style.labelColon}>
-                                <div className={style.labelContainer}>
-                                    <div className={style.mandatoryField}>*</div>
-                                    <label htmlFor="name">
-                                        Amenity Name :
-                                    </label>
-                                </div>
-                                </div>
             
-                                <div className={style.inputContainer}>
-                                    <input
-                                        className={style.inputSection}
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={amenity}
-                                        onChange={handleChange}
-                                    />
-                                    <button
-                                        type="submit"
-                                        className={`${style.submitButton} submitButton`}
-                                        >
-                                        {/* {editingHandoverId ? "Update Handover" : "Add Handover"} */}
-                                        Add Amenity
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    
-                    </div>
-                    
-                
-                </form>
-                
-                
-            </fieldset>
-            <form onSubmit={handleOpenMenu} style={{display: "flex", alignItems: "center", marginTop: "8px", marginBottom: "10px"}}>
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <button
-                        type="submit"
-                        className={`${style.submitButton} submitButton`}
+            
+            <TableContainer component={Paper} elevation={3}>
+                <Table>
+                    <TableHead style={{ backgroundColor: "#edf7f6", fontSize: "11px" }}>
+                    <TableRow>
+                        <TableCell align="center" style={{ padding: "0px" }}>
+                        S.NO.
+                        </TableCell>
+                        <TableCell align="center" style={{ padding: "0px" }}>
+                        Room Number
+                        </TableCell>
+                        <TableCell align="center" style={{ padding: "0px" }}>
+                        Set Amenities
+                        </TableCell>
+                        <TableCell align="center" style={{ padding: "0px" }}>
+                        Added Amenities
+                        </TableCell>
+                    </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                    {roomNumber.map((room, index) => (
+                        <TableRow key={room.id || index}>
+                        {/* Serial No */}
+                        <TableCell align="center" style={{ padding: "4px" }}>
+                            {index + 1}
+                        </TableCell>
+
+                        {/* Room Number */}
+                        <TableCell
+                            align="center"
+                            style={{
+                            padding: "4px",
+                            maxWidth: "50px",
+                            wordWrap: "break-word",
+                            overflowWrap: "break-word",
+                            whiteSpace: "normal",
+                            }}
                         >
-                        Map Amenity to Room
-                    </button>
-                </div>
-            </form>
-            {isOpen && (
-                    <div className={style.modalOverlay}>
-                        <div className={style.modalContent}>
-                            <h3>Select Amenity and Room</h3>
+                            {room.number}
+                        </TableCell>
 
-                            <label>Room Number:</label>
-                            <select
-                                value={selectedRoom}
-                                onChange={(e) => setSelectedRoom(e.target.value)}
-                            >
-                                <option value="">Select Room</option>
-                                {roomNumber.map((room, index) => (
-                                    <option key={index} value={room}>
-                                        Room {room}
-                                    </option>
-                                ))}
-                            </select>
-
-                            <label>Amenity:</label>
-                            <select
-                                value={selectedAmenity}
-                                onChange={(e) => setSelectedAmenity(e.target.value)}
-                            >
-                                <option value="">Select Amenity</option>
-                                {details.map((item, index) => (
-                                    <option key={index} value={item.name}>
-                                        {item.name}
-                                    </option>
-                                ))}
-                            </select>
-
-                            <div style={{ marginTop: '10px', display: "flex", alignItems: "center" }}>
-                                <button className={`${style.submitButton} submitButton`} onClick={handleAddAmenity}>Add</button>
-                                <button className={`${style.submitButton} submitButton`} onClick={handleClose} style={{ marginLeft: '5px' }}>
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            {isLoading ? (
-                <Grid container justifyContent="center" alignItems="center">
-                    <CircularProgress />
-                </Grid>
-                )  
-                    
-                : details.length > 0 ? (
-                    <TableContainer component={Paper} elevation={3}>
-                        <Table>
-                            <TableHead
+                        {/* Show Amenity Checkboxes */}
+                        <TableCell
+                            align="center"
+                            style={{
+                            padding: "4px",
+                            maxWidth: "250px",
+                            wordWrap: "break-word",
+                            overflowWrap: "break-word",
+                            whiteSpace: "normal",
+                            }}
+                        >
+                            {amenityData.map((amenity) => (
+                            <label
+                                key={amenity.id}
                                 style={{
-                                backgroundColor: "#edf7f6",
-                                fontSize: "11px",
+                                marginRight: "10px",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                cursor: "pointer",
                                 }}
                             >
-                                <TableRow>
-                                    <TableCell align="center" style={{ padding: "0px" }}>
-                                        <Button style={{ fontSize: "var(--page-content-font-size)" }}>
-                                        {" "}
-                                        S.NO.
-                                        </Button>
-                                    </TableCell>
-                                    <TableCell align="center" style={{ padding: "0px" }}>
-                                        <Button style={{ fontSize: "var(--page-content-font-size)" }}>
-                                        {" "}
-                                        Amenity Name
-                                        </Button>
-                                    </TableCell>
-                                    <TableCell align="center" style={{ padding: "0px" }}>
-                                        <Button style={{ fontSize: "var(--page-content-font-size)" }}>
-                                        {" "}
-                                        Action
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {details.map((item, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell align="center" style={{ padding: "4px" }}>
-                                            {index + 1}
-                                        </TableCell>
-                                        <TableCell 
-                                            align="center" 
-                                            style={{ 
-                                                padding: "0px",
-                                                maxWidth: '50px', 
-                                                wordWrap: "break-word", 
-                                                overflowWrap: "break-word", 
-                                                whiteSpace: "normal"
-                                            }}
-                                        >
-                                            {item.name}
-                                        </TableCell>
-                                        {user.is_superuser && (
-                                            <TableCell align="center" style={{ padding: "4px" }}>
-                                                <FaEdit
-                                                    style={{ cursor: "pointer", color: "#f79330" }}
-                                                    onClick={(e) => handleEdit(item)}
-                                                />
-                                                &nbsp; &nbsp; &nbsp;
-                                                <MdDelete
-                                                    style={{ cursor: "pointer", color: "#EB0B0B" }}
-                                                    onClick={() => handleDelete(item.id)}
-                                                />
-                                            </TableCell>
-                                        )}
-                                    </TableRow>
-                                ))}
-                            </TableBody>
+                                <Checkbox
+                                checked={selectedAmenities[room.id]?.has(amenity.id) || false}
+                                onChange={() => handleAmenityChange(room.id, amenity.id)}
+                                size="small"
+                                color="primary"
+                                />
+                                {amenity.amenity_name}
+                            </label>
+                            ))}
+                        </TableCell>
 
-                        </Table>
-                    </TableContainer>
-
-                ) : (
-                    <Typography variant="h6" align="center">
-                        No data available.
-                    </Typography>
-                )
-            }
+                        {/* Submit button per row */}
+                        <TableCell align="center" style={{ padding: "4px" }}>
+                            <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            onClick={() => handleSubmit(room.id)}
+                            >
+                            Submit
+                            </Button>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                </TableContainer>
         </div>
     </div>
   );

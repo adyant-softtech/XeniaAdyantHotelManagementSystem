@@ -13,6 +13,10 @@ class TenantListSerializer(serializers.ModelSerializer):
         model = Tenant
         fields = '__all__'
 
+class AmenitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AmenityPublic
+        fields = '__all__'
 
 class ClientDetailsSerializer(serializers.ModelSerializer):
     class Meta:

@@ -147,3 +147,9 @@ class Otp(models.Model):
 
     class Meta:
         verbose_name_plural = 'OTP'
+        
+class AmenityPublic(models.Model):
+    amenity_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.amenity_name}"

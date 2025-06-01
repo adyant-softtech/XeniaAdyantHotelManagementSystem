@@ -1,0 +1,23 @@
+.facilities {
+    margin-top: 0.5rem;
+  }
+  
+  .title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .facilityItem {
+    font-size: 0.7rem;
+    color: #444;
+  }
+  

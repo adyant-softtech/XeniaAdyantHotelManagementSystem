@@ -92,7 +92,11 @@ Reason : Register the Amentiy table
 Addition by Om Shrivastava on 27-05-2024
 Reason : Register the Room detail table
 """
-
+@admin.register(RoomImage)
+class RoomImageAdmin(admin.ModelAdmin):
+    # Addition by Om Shrivastava on 28-05-2024
+    # Reason : Show these fields in admin site
+    list_display = ( "image", "room")
 
 @admin.register(RoomDetail)
 class RoomDetailAdmin(admin.ModelAdmin):
@@ -102,6 +106,9 @@ class RoomDetailAdmin(admin.ModelAdmin):
                     "room_type", 
                     "price", "number", 
                     "variety",
+                    "image",
+                    "number_of_persons",
+                    "room_description",
                     )
 
     # End of addition by Om Shrivastava on 28-05-2024
@@ -337,7 +344,7 @@ class SettingModelAdmin(admin.ModelAdmin):
     exclude = ('standard_checkin_time', 'standard_checkout_time', 'vacant_info_before_hour')
     # Addition by Om Shrivastava on 28-05-2024
     # Reason : Show these fields in admin site
-    list_display = ("hotel_name", "hotel_address",
+    list_display = ("id","hotel_name", "hotel_address",
                     # Modification and addition by Om Shrivastava on 01-06-2024
                     # Reason : Get the vacant_info_hour
                     # "standard_checkin_time","standard_checkout_time",
@@ -416,3 +423,7 @@ class RoomTypeAdmin(admin.ModelAdmin):
 @admin.register(RoomVariety)
 class RoomVarietyAdmin(admin.ModelAdmin):
     list_display = ("id", "room_variety")
+    
+@admin.register(HotelAmenity)
+class HotelAmenityAdmin(admin.ModelAdmin):
+    list_display = ("id","amenity_name",)

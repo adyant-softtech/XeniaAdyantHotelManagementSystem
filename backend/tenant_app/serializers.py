@@ -1,6 +1,8 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from .models import *
+from admin_app.models import AmenityPublic
+
 
 
 class UserSerializer(ModelSerializer):
@@ -16,35 +18,7 @@ class SocialSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class SettingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Setting
-        fields = [
-            'id',
-            'hotel_name',
-            'hotel_address',
-            'terms_and_conditions',
-            'logo',
-            'standard_checkin_time',
-            'standard_checkout_time',
-            'vacant_info_before_hour',
-            'gst',
-            # Added by - Ashish Dewangan on 18-09-2024
-            # Reason - To serialize contact number, email , gstin, tin columns
-            'contact_number',
-            'email',
-            'gstin',
-            'tin',
-            # End of addition by - Ashish Dewangan on 18-09-2024
-            # Reason - To serialize contact number, email , gstin, tin columns
-            # Added by - Om Shrivastava on 03-01-2025
-            # Reason - To serialize whatsapp number
-            'whatsapp_number',
-            # End of addition by - Om Shrivastava on 03-01-2025
-            # Reason - To serialize contact whatsapp 
-            'created_at',
-            'updated_at'
-        ]
+
 # End of Code Addition by Tejasve Gupta on 18-07-2024
 # Reason - To get Hotel Details
 
@@ -70,6 +44,10 @@ Reason - Create serializer of Amenity, Roomdetail, amentiyroom, billingdetails t
 # Code added by Om Shrivastava on 29-05-2024
 # Reason - For serialize the Amenity table
 
+class AmenityPublicSerializer(serializers.ModelSerializer): 
+    class Meta:
+        model = AmenityPublic
+        fields = ['id', 'amenity_name']
 
 class AmenitySerializer(serializers.ModelSerializer):
     class Meta:
@@ -92,7 +70,10 @@ class RoomTypeSerializer(serializers.ModelSerializer):
         fields = ['room_type']
         
 
-
+class RoomImageSerializer(serializers.ModelSerializer):
+    models = RoomImage
+    fields = '__all__'
+    
 class RoomDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomDetail
@@ -104,7 +85,13 @@ class RoomDetailSerializer(serializers.ModelSerializer):
         fields = ['id',
                   'room_type', 'price', 'number', 
                   'variety',
-                  'is_active']
+                  'is_active',
+                  'number_of_persons',
+                  'image',
+                  'room_description',
+                  'setting',
+                  'amenities', ]
+        
         # End of modification by - Ashish Dewangan on 04-09-2024
         # Reaspm - To serialize is_active column
         # end of Code Addition by Tejasve Gupta on 21-08-2024
@@ -112,6 +99,75 @@ class RoomDetailSerializer(serializers.ModelSerializer):
 # End of code addition by Om Shrivastava on 29-05-2024
 # Reason - For serialize the RoomDetail table
 
+
+class HotelAmenitySerializer(serializers.ModelSerializer):
+    hotel_name = serializers.CharField(source='hotel.hotel_name', read_only=True)
+    rooms = RoomDetailSerializer(source='hotel.rooms', many=True, read_only=True)
+    class Meta:
+        model = HotelAmenity
+        # fields = '__all__'
+        fields = ['id', 'amenity_name', 'hotel', 'hotel_name', 'rooms']
+
+
+class HotelAmenityMultipleSerializer(serializers.Serializer):
+    hotel = serializers.PrimaryKeyRelatedField(queryset=Setting.objects.all())
+    amenity_ids = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(queryset=AmenityPublic.objects.all())
+    )
+
+    def create(self, validated_data):
+        hotel = validated_data['hotel']
+        amenity_ids = validated_data['amenity_ids']
+        amenities = []
+        for amenity in amenity_ids:
+            ha = HotelAmenity.objects.create(hotel=hotel, amenity_name=amenity)
+            amenities.append(ha)
+        return amenities
+
+class HotelAmenityReadSerializer(serializers.ModelSerializer):
+    amenity_name = AmenityPublicSerializer(read_only=True)
+
+    class Meta:
+        model = HotelAmenity
+        fields = ['id', 'hotel', 'amenity_name']
+        
+class SettingSerializer(serializers.ModelSerializer):
+    rooms = RoomDetailSerializer( many=True, read_only=True)
+    amenities = HotelAmenitySerializer(many=True, read_only=True)
+    class Meta:
+        model = Setting
+        fields = [
+            'id',
+            'hotel_name',
+            'hotel_address',
+            'terms_and_conditions',
+            'logo',
+            'standard_checkin_time',
+            'standard_checkout_time',
+            'vacant_info_before_hour',
+            'gst',
+            'city',
+            # Added by - Ashish Dewangan on 18-09-2024
+            # Reason - To serialize contact number, email , gstin, tin columns
+            'contact_number',
+            'email',
+            'gstin',
+            'tin',
+            # End of addition by - Ashish Dewangan on 18-09-2024
+            # Reason - To serialize contact number, email , gstin, tin columns
+            # Added by - Om Shrivastava on 03-01-2025
+            # Reason - To serialize whatsapp number
+            'whatsapp_number',
+            # End of addition by - Om Shrivastava on 03-01-2025
+            # Reason - To serialize contact whatsapp 
+            'created_at',
+            'updated_at',
+            'rooms',
+            'amenities',
+            
+        ]
+        
+        
 # Code added by Om Shrivastava on 29-05-2024
 # Reason - For serialize the AmenityRoom table
 
@@ -126,39 +182,68 @@ class RoomDetailSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = AmenityRoom
 #         fields = ['id', 'room_number', 'amenity_name', 'created_at', 'updated_at']
-from rest_framework import serializers
-from .models import AmenityRoom, RoomDetail, Amenity
+
 
 class AmenityRoomSerializer(serializers.ModelSerializer):
     room_number = serializers.CharField(source='room_id.number', read_only=True)
-    amenity_name = serializers.CharField(source='amenity_id.name', read_only=True)
+    amenity_name = serializers.CharField(source='amenity_id.amenity_name', read_only=True)
     room = serializers.CharField(write_only=True)  # Accept room number as input
     amenity = serializers.CharField(write_only=True)  # Accept amenity name as input
 
+    room_details = RoomDetailSerializer(source='room_id', read_only=True)  # Nested room info
+
     class Meta:
         model = AmenityRoom
-        fields = ['id', 'room', 'amenity', 'room_number', 'amenity_name', 'created_at', 'updated_at']
+        fields = ['id', 'room', 'amenity', 'room_number', 'amenity_name', 'room_details', 'created_at', 'updated_at']
 
     def create(self, validated_data):
-        # Extract room number and amenity name from validated data
         room_number = validated_data.pop('room')
         amenity_name = validated_data.pop('amenity')
 
-        # Get the RoomDetail object
         try:
             room = RoomDetail.objects.get(number=room_number)
         except RoomDetail.DoesNotExist:
             raise serializers.ValidationError({"room": "Room not found."})
 
-        # Get the Amenity object
         try:
-            amenity = Amenity.objects.get(name=amenity_name)
-        except Amenity.DoesNotExist:
+            amenity = AmenityPublic.objects.get(amenity_name=amenity_name)
+        except AmenityPublic.DoesNotExist:
             raise serializers.ValidationError({"amenity": "Amenity not found."})
 
-        # Create the AmenityRoom object
-        amenity_room = AmenityRoom.objects.create(room_id=room, amenity_id=amenity)
-        return amenity_room
+        return AmenityRoom.objects.create(room_id=room, amenity_id=amenity)
+
+from rest_framework import serializers
+class AmenityRoomCreateSerializer(serializers.Serializer):
+    room_id = serializers.IntegerField()
+    amenities = serializers.ListField(
+        child=serializers.IntegerField(),
+        allow_empty=False
+    )
+
+    def validate_room_id(self, value):
+        try:
+            room = RoomDetail.objects.get(id=value)
+        except RoomDetail.DoesNotExist:
+            raise serializers.ValidationError("Room with this ID does not exist.")
+        return room
+
+    def validate_amenities(self, value):
+        amenities = AmenityPublic.objects.filter(id__in=value)
+        if len(amenities) != len(set(value)):
+            raise serializers.ValidationError("One or more amenities are invalid.")
+        return amenities
+
+    def create(self, validated_data):
+        room = validated_data['room_id']  # This is the RoomDetail instance after validation
+        amenities = validated_data['amenities']  # This is a queryset of AmenityPublic instances
+
+        amenity_room_objs = [
+            AmenityRoom(room_id=room, amenity_id=amenity) for amenity in amenities
+        ]
+        AmenityRoom.objects.bulk_create(amenity_room_objs)
+        return amenity_room_objs
+
+
 
 # End of code addition by Om Shrivastava on 29-05-2024
 # Reason - For serialize the AmenityRoom table
