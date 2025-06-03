@@ -474,3 +474,57 @@ class RoomDetailAPIView(APIView):
                                     status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({'error': 'Room not found in any tenant'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class RoomPriceFilterAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        TenantModel = get_tenant_model()
+
+        min_price_param = request.query_params.get('min_price')
+        max_price_param = request.query_params.get('max_price')
+
+        try:
+            min_price = int(min_price_param or 0)
+            max_price = int(max_price_param or 1000000)
+        except ValueError:
+            return Response({'error': 'Invalid price range parameters.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        all_filtered_rooms = []
+
+        for tenant in TenantModel.objects.exclude(schema_name='public'):
+            with schema_context(tenant.schema_name):
+                try:
+                    from tenant_app.models import RoomDetail  # adjust if in different app
+
+                    room_queryset = RoomDetail.objects.filter(
+                        is_active=True,
+                        price__gte=min_price,
+                        price__lte=max_price
+                    )
+
+                    if not room_queryset.exists():
+                        continue
+
+                    serialized_rooms = RoomDetailSerializer(
+                        room_queryset, many=True, context={'request': request}
+                    )
+
+                    # Get hotel name
+                    hotel_name = tenant.schema_name
+                    first_room = room_queryset.first()
+                    if first_room and first_room.setting:
+                        hotel_name = first_room.setting.hotel_name
+
+                    all_filtered_rooms.append({
+                        "tenant": tenant.schema_name,
+                        "hotel_name": hotel_name,
+                        "rooms": serialized_rooms.data
+                    })
+
+                except Exception as e:
+                    print(f"Error in tenant {tenant.schema_name}: {e}")
+
+        return Response({
+            "filtered_hotels": all_filtered_rooms,
+            "message": "No rooms found within the selected price range." if not all_filtered_rooms else ""
+        })

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaHeart, FaShareAlt } from 'react-icons/fa';
 import styles from './Dashboard.module.css';
 import { FaStar } from 'react-icons/fa';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import {
   getRoomTypes,
   getRoomDetails,
@@ -10,6 +13,7 @@ import {
   getAmenityFilterData,
   getAmenityApi,
   getAmenityData,
+  getHotelByPriceRange,
 } from "../../Api/services";
 import { GlobalContext } from "../../context/Context";
 import { baseURL } from "../../Api/config";
@@ -42,6 +46,9 @@ const Dashboard = () => {
   const [selectedAmenity, setSelectedAmenity] = useState("");
   const [selectedAmenityName, setSelectedAmenityName] = useState("");
   const [amenityData, setAmenityData] = useState('');
+  const [priceRange, setPriceRange] = useState([0, 0]);
+  const [priceFilteredRooms, setPriceFilteredRooms] = useState([]);
+
 
   useEffect(() => {
     const fetchRoomTypes = async () => {
@@ -104,7 +111,9 @@ const Dashboard = () => {
     }
   }, [selectedAmenity]); // 👈 now it listens for changes
 
-  
+  const handleSliderChange = (event, newValue) => {
+    setPriceRange(newValue);
+  };
 
   const getAmenityApiDetails = async () => {
     const access = localStorage.getItem("access");
@@ -139,156 +148,170 @@ const Dashboard = () => {
     navigate(`/roomdetails/${roomId}`);
   };
 
-  // useEffect(() => {
-  //   const fetchFilteredAmenityRooms = async () => {
-  //     const access = localStorage.getItem("access");
-  //     try {
-  //       if (!tenant || tenant === "null") {
-  //         console.error("Tenant value is missing or null");
-  //         return;
-  //       }
-
-  //       if (!selectedAmenity) {
-  //         console.warn("No amenity selected to filter by.");
-  //         return;
-  //       }
-
-  //       const data = await getAmenityFilterData(access, selectedAmenity, tenant);
-  //       console.log("Filtered Amenity Rooms:", data);
-  //       // setFilteredAmenityRooms(data);
-  //        console.log("Raw Filtered Amenity Rooms Data:", data);
-
-  //       // Extract only room_details from each item in the data array
-  //       const roomDetailsArray = data.map(item => item.room_details);
-
-  //       console.log("Extracted Room Details:", roomDetailsArray);
-
-  //       setFilteredAmenityRooms(roomDetailsArray);
-  //     } catch (error) {
-  //       console.error("Error fetching filtered amenity rooms:", error);
-  //     }
-  //   };
-
-  //   if (tenant && tenant !== "null" && selectedAmenity) {
-  //     fetchFilteredAmenityRooms();
-  //   }
-  // }, [tenant, selectedAmenity]);
-
   console.log("...............", filteredAmenityRooms);
 
-const roomsToRender = 
-  (filteredRooms && filteredRooms.length > 0) ? filteredRooms :
-  (filteredAmenityRooms && filteredAmenityRooms.length > 0) ? filteredAmenityRooms :
-  rooomDataSet;
+useEffect(() => {
+  const fetchRoomsByPrice = async () => {
+    try {
+      const [min_price, max_price] = priceRange;
+
+      if (min_price === 0 && max_price === 0) {
+        setPriceFilteredRooms([]); // Clear if no range
+        return;
+      }
+
+      const response = await getHotelByPriceRange({ min_price, max_price });
+
+      const flatRooms =
+        response?.filtered_hotels?.flatMap(hotel => hotel.rooms) || [];
+
+      console.log("Flat price-filtered rooms:", flatRooms);
+
+      setPriceFilteredRooms(flatRooms);
+    } catch (error) {
+      console.error("Error filtering rooms by price:", error);
+      setPriceFilteredRooms([]);
+    }
+  };
+
+  fetchRoomsByPrice();
+}, [priceRange]);
+
+
+
+// const roomsToRender = 
+//   (filteredRooms && filteredRooms.length > 0) ? filteredRooms :
+//   (filteredAmenityRooms && filteredAmenityRooms.length > 0) ? filteredAmenityRooms :
+//   rooomDataSet;
+  
+const filteredLists = [];
+
+if (filteredRooms?.length > 0) filteredLists.push(filteredRooms);
+if (filteredAmenityRooms?.length > 0) filteredLists.push(filteredAmenityRooms);
+if (priceFilteredRooms?.length > 0) filteredLists.push(priceFilteredRooms);
+
+const intersectRooms = (lists) => {
+  if (lists.length === 0) return [];
+
+  return lists.reduce((acc, curr) =>
+    acc.filter(room => curr.find(r => r.id === room.id))
+  );
+};
+
+const roomsToRender =
+  filteredLists.length > 0 ? intersectRooms(filteredLists) : rooomDataSet;
 
 
   return (
-    <div className={styles.dashboardContainer}>
+    <div className={styles.dashboardContainer} style={{ display: 'flex', alignItems: 'flex-start' }}>
 
-    <div className={styles.amenityFilter}>
-      <label>Room Amenity:</label>
-      <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
+      <div className={styles.sidebar}>
+        <h4>Room amenities</h4>
         {amenityData && amenityData.length > 0 ? (
-          amenityData.map((amenity) => (
-            <label key={amenity.id} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-              <input
-                type="checkbox"
-                name="amenity"
-                value={amenity.amenity_name}
-                onChange={(e) => setSelectedAmenity(e.target.value)}
-                style={{ marginRight: '5px' }}
-              />
-              {amenity.amenity_name}
-            </label>
-          ))
+          <div className={styles.amenityList}>
+            {amenityData.map((amenity) => (
+              <label key={amenity.id} className={styles.amenityItem}>
+                <input
+                  type="checkbox"
+                  name="amenity"
+                  value={amenity.amenity_name}
+                  onChange={(e) => setSelectedAmenity(e.target.value)}
+                />
+                {amenity.amenity_name}
+              </label>
+            ))}
+          </div>
         ) : (
           <p>No amenities available</p>
         )}
+        <hr style={{ marginTop: '16px', borderTop: '1px solid #ccc' }} />
+        <div>
+          <Box mt={4}>
+          <h4>Your budget (per night)</h4>
+          <Slider
+            value={priceRange}
+            onChange={handleSliderChange}
+            valueLabelDisplay="auto"
+            min={0}
+            max={3870}
+            step={50}
+          />
+          <Box display="flex" justifyContent="space-between">
+            <Typography>Rs. {priceRange[0]}</Typography>
+            <Typography>Rs. {priceRange[1]}</Typography>
+          </Box>
+        </Box>
+        </div>
       </div>
-    </div>
 
-      {roomsToRender && roomsToRender.length > 0 ? (
-        roomsToRender.map((room) => (
-          <div key={room.id} className={styles.hotelCard}>
-            <div className={styles.hotelImageSection}>
-              {room.image ? (
-                // <img
-                //   src={`${baseURL}${room.image}`}
-                //   alt={`Room ${room.room_number}`}
-                //   className={styles.roomImage}
-                // />
-                <img
-                  src={room.image.startsWith("http") ? room.image : `${baseURL}${room.image}`}
-                  alt={`Room ${room.room_number || room.number || "N/A"}`}
-                  className={styles.roomImage}
-                />
+      <div className={styles.roomList}>
+        {roomsToRender && roomsToRender.length > 0 ? (
+          roomsToRender.map((room) => (
+            <div key={room.id} className={styles.hotelCard}>
+              <div className={styles.hotelImageSection}>
+                {room.image ? (
+                  <img
+                    src={room.image.startsWith("http") ? room.image : `${baseURL}${room.image}`}
+                    alt={`Room ${room.room_number || room.number || "N/A"}`}
+                    className={styles.roomImage}
+                  />
 
 
-              ) : (
-                <div className={styles.noImagePlaceholder}>No Image Available</div>
-              )}
-              <div className={styles.popularLabel}>Premium choice</div>
-            </div>
+                ) : (
+                  <div className={styles.noImagePlaceholder}>No Image Available</div>
+                )}
+                <div className={styles.popularLabel}>Premium choice</div>
+              </div>
 
-            <div className={styles.hotelInfoSection}>
-              <h3>Room Number: {room.room_number || room.number || "N/A"}</h3>
-              <p>
-                Room Type: {room.room_type} {room.variety ? `(${room.variety})` : ""}
-              </p>
-              <p>
-                Room Variety: {room.number_of_persons
-                  ? `Double (Upto ${room.number_of_persons} people)`
-                  : "N/A"}
-              </p>
-              {/* Replace static rating with dynamic or default */}
-              <div className={styles.rating}>
-                <span>{room.rating || "7.5"}</span> good (8054 ratings)
+              <div className={styles.hotelInfoSection}>
+                <h3>Room Number: {room.room_number || room.number || "N/A"}</h3>
+                <p>
+                  Room Type: {room.room_type} {room.variety ? `(${room.variety})` : ""}
+                </p>
+                <p>
+                  Room Variety: {room.number_of_persons
+                    ? `Double (Upto ${room.number_of_persons} people)`
+                    : "N/A"}
+                </p>
+                {/* Replace static rating with dynamic or default */}
+                <div className={styles.rating}>
+                  <span>{room.rating || "7.5"}</span> good (8054 ratings)
+                </div>
+              </div>
+
+              <div className={styles.hotelPriceSection}>
+                <div className={styles.iconBox}>
+                  <FaHeart className={styles.icon} />
+                  <FaShareAlt className={styles.icon} />
+                </div>
+                <p className={styles.price}>
+                  ₹{room.price || room.room_price || "N/A"}
+                </p>
+
+
+                <button
+                  className={styles.dealButton}
+                  onClick={() =>
+                    handleViewDetails(room.id)
+                  }
+                >
+                  Current Booking
+                </button>
+                <button
+                  className={styles.dealButton}
+                  onClick={() =>
+                    handleViewDetails(room.id)
+                  }
+                >
+                  Advance Booking
+                </button>
               </div>
             </div>
-
-            <div className={styles.hotelPriceSection}>
-              <div className={styles.iconBox}>
-                <FaHeart className={styles.icon} />
-                <FaShareAlt className={styles.icon} />
-              </div>
-              <p className={styles.price}>₹{room.price}</p>
-
-              <button
-                className={styles.dealButton}
-                onClick={() =>
-                  // handleViewDetails({
-                  //   title: `Room Number: ${room.room_number}`,
-                  //   description: `Type: ${room.room_type}, Variety: ${room.variety}`,
-                  //   price: `₹${room.room_price}`,
-                  //   image: room.image || "/images/no-image.jpg",
-                  //   rating: room.rating || "N/A",
-                  // })
-                  handleViewDetails(room.id)
-                }
-              >
-                Current Booking
-              </button>
-              <button
-                className={styles.dealButton}
-                onClick={() =>
-                  // handleViewDetails({
-                  //   title: `Room Number: ${room.room_number}`,
-                  //   description: `Type: ${room.room_type}, Variety: ${room.variety}`,
-                  //   price: `₹${room.room_price}`,
-                  //   image: room.image || "/images/no-image.jpg",
-                  //   rating: room.rating || "N/A",
-                  // })
-                  handleViewDetails(room.id)
-                }
-              >
-                Advance Booking
-              </button>
-            </div>
-          </div>
-        ))
-      ) : (
-        <p>No rooms available</p>
-      )}
+          ))
+        ) : (
+          <p>No rooms available</p>
+        )}
+      </div>
     </div>
   );
 };

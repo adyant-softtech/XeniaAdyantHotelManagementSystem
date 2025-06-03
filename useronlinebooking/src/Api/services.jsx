@@ -1316,3 +1316,16 @@ export const getHotel = async ({ city, adults = 1, children = 0, rooms = 1 }) =>
     throw error;
   }
 };
+
+export const getHotelByPriceRange = async (params) => {
+  try {
+    const response = await APIWithoutV1.get('/filter_room_city/room-price-filter/', {
+      params,  
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching rooms by price range:", error);
+    throw error;
+  }
+};
+

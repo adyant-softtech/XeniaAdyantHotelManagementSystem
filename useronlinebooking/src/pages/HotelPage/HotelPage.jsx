@@ -166,7 +166,7 @@ const handleViewRooms = (tenant) => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <div className={styles.amenityFilter}>
+      {/* <div className={styles.amenityFilter}>
         <label>Room Amenity:</label>
         <div style={{ display: 'flex', gap: '15px', marginTop: '8px' }}>
           {amenityData && amenityData.length > 0 ? (
@@ -186,7 +186,7 @@ const handleViewRooms = (tenant) => {
             <p>No amenities available</p>
           )}
         </div>
-      </div>
+      </div> */}
 
       {roomsToRender && roomsToRender.length > 0 ? (
         roomsToRender.map((hotel, index) => {

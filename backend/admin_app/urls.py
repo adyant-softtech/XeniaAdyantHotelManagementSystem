@@ -22,6 +22,9 @@ urlpatterns = [
     
     path('filterHotel/', RoomFilterAPIView.as_view(), name='amenity-list'),
     path('rooms/<int:room_id>/', RoomDetailAPIView.as_view(), name='room-detail'),
+    path('room-price-filter/', RoomPriceFilterAPIView.as_view(), name='room-price-filter'),
+
+
 
 
 ]
