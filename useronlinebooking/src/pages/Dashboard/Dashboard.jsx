@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaHeart, FaShareAlt } from 'react-icons/fa';
+import { FaRegSquare, } from "react-icons/fa";
+import { FaCheckSquare } from "react-icons/fa";
 import styles from './Dashboard.module.css';
 import { FaStar } from 'react-icons/fa';
 import Slider from '@mui/material/Slider';
@@ -201,7 +203,15 @@ const intersectRooms = (lists) => {
 const roomsToRender =
   filteredLists.length > 0 ? intersectRooms(filteredLists) : rooomDataSet;
 
+const [isChecked, setIsChecked] = useState(false);
+const [checkedRooms, setCheckedRooms] = useState({});
 
+ const toggleCheckbox = (roomId) => {
+  setCheckedRooms((prev) => ({
+    ...prev,
+    [roomId]: !prev[roomId],
+  }));
+};
   return (
     <div className={styles.dashboardContainer} style={{ display: 'flex', alignItems: 'flex-start' }}>
 
@@ -260,7 +270,7 @@ const roomsToRender =
                 ) : (
                   <div className={styles.noImagePlaceholder}>No Image Available</div>
                 )}
-                <div className={styles.popularLabel}>Premium choice</div>
+                {/* <div className={styles.popularLabel}>Premium choice</div> */}
               </div>
 
               <div className={styles.hotelInfoSection}>
@@ -274,22 +284,37 @@ const roomsToRender =
                     : "N/A"}
                 </p>
                 {/* Replace static rating with dynamic or default */}
-                <div className={styles.rating}>
+                {/* <div className={styles.rating}>
                   <span>{room.rating || "7.5"}</span> good (8054 ratings)
-                </div>
+                </div> */}
+                <p>
+                  Room Amenities: {room.amenities || "N/A"} 
+                </p>
               </div>
 
               <div className={styles.hotelPriceSection}>
                 <div className={styles.iconBox}>
-                  <FaHeart className={styles.icon} />
-                  <FaShareAlt className={styles.icon} />
+                  <input
+                    type="checkbox"
+                    checked={!!checkedRooms[room.id]}
+                    onChange={() => toggleCheckbox(room.id)}
+                    className={styles.checkboxInput}
+                  />
+                 
                 </div>
                 <p className={styles.price}>
                   ₹{room.price || room.room_price || "N/A"}
                 </p>
 
-
                 <button
+                  className={styles.dealButton}
+                  onClick={() =>
+                    handleViewDetails(room.id)
+                  }
+                >
+                  View
+                </button>
+                {/* <button
                   className={styles.dealButton}
                   onClick={() =>
                     handleViewDetails(room.id)
@@ -304,7 +329,7 @@ const roomsToRender =
                   }
                 >
                   Advance Booking
-                </button>
+                </button> */}
               </div>
             </div>
           ))

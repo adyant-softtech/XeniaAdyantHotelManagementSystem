@@ -251,14 +251,22 @@ useEffect(() => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // if (name === "room_type" || name === "variety") {
+    //   const dataArray = name === "room_type" ? roomTypes : roomVariety;
+    //   const selectedType = dataArray.find(type => type.value === parseInt(value));
+    //   setFormData({
+    //     ...formData,
+    //     [name]: selectedType ? selectedType.label : value,
+    //   });
+    // }
     if (name === "room_type" || name === "variety") {
-      const dataArray = name === "room_type" ? roomTypes : roomVariety;
-      const selectedType = dataArray.find(type => type.value === parseInt(value));
       setFormData({
         ...formData,
-        [name]: selectedType ? selectedType.label : value,
+        [name]: value, // value is already the label here
       });
-    } else if (name === "is_active") {
+    }
+ 
+    else if (name === "is_active") {
       setFormData({ ...formData, [name]: e.target.checked });
     } else {
       if (name === "number" && value.includes(".")) {
@@ -512,7 +520,7 @@ useEffect(() => {
                     onChange={handleChange}
                   >
                     {roomTypes.map((type, index) => (
-                      <option key={index} value={type.value}>
+                      <option key={index} value={type.label}>
                         {type.label}
                       </option>
                     ))}
@@ -560,7 +568,7 @@ useEffect(() => {
                       onChange={handleChange}
                     >
                       {roomVariety.map((type, index) => (
-                        <option key={index} value={type.value}>
+                        <option key={index} value={type.label}>
                           {type.label}
                         </option>
                       ))}

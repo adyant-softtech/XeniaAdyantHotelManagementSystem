@@ -71,9 +71,9 @@ const HotelRoom = () => {
                         handleViewDetails(room.id)
                         }
                     >
-                        Current Booking
+                        Book
                     </button>
-                    <button
+                    {/* <button
                         className={styles.dealButton}
                         onClick={() =>
                         
@@ -81,7 +81,7 @@ const HotelRoom = () => {
                         }
                     >
                         Advance Booking
-                    </button>
+                    </button> */}
                 </div>
             </div>
         ))}

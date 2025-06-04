@@ -77,7 +77,7 @@ const RoomDetails = () => {
             </div>
 
             <p>Most popular facilities:</p>
-            <ul className={styles.facilitiesList}>
+            {/* <ul className={styles.facilitiesList}>
               <li className={styles.facilityItem}>Outdoor swimming pool</li>
               <li className={styles.facilityItem}>Free WiFi</li>
               <li className={styles.facilityItem}>Family rooms</li>
@@ -85,7 +85,20 @@ const RoomDetails = () => {
               <li className={styles.facilityItem}>Free parking</li>
               <li className={styles.facilityItem}>Tea/coffee maker in all rooms</li>
               <li className={styles.facilityItem}>Very good breakfast</li>
+            </ul> */}
+            <ul className={styles.facilitiesList}>
+              {roomDetails?.amenities ? (
+                roomDetails.amenities.split(',').map((amenity, index) => (
+                  <li key={index} className={styles.facilityItem}>
+                    {amenity.trim()}
+                  </li>
+                ))
+              ) : (
+                <li className={styles.facilityItem}>No amenities listed.</li>
+              )}
             </ul>
+
+
 
             <button className={styles.bookButton} onClick={handleBookClick}>
               BOOK THIS NOW

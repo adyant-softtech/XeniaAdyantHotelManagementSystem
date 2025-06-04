@@ -68,8 +68,8 @@ const Header = () => {
     }
   };
 
-  handleSearchCity(); // Call the async function
-}, [selectedCity]); // Add selectedCity to dependency array
+  handleSearchCity(); 
+}, [selectedCity]); 
 
 
 
@@ -100,24 +100,29 @@ const Header = () => {
       <Link to="/" className={styles.logo}>🏠 HOTEL MANAGEMENT</Link>
 
       <form className={styles.searchForm} onSubmit={handleSearch}>
+
+        {/* City Dropdown */}
         <div className={styles.dropdownContainer}>
           <div
             className={styles.dropdownBox}
             onClick={() => {
-              setActiveDropdown(activeDropdown === 'city' ? '' : 'city');
-              setShowDropdown(!showDropdown);
+              setActiveDropdown((prev) => (prev === 'city' ? '' : 'city'));
             }}
           >
             {selectedCity}
             <FaChevronDown className={styles.downArrow} />
           </div>
-          {activeDropdown === 'city' && showDropdown && (
+
+          {activeDropdown === 'city' && (
             <div className={styles.dropdownList}>
               {citiesInChhattisgarh.map((city) => (
                 <div
                   key={city}
                   className={styles.dropdownItem}
-                  onClick={() => handleCityClick(city)}
+                  onClick={() => {
+                    handleCityClick(city);
+                    setActiveDropdown('');
+                  }}
                 >
                   {city}
                 </div>
@@ -126,6 +131,7 @@ const Header = () => {
           )}
         </div>
 
+        {/* Date Picker */}
         <input
           type="date"
           value={checkIn}
@@ -133,18 +139,19 @@ const Header = () => {
           className={styles.input}
         />
 
+        {/* Guests Dropdown */}
         <div className={styles.guestsInput}>
           <div
             className={styles.inputBox}
             onClick={() => {
-              setActiveDropdown(activeDropdown === 'guests' ? '' : 'guests');
-              setShowDropdown(!showDropdown);
+              setActiveDropdown((prev) => (prev === 'guests' ? '' : 'guests'));
             }}
           >
             {guests.adults} adults · {guests.children} children · {guests.rooms} room
             <FaChevronDown className={styles.downArrow} />
           </div>
-          {activeDropdown === 'guests' && showDropdown && (
+
+          {activeDropdown === 'guests' && (
             <div className={styles.dropdownList}>
               {['adults', 'children', 'rooms'].map((type) => (
                 <div key={type} className={styles.dropdownItem}>
@@ -158,11 +165,13 @@ const Header = () => {
           )}
         </div>
 
+        {/* Search Button */}
         <button type="submit" className={styles.searchBtn}>
           <FaSearch />
         </button>
       </form>
 
+      {/* Navigation */}
       <nav className={styles.nav}>
         <Link to="/contact">Contact Us</Link>
         <Link to="/about">About Us</Link>
@@ -170,6 +179,7 @@ const Header = () => {
         <Link to="/login" className={styles.login}>Login</Link>
       </nav>
     </header>
+
   );
 };
 
