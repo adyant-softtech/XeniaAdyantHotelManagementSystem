@@ -10,6 +10,8 @@ const Context = ({ children }) => {
   const [tenant, setTenant] = useState(null);
 
   const [filteredRooms, setFilteredRooms] = useState([]);
+  const [checkedRooms, setCheckedRooms] = useState({});
+
   const [user, setUser] = useState({});
   const [roomData, setRoomData] = useState([]);
   const [availableRoomList, setAvailableRoomList] = useState([]);
@@ -131,6 +133,8 @@ const Context = ({ children }) => {
         setSearch,
         filteredRooms,
         setFilteredRooms,
+        checkedRooms,
+        setCheckedRooms,
       }}
     >
       {children}

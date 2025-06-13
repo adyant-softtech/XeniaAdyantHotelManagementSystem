@@ -8,6 +8,7 @@ import { FaStar } from 'react-icons/fa';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { FaUser } from 'react-icons/fa';
 import {
   getRoomTypes,
   getRoomDetails,
@@ -204,7 +205,9 @@ const roomsToRender =
   filteredLists.length > 0 ? intersectRooms(filteredLists) : rooomDataSet;
 
 const [isChecked, setIsChecked] = useState(false);
-const [checkedRooms, setCheckedRooms] = useState({});
+// const [checkedRooms, setCheckedRooms] = useState({});
+const { checkedRooms, setCheckedRooms } = useContext(GlobalContext);
+
 
  const toggleCheckbox = (roomId) => {
   setCheckedRooms((prev) => ({
@@ -212,6 +215,16 @@ const [checkedRooms, setCheckedRooms] = useState({});
     [roomId]: !prev[roomId],
   }));
 };
+
+  const selectedRooms = Object.keys(checkedRooms)
+  .filter((roomId) => checkedRooms[roomId])
+  .map((roomId) => {
+    const room = (filteredRooms.length > 0 ? filteredRooms : rooomDataSet).find(
+      (room) => room.id === parseInt(roomId)
+    );
+    return room;
+  });
+
   return (
     <div className={styles.dashboardContainer} style={{ display: 'flex', alignItems: 'flex-start' }}>
 
@@ -294,12 +307,20 @@ const [checkedRooms, setCheckedRooms] = useState({});
 
               <div className={styles.hotelPriceSection}>
                 <div className={styles.iconBox}>
-                  <input
+                  {/* <input
                     type="checkbox"
                     checked={!!checkedRooms[room.id]}
                     onChange={() => toggleCheckbox(room.id)}
                     className={styles.checkboxInput}
-                  />
+                  /> */}
+                  <button
+                    onClick={() => toggleCheckbox(room.id)}
+                    // className={`${styles.checkboxInput} ${checkedRooms[room.id] ? styles.active : ''}`}
+                    className={`${styles.checkboxInput} ${checkedRooms[room.id] ? styles.active : ''}`}
+                  >
+                    {checkedRooms[room.id] ? 'Added' : 'Add'}
+                  </button>
+
                  
                 </div>
                 <p className={styles.price}>
@@ -337,7 +358,10 @@ const [checkedRooms, setCheckedRooms] = useState({});
           <p>No rooms available</p>
         )}
       </div>
+      
     </div>
+
+    
   );
 };
 

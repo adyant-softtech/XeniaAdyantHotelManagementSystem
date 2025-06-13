@@ -28,6 +28,10 @@
   flex: 1;
   padding: 15px;
 }
+.active {
+  background-color: #4CAF50; /* green */
+  color: white;
+}
   
   .searchBar {
     margin-bottom: 2rem;

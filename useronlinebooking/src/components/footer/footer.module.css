@@ -13,6 +13,28 @@
   z-index: 1000;
 }
 
+.button {
+  white-space: nowrap;
+  padding: 6px 12px;
+}
+
+
+.whatsAppIcon {
+  position: fixed; 
+  bottom: 40px; 
+  color: black; 
+  /* right: 20px;     */
+  z-index: 1000;    /* Ensures it's above other elements */
+  cursor: pointer;
+  background-color: #007bff;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  /* width: 40px;
+  height: 40px; */
+  display: flex;
+}
+
 .footer nav {
   margin-bottom: 5px;
 }
@@ -32,4 +54,100 @@
 .footer p {
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* Popup background overlay */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup content box */
+.popupContent {
+  background-color: #fff;
+  padding: 24px 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+  width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+  animation: popupFadeIn 0.3s ease;
+}
+
+/* Optional fade-in animation */
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close button */
+.popupContent button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  /* margin-top: 20px; */
+}
+
+.popupContent button:hover {
+  background-color: #45a049;
+}
+
+/* Optional: style for list */
+.popupContent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popupContent li {
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+.selectedRoomsTable table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.selectedRoomsTable th,
+.selectedRoomsTable td {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  text-align: center;
+  color: black;
+}
+
+.selectedRoomsTable th {
+  background-color: #007bff;
+}
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #c0392b;
+  transition: transform 0.2s ease;
+}
+
+.deleteButton:hover {
+  transform: scale(1.2);
 }

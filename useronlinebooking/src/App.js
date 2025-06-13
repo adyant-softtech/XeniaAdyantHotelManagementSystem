@@ -19,6 +19,8 @@ import SearchBar from './pages/SearchBar/SearchBar';
 import GuestDetailsForm from './components/GuestDetailsForm/GuestDetailsForm';
 import HotelPage from './pages/HotelPage/HotelPage';
 import HotelRoom from './pages/HotelRoom/HotelRoom';
+import GuestDetails from './pages/GuestDetails/GuestDetails';
+import SelectedRoom from './pages/SelectedRoom/SelectedRoom';
 
 function App() {
   return (
@@ -48,6 +50,8 @@ function App() {
         <Route path="/confirmation" element={<BookingConfirmation />} />
         <Route path="/search" element={<SearchBar />} />
         <Route path="/book" element={<GuestDetailsForm />} />
+        <Route path="/guestDetails" element={<GuestDetails />}/>
+        <Route path="/selectedRooms" element={<SelectedRoom/>}/>
       </Routes>
       <Footer />
     </>

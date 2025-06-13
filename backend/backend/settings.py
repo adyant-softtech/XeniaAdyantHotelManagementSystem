@@ -163,7 +163,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://tenant2.xeniaindia.in', 'http://tenant2.xeniaindia.in',"http://192.168.29.185:8000"]
+    'https://tenant2.xeniaindia.in', 'http://tenant2.xeniaindia.in',"http://192.168.9.157:8000"]
 #SERVER CHANGES
 # CSRF_TRUSTED_ORIGINS = ["http://31.220.17.212/"]
 
@@ -178,8 +178,8 @@ EMAIL_HOST_PASSWORD = 'iodgtzixghezvmrx'
 HTTP_METHOD = "http://"
 
 DOMAIN_NAME = "xeniaindia"
-FRONTEND_URL = "192.168.29.185:3000/"
-BACKEND_URL = "192.168.29.185:8000/"
+FRONTEND_URL = "192.168.9.157:3000/"
+BACKEND_URL = "192.168.9.157:8000/"
 API_VERSION = "v1/"
 
 
