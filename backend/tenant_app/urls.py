@@ -67,6 +67,7 @@ urlpatterns = [
     # Code Addition by Tejasve Gupta on 24-07-2024
     # Reason - To post room details from frontend as well
     path("<str:tenant>/roomdetails/", RoomDetailCreateAPIView.as_view(), name='Room-Details'),
+    path("<str:tenant>/roomdetail/", RoomDetailsAPIView.as_view(), name='Room-Details'),
     path('<str:tenant>/rooms-put-delete/<int:pk>/',
          RoomDetailCreateAPIView.as_view(), name='rooms-put-delete'),
     # End of Code Addition by Tejasve Gupta on 24-07-2024
@@ -126,7 +127,8 @@ urlpatterns = [
      path('<str:tenant>/postHotelAmenity/', HotelAmenityMultipleView.as_view(), name='hotel-amenity'),
      path('<str:tenant>/getHotelAmenity/', HotelAmenityMultipleView.as_view(), name='hotel-amenity'),
      path("<str:tenant>/roomdetails/", RoomFilterAPIView.as_view(), name='Room-Details'),
-
+     path('<str:tenant>/user-bookings/', UserBookingAPIView.as_view(), name='user-bookings'),
+     path('<str:tenant>/user-bookings/<int:user_id>/', UserBookingAPIView.as_view(), name='user-bookings-detail'),
 # End by akanksha on 07-02-2025
 # Reason to store refund amount in the backend
 

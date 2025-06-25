@@ -16,24 +16,28 @@ const citiesInChhattisgarh = [
 ];
 
 const Header = () => {
-  const { search , setSearch } = useContext(GlobalContext);
+  const { search , setSearch, user } = useContext(GlobalContext);
   const [ searchContent, setSearchContent ] = useState();
   const [selectedCity, setSelectedCity] = useState('Chhattisgarh');
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState('');
-  const [checkIn, setCheckIn] = useState('');
+  const today = new Date().toISOString().split("T")[0];
+  const [checkIn, setCheckIn] = useState(today);
   const [cityData, setCityData ] = useState({});
-  const [guests, setGuests] = useState({
-    adults: 1,
-    children: 0,
-    rooms: 1,
-  });
+  // const [guests, setGuests] = useState({
+  //   adults: 1,
+  //   children: 0,
+  //   rooms: 1,
+  // });
   const navigate = useNavigate();
 
   const { tenant } = useContext(GlobalContext);
-  const { roomData, setFilteredRooms, setRoomData  } = useContext(GlobalContext);
+  const { roomData, setFilteredRooms, setRoomData , guests, handleIncrease, handleDecrease } = useContext(GlobalContext);
 
-  
+  const handleHistoryClick = () => {
+    navigate("/history");
+  };
+
     const handleSearch = async (e) => {
       e.preventDefault();
       const params = {
@@ -79,21 +83,21 @@ const Header = () => {
     setActiveDropdown('');
   };
 
-  const handleIncrease = (type) => {
-    setGuests((prev) => ({
-      ...prev,
-      [type]: prev[type] + 1,
-    }));
-  };
+  // const handleIncrease = (type) => {
+  //   setGuests((prev) => ({
+  //     ...prev,
+  //     [type]: prev[type] + 1,
+  //   }));
+  // };
 
-  const handleDecrease = (type) => {
-    setGuests((prev) => {
-      if (prev[type] > (type === 'rooms' ? 1 : 0)) {
-        return { ...prev, [type]: prev[type] - 1 };
-      }
-      return prev;
-    });
-  };
+  // const handleDecrease = (type) => {
+  //   setGuests((prev) => {
+  //     if (prev[type] > (type === 'rooms' ? 1 : 0)) {
+  //       return { ...prev, [type]: prev[type] - 1 };
+  //     }
+  //     return prev;
+  //   });
+  // };
 
   return (
     <header className={styles.header}>
@@ -151,18 +155,38 @@ const Header = () => {
             <FaChevronDown className={styles.downArrow} />
           </div>
 
-          {activeDropdown === 'guests' && (
+          {activeDropdown === "guests" && (
             <div className={styles.dropdownList}>
-              {['adults', 'children', 'rooms'].map((type) => (
-                <div key={type} className={styles.dropdownItem}>
-                  <p>{type.charAt(0).toUpperCase() + type.slice(1)}</p>
-                  <button type="button" onClick={() => handleDecrease(type)}>-</button>
-                  <span>{guests[type]}</span>
-                  <button type="button" onClick={() => handleIncrease(type)}>+</button>
-                </div>
-              ))}
+              {["adults", "children", "rooms"].map((type) => {
+                const minValue = type === "rooms" ? 1 : 0;
+                const label = type.charAt(0).toUpperCase() + type.slice(1);
+                return (
+                  <div key={type} className={styles.dropdownItem}>
+                    <p>{label}</p>
+                    <div className={styles.counterControls}>
+                      <button
+                        type="button"
+                        onClick={() => handleDecrease(type)}
+                        disabled={guests[type] <= minValue}
+                        className={styles.counterButton}
+                      >
+                        –
+                      </button>
+                      <span className={styles.counterValue}>{guests[type]}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleIncrease(type)}
+                        className={styles.counterButton}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
+
         </div>
 
         {/* Search Button */}
@@ -177,6 +201,11 @@ const Header = () => {
         <Link to="/about">About Us</Link>
         <Link to="/signup" className={styles.signup}>Sign Up</Link>
         <Link to="/login" className={styles.login}>Login</Link>
+        {user && user.username && (
+          <button onClick={handleHistoryClick} className={styles.login}>
+            History
+          </button>
+        )}
       </nav>
     </header>
 

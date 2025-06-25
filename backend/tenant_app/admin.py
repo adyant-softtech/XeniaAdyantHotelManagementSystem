@@ -10,9 +10,9 @@ from django.conf import settings
 
 @admin.register(User)
 class UserModelAdmin(admin.ModelAdmin):
-    list_display = ( 'email', 'username',
+    list_display = ( 'id','email', 'username',
                     'last_name',
-                    'contact_number',
+                    'contact_number', 
                     )
 
     list_filter = ('is_active',)

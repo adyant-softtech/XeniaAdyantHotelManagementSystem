@@ -24,30 +24,52 @@ const Context = ({ children }) => {
   const [adminName, setAdminName] = useState("");
   const [search, setSearch] = useState("");
 
+  const [guests, setGuests] = useState({
+    adults: 1,
+    children: 0,
+    rooms: 1,
+  });
+
+  const handleIncrease = (type) => {
+    setGuests((prev) => ({
+      ...prev,
+      [type]: prev[type] + 1,
+    }));
+  };
+
+  const handleDecrease = (type) => {
+    setGuests((prev) => {
+      if (prev[type] > (type === "rooms" ? 1 : 0)) {
+        return { ...prev, [type]: prev[type] - 1 };
+      }
+      return prev;
+    });
+  };
+
   useEffect(() => {
     setTenant(window.location.hostname.split(".")[0]);
   }, []);
 
-  // useEffect(() => {
-  //   const fetchRoomTypes = async () => {
-  //     const access = localStorage.getItem("access");
-  //     try {
-  //       if (!tenant || tenant === "null") {
-  //         console.error("Tenant value is missing or null");
-  //         return;
-  //       }
-  //       const data = await getRoomTypes(access, tenant);
-  //       console.log("context ")
-  //       setRoomData(data.room_list);
-  //     } catch (error) {
-  //       console.error("Error fetching room types:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchRoomTypes = async () => {
+      const access = localStorage.getItem("access");
+      try {
+        if (!tenant || tenant === "null") {
+          console.error("Tenant value is missing or null");
+          return;
+        }
+        const data = await getRoomTypes(tenant);
+        console.log("context ")
+        setRoomData(data.room_list);
+      } catch (error) {
+        console.error("Error fetching room types:", error);
+      }
+    };
 
-  //   if (tenant && tenant !== "null") {
-  //     fetchRoomTypes();
-  //   }
-  // }, [tenant]);
+    if (tenant && tenant !== "null") {
+      fetchRoomTypes();
+    }
+  }, [tenant]);
 
   useEffect(() => {
     const previousPath = sessionStorage.getItem("path");
@@ -95,7 +117,7 @@ const Context = ({ children }) => {
     try {
       setLoading(true);
       const response = await getCheckinDetails(access, {}, tenant);
-      setRoomData(response.room_list || []);
+      // setRoomData(response.room_list || []);
     // setFilteredRooms(response.room_list || []);
       setAvailableRoomList(response.available_rooms || []);
       setReservedRoomList(response.reserved_rooms || []);
@@ -135,6 +157,10 @@ const Context = ({ children }) => {
         setFilteredRooms,
         checkedRooms,
         setCheckedRooms,
+        guests,
+        setGuests,
+        handleIncrease,
+        handleDecrease,
       }}
     >
       {children}

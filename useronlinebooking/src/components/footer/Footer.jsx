@@ -2,27 +2,43 @@ import React from 'react';
 
 import styles from './footer.module.css';
 import { FaUser } from 'react-icons/fa'; 
-import { useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useContext, useState, useRef } from 'react';
 import { GlobalContext } from '../../context/Context';
 
 const Footer = () => {
+  const location = useLocation();
+  const hideButtonOnPaths = ['/history'];
   const navigate = useNavigate();
-  const { checkedRooms, filteredRooms, roomData, setCheckedRooms } = useContext(GlobalContext);
+  const { checkedRooms, filteredRooms, roomData, setCheckedRooms, user } = useContext(GlobalContext);
 
   const roomsToUse = filteredRooms.length > 0 ? filteredRooms : roomData;
 
   const selectedRooms = Object.keys(checkedRooms)
-    .filter(id => checkedRooms[id])
-    .map(id => roomsToUse.find(room => room.id === parseInt(id)));
+  .filter(id => checkedRooms[id])
+  .map(id => roomsToUse.find(room => Number(room.id) === Number(id)))
+  .filter(room => room !== undefined);
+
 
   // const handleProceed = () => {
   //   navigate('/selectedRooms', { state: { selectedRooms } });
   // };
   const [showPopup, setShowPopup] = useState(false);
+  // const closePopup = () => {
+  //   setShowPopup(false);
+  //   navigate('/guestDetails', { state: { selectedRooms } });
+  // };
   const closePopup = () => {
+    if (!user || !user.username) {
+      navigate("/login"); 
+      setShowPopup(false);
+      return;
+    }
     setShowPopup(false);
     navigate('/guestDetails', { state: { selectedRooms } });
+  };
+  const closedPopup = () => {
+    setShowPopup(false);
   };
   const handleProceed = () => {
     setShowPopup(true);
@@ -36,19 +52,31 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={`${styles.whatsAppIcon}`}>
        
-       <button
+       {/* <button
           className={styles.button}
           onClick={handleProceed}
         >
           Selected Rooms
         </button>
-        
+         */}
+
+        {!hideButtonOnPaths.includes(location.pathname) && (
+          <button
+            className={styles.button}
+            onClick={handleProceed}
+          >
+            Selected Rooms
+          </button>
+        )}
       </div>
       {showPopup && (
-        <div className={styles.popupOverlay}>
-          <div className={styles.popupContent}>
+        <div className={styles.popupOverlay}
+         onClick={() => setShowPopup(false)}>
+          <div className={styles.popupContent}
+          onClick={(e) => e.stopPropagation()}>
             <div className={styles.selectedRoomsTable}>
               <h4>Selected Rooms</h4>
+              {/* <span className={styles.closeIcon} onClick={closedPopup}>✖️</span> */}
               <table>
                 <thead>
                   <tr>
@@ -61,22 +89,25 @@ const Footer = () => {
                 </thead>
                 <tbody>
                   {selectedRooms.map((room) => (
-                    <tr key={room.id}>
-                      <td>{room.room_number}</td>
-                      <td>{room.room_type}</td>
-                      <td>{room.room_price}</td>
-                      <td>{room.variety}</td>
-                      <td>
-                        <button
-                          onClick={() => handleDelete(room.id)}
-                          className={styles.deleteButton}
-                          title="Remove Room"
-                        >
-                          🗑️
-                        </button>
-                      </td>
-                    </tr>
+                    room ? (
+                      <tr key={room.id}>
+                        <td>{room.room_number}</td>
+                        <td>{room.room_type}</td>
+                        <td>{room.room_price}</td>
+                        <td>{room.variety}</td>
+                        <td>
+                          <button
+                            onClick={() => handleDelete(room.id)}
+                            className={styles.deleteButton}
+                            title="Remove Room"
+                          >
+                            🗑️
+                          </button>
+                        </td>
+                      </tr>
+                    ) : null
                   ))}
+
                 </tbody>
               </table>
             </div>

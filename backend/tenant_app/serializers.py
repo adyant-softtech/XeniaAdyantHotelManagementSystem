@@ -491,9 +491,36 @@ class CheckinDetailSerializer(serializers.ModelSerializer):
         # Reason - Advance Booking Options
 # End of code addition by Om Shrivastava on 29-05-2024
 # Reason - For serialize the CheckinDetail table
+from django.db.models import Q
+
+class UserSerializerss(serializers.ModelSerializer):
+    billings = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 'email', 'username', 'first_name', 'last_name',
+            'contact_number', 'billings'
+        ]
+
+    def get_billings(self, obj):
+        user = obj
+
+        billings_qs = BillingDetail.objects.filter(
+            Q(user_id_at_checkin=user) |
+            Q(user_id_at_checkout=user) |
+            Q(user_id=user)
+        ).distinct()
+
+        return BillingDetailSerializer(billings_qs, many=True).data
+
+
 
 # Code added by Om Shrivastava on 29-05-2024
 # Reason - For serialize the BookedRoom table
+
+
+
 
 
 class BookedRoomSerializer(serializers.ModelSerializer):

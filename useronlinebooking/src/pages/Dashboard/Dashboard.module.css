@@ -1,165 +1,125 @@
 .dashboardContainer {
-    padding: 2rem;
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif;
-    display: flex;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-top: 0;
+  background-color: #f9f9f9;
+  width: 100vw;
+  max-width: 100%;
+  margin-top: 0;
+  box-sizing: border-box;
   }
   
   .sidebar {
-  width: 250px;
-  padding: 15px;
-  background-color: #f5f5f5;
+  width: 240px;
+  padding: 20px;
+  background-color: #f8f8f8;
   border-right: 1px solid #ccc;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
 }
 
-.amenityList {
-  display: flex;
-  flex-direction: column;
-}
-
-.amenityItem {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
 .roomList {
-  flex: 1;
-  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 per row */
+  gap: 20px;
+  padding: 20px;
 }
-.active {
-  background-color: #4CAF50; /* green */
-  color: white;
-}
-  
-  .searchBar {
-    margin-bottom: 2rem;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
-  }
   
   .hotelCard {
-    display: flex;
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-    gap: 1rem;
+  width: 100%;
+  max-width: 320px;
+  height: auto; /* ?? Reduce total card height */
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  overflow: hidden;
   }
   
+  .hotelCard:hover {
+  transform: translateY(-3px);
+}
   .hotelImageSection {
-    flex: 1;
-    position: relative;
+  height: 100px;
+  overflow: hidden;
   }
   
   .hotelImageSection img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 8px;
   }
   
-  .popularLabel {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background-color: #febb02;
-    color: #333;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.75rem;
-    border-radius: 5px;
-  }
   
   .hotelInfoSection {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+ flex-grow: 1;
+  overflow-y: auto;
+  margin: 8px 0;
+  font-size: 12.5px;
+  line-height: 1.2;
   }
+  .bottomSection {
+  margin-top: auto;
+}
   
-  .subText {
-    font-size: 0.9rem;
-    color: orange;
-  }
-  
-  .rating {
-    margin-top: 0.5rem;
-    color: #555;
-    font-size: 0.9rem;
-  }
-  
-  .rating span {
-    background-color: #007f5f;
-    color: yellow;
-    padding: 0.2rem 0.5rem;
-    border-radius: 5px;
-    margin-right: 0.5rem;
-  }
   
   .hotelPriceSection {
-    flex: 1;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  padding: 8px 12px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ddd; 
   }
-  
-  .discount {
-    background-color: #d10024;
-    color: white;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.8rem;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
-    display: inline-block;
-    align-self: flex-end;
-  }
-  
-  .price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #222;
-  }
-  
-  .smallPrice {
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 0.5rem;
-  }
-  
-  .dealButton {
-    background-color: darkgreen;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
+.addButton,
+.viewButton {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  background-color: #28a745; /* ? Green for both */
+  transition: background-color 0.2s ease-in-out;
+} 
   .dealButton:hover {
-    background-color: #005fa3;
+     background-color: #218838;
   }
-  
+  .addButton.active {
+   background-color: #218838;
+}
+
+.dealButton:hover {
+   background-color: #218838;
+}
+  .roomGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 20px;
+}
   /* Room Card Style */
   .roomCard {
-    background-color: white;
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+  max-width: 320px; /* fixed max width */
+  height: 200px; /* fixed height */
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
   }
   
   .roomCard img {
-    width: 200px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 8px;
   }
   
   .roomContent {
@@ -175,64 +135,23 @@
     font-size: 0.95rem;
   }
   
-  .roomButtons {
-    margin-top: 1rem;
-    display: flex;
-    gap: 1rem;
-  }
   
-  .currentBtn,
-  .advanceBtn {
-    background-color: #007f5f;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .advanceBtn {
-    background-color: #007f5f;
-  }
-  
-  .currentBtn:hover {
-    background-color: #005f40;
-  }
-  
-  .advanceBtn:hover {
-    background-color: #cc7033;
-  }
-  .iconBox {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-  
-  .icon {
-    font-size: 18px;
-    color: #555;
-    cursor: pointer;
-    transition: color 0.1s ease;
-  }
-  
-  .icon:hover {
-    color: red;
-  }
-  
-  .amenityFilter {
-  margin-bottom: 16px;
-}
-
-.amenityFilter label {
-  margin-right: 20px;       /* Space between each radio label */
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  .price {
+  font-weight: bold;
   font-size: 14px;
-  color: #333;
+  margin-top: 8px;
+  }
+  .buttonRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px; /* ?? space between buttons */
 }
-
-.amenityFilter input[type="radio"] {
-  margin-right: 6px;        /* Space between radio button and text */
-}
+  
+  
+  
+  
+  
+  
+  
+  
+  

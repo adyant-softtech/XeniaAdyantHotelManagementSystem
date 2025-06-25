@@ -80,7 +80,7 @@ body {
 
 .login {
   background-color: #f4b400;
-  color: #007b5e;
+  /* color: #007b5e; */
   padding: 0.5rem 1rem;
   border-radius: 5px;
 }

@@ -23,16 +23,6 @@ import { baseURL } from "../../Api/config";
 
 const Dashboard = () => {
   const {  filteredRooms, setRoomData, setFilteredRooms} = useContext(GlobalContext);
-// const [roomsToRender, setRoomsToRender] = useState([]);
-  
-  // const roomsToRender = filteredRooms.length > 0 ? filteredRooms : roomData;
-  console.log("jdsgfjadshfjd", filteredRooms)
-
-  // console.log("roomData from context", roomData);
-  console.log("filteredRooms from context", filteredRooms);
-
-  
-  
   const navigate = useNavigate();
   const { tenant } = useContext(GlobalContext);
   const [roomTypes, setRoomTypes] = useState([]);
@@ -61,7 +51,7 @@ const Dashboard = () => {
           console.error("Tenant value is missing or null");
           return;
         }
-        const data = await getRoomTypes(access, tenant);
+        const data = await getRoomTypes( tenant);
         console.log("dashboard .jsx");
         setRoomTypes(data.room_types || []);
         setRoomVariety(data.variety || []);
@@ -201,11 +191,15 @@ const intersectRooms = (lists) => {
   );
 };
 
+// const roomsToRender =
+//   filteredLists.length > 0 ? intersectRooms(filteredLists) : rooomDataSet;
+
 const roomsToRender =
-  filteredLists.length > 0 ? intersectRooms(filteredLists) : rooomDataSet;
+  filteredLists.length > 0
+    ? intersectRooms(filteredLists).filter(room => room.is_active)
+    : rooomDataSet.filter(room => room.is_active);
 
 const [isChecked, setIsChecked] = useState(false);
-// const [checkedRooms, setCheckedRooms] = useState({});
 const { checkedRooms, setCheckedRooms } = useContext(GlobalContext);
 
 
@@ -270,97 +264,36 @@ const { checkedRooms, setCheckedRooms } = useContext(GlobalContext);
       <div className={styles.roomList}>
         {roomsToRender && roomsToRender.length > 0 ? (
           roomsToRender.map((room) => (
-            <div key={room.id} className={styles.hotelCard}>
-              <div className={styles.hotelImageSection}>
-                {room.image ? (
-                  <img
-                    src={room.image.startsWith("http") ? room.image : `${baseURL}${room.image}`}
-                    alt={`Room ${room.room_number || room.number || "N/A"}`}
-                    className={styles.roomImage}
-                  />
+  <div key={room.id} className={styles.hotelCard}>
+    <img
+      src={room.image?.startsWith("http") ? room.image : `${baseURL}${room.image}`}
+      alt={`Room ${room.room_number || room.number || "N/A"}`}
+      className={styles.roomImage}
+    />
 
+    <div className={styles.roomDetails}>
+      <p><strong>Room Number:</strong> {room.room_number || room.number || "N/A"}</p>
+      <p><strong>Room Type:</strong> {room.room_type}</p>
+      <p><strong>Room Variety:</strong> {room.variety || `Double (Upto ${room.number_of_persons} people)`}</p>
+      <p><strong>Amenities:</strong> {room.amenities || "N/A"}</p>
+    </div>
 
-                ) : (
-                  <div className={styles.noImagePlaceholder}>No Image Available</div>
-                )}
-                {/* <div className={styles.popularLabel}>Premium choice</div> */}
-              </div>
-
-              <div className={styles.hotelInfoSection}>
-                <h3>Room Number: {room.room_number || room.number || "N/A"}</h3>
-                <p>
-                  Room Type: {room.room_type} {room.variety ? `(${room.variety})` : ""}
-                </p>
-                <p>
-                  Room Variety: {room.number_of_persons
-                    ? `Double (Upto ${room.number_of_persons} people)`
-                    : "N/A"}
-                </p>
-                {/* Replace static rating with dynamic or default */}
-                {/* <div className={styles.rating}>
-                  <span>{room.rating || "7.5"}</span> good (8054 ratings)
-                </div> */}
-                <p>
-                  Room Amenities: {room.amenities || "N/A"} 
-                </p>
-              </div>
-
-              <div className={styles.hotelPriceSection}>
-                <div className={styles.iconBox}>
-                  {/* <input
-                    type="checkbox"
-                    checked={!!checkedRooms[room.id]}
-                    onChange={() => toggleCheckbox(room.id)}
-                    className={styles.checkboxInput}
-                  /> */}
-                  <button
-                    onClick={() => toggleCheckbox(room.id)}
-                    // className={`${styles.checkboxInput} ${checkedRooms[room.id] ? styles.active : ''}`}
-                    className={`${styles.checkboxInput} ${checkedRooms[room.id] ? styles.active : ''}`}
-                  >
-                    {checkedRooms[room.id] ? 'Added' : 'Add'}
-                  </button>
-
-                 
-                </div>
-                <p className={styles.price}>
-                  ₹{room.price || room.room_price || "N/A"}
-                </p>
-
-                <button
-                  className={styles.dealButton}
-                  onClick={() =>
-                    handleViewDetails(room.id)
-                  }
-                >
-                  View
-                </button>
-                {/* <button
-                  className={styles.dealButton}
-                  onClick={() =>
-                    handleViewDetails(room.id)
-                  }
-                >
-                  Current Booking
-                </button>
-                <button
-                  className={styles.dealButton}
-                  onClick={() =>
-                    handleViewDetails(room.id)
-                  }
-                >
-                  Advance Booking
-                </button> */}
-              </div>
-            </div>
-          ))
+    <div className={styles.buttonSection}>
+      <p class name={styles.price}><strong>Price:</strong> ₹{room.price || room.room_price || "N/A"}</p>
+      <div className={styles.buttonRow}>
+        <button className={styles.addButton}>Add</button>
+        <button className={styles.viewButton}>View</button>
+        
+    </div>
+  </div>
+  </div>
+))
         ) : (
           <p>No rooms available</p>
         )}
       </div>
-      
     </div>
-
+  
     
   );
 };

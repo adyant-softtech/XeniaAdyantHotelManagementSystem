@@ -54,7 +54,7 @@ const HotelPage = () => {
           console.error("Tenant value is missing or null");
           return;
         }
-        const data = await getRoomTypes(access, tenant);
+        const data = await getRoomTypes( tenant);
         console.log("dashboard .jsx");
         setRoomTypes(data.room_types || []);
         setRoomVariety(data.variety || []);
@@ -205,7 +205,7 @@ const handleViewRooms = (tenant) => {
                 ) : (
                   <div className={styles.noImagePlaceholder}>No Image Available</div>
                 )}
-                <div className={styles.popularLabel}>Premium choice</div>
+                {/* <div className={styles.popularLabel}>Premium choice</div> */}
               </div>
 
               <div className={styles.hotelInfoSection}>
@@ -218,16 +218,16 @@ const handleViewRooms = (tenant) => {
                     ? `Double (Upto ${room.number_of_persons} people)`
                     : "N/A"}
                 </p>
-                <div className={styles.rating}>
+                {/* <div className={styles.rating}>
                   <span>{room.rating || "7.5"}</span> good (8054 ratings)
-                </div>
+                </div> */}
               </div>
 
               <div className={styles.hotelPriceSection}>
-                <div className={styles.iconBox}>
+                {/* <div className={styles.iconBox}>
                   <FaHeart className={styles.icon} />
                   <FaShareAlt className={styles.icon} />
-                </div>
+                </div> */}
                 <p className={styles.price}>₹{room.price}</p>
                 <button onClick={() => handleViewRooms(hotel.tenant)}>View Rooms</button>
               </div>

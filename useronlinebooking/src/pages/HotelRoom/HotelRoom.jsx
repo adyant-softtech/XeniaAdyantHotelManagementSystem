@@ -40,7 +40,8 @@ const HotelRoom = () => {
                     ) : (
                     <div className={styles.noImagePlaceholder}>No Image Available</div>
                     )}
-                    <div className={styles.popularLabel}>Premium choice</div>
+                    {/* <div className={styles.popularLabel}>Premium choice
+                    </div> */}
                 </div>
 
                 <div className={styles.hotelInfoSection}>
@@ -54,16 +55,16 @@ const HotelRoom = () => {
                         : "N/A"}
                     </p>
                     {/* Replace static rating with dynamic or default */}
-                    <div className={styles.rating}>
+                    {/* <div className={styles.rating}>
                     <span>{room.rating || "7.5"}</span> good (8054 ratings)
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className={styles.hotelPriceSection}>
-                    <div className={styles.iconBox}>
+                    {/* <div className={styles.iconBox}>
                     <FaHeart className={styles.icon} />
                     <FaShareAlt className={styles.icon} />
-                    </div>
+                    </div> */}
                     <p className={styles.price}>₹{room.price}</p>
                     <button
                         className={styles.dealButton}

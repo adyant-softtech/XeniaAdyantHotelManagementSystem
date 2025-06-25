@@ -8,6 +8,7 @@ from .authentication import *
 from django.contrib.auth.hashers import make_password
 from .models import *
 
+from django.shortcuts import get_object_or_404
 from itertools import combinations
 import re
 from rest_framework.pagination import PageNumberPagination
@@ -1763,10 +1764,12 @@ class CheckinDetailView(APIView):
             #  Addition by Om Shrivastava on 31-05-2024
             #  Reason : Get the room type and price also
             room_type = room_data.get('room_type')
-            price = room_data.get('price')
+            # price = room_data.get('room_price')
+            price = room_data.get('room_price') or room_data.get('price')
+
             #  End of addition by Om Shrivastava on 31-05-2024
             #  Reason : Get the room type and price also
-
+            print(f"Fetching room detail for number: {room_number}, type: {room_type}, price: {price}")
             try:
                 # Check if RoomDetail exists
                 # Code Modification by Tejasve Gupta on 08-06-2024
@@ -1780,14 +1783,16 @@ class CheckinDetailView(APIView):
                     price=price
                     #  End of addition by Om Shrivastava on 31-05-2024
                     #  Reason : Get the room type and price also
+                    
                 )
                 # print("ROOM DETAILS:", room_detail)
                 # Code Modification by Tejasve Gupta on 08-06-2024
                 # Reason - Correction of code for Form Data and Booked Rooms
+                
             except RoomDetail.DoesNotExist:
                 return Response({"error": f"Room detail not found for room number {room_number}."},
                                 status=status.HTTP_404_NOT_FOUND)
-
+              
            
 
             checkin_detail = CheckinDetail.objects.create(
@@ -3088,6 +3093,8 @@ class ReCheckinFormAPIView(APIView):
             except RoomDetail.DoesNotExist:
                 return Response({"error": f"Room detail not found for room number {room_number}."},
                                 status=status.HTTP_404_NOT_FOUND)
+                
+            
 
             total_amount += price
 
@@ -3130,8 +3137,8 @@ class ReCheckinFormAPIView(APIView):
 
 
 class RoomDetailCreateAPIView(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
     room_list = {}
 
     def get(self, request, *args, **kwargs):
@@ -3388,6 +3395,50 @@ class RoomDetailCreateAPIView(APIView):
 # Code Addition by Tejasve Gupta on 02-08-2024
 # Reason - for name search dropdown
 
+
+class RoomDetailsAPIView(APIView):
+    room_list = {}
+
+    def get(self, request, *args, **kwargs):
+        room_types = [
+            {"value": rt.id, "label": rt.room_type} 
+            for rt in RoomType.objects.all()
+        ]
+        
+        variety = [
+            {"value": rv.id, "label": rv.room_variety} 
+            for rv in RoomVariety.objects.all()
+        ]
+        
+        
+
+        all_room_details = RoomDetail.objects.all().order_by("number")
+        all_room_details_serializer = RoomDetailSerializer(
+            all_room_details, many=True)
+
+        room_list = [
+            {
+                'id': room['id'],
+                'room_type': room['room_type'],
+                'room_number': room['number'],
+                'room_price': room['price'],
+                'variety': room['variety'],
+                'is_active': room['is_active'],
+                'image': room['image'],
+                'number_of_persons': room['number_of_persons'],
+                'amenities': room['amenities'],
+            } for room in all_room_details_serializer.data
+        ]
+
+        response = {
+            'room_types': room_types,
+            'variety': variety,
+            'room_list': room_list
+        }
+
+        return Response(response)
+
+   
 
 class PersonalDetailView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -5276,3 +5327,13 @@ class RoomFilterAPIView(APIView):
             'room_list': serialized_filtered.data,
             'message': 'No rooms available for the selected configuration.' if not selected_rooms else ''
         })
+        
+class UserBookingAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, tenant, user_id=None):
+        # If no user_id param, default to logged in user
+        user = get_object_or_404(User, id=user_id or request.user.id)
+        serializer = UserSerializerss(user)
+        return Response(serializer.data)

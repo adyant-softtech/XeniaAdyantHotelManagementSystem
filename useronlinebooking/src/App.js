@@ -21,6 +21,7 @@ import HotelPage from './pages/HotelPage/HotelPage';
 import HotelRoom from './pages/HotelRoom/HotelRoom';
 import GuestDetails from './pages/GuestDetails/GuestDetails';
 import SelectedRoom from './pages/SelectedRoom/SelectedRoom';
+import History from './pages/History/History';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/book" element={<GuestDetailsForm />} />
         <Route path="/guestDetails" element={<GuestDetails />}/>
         <Route path="/selectedRooms" element={<SelectedRoom/>}/>
+        <Route path="/history" element={<History/>}/>
       </Routes>
       <Footer />
     </>

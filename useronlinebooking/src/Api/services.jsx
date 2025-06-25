@@ -500,11 +500,11 @@ export const postReCheckinDetailsApi = async (access, billing_id) => {
 //   }
 // };
 
-export const postRooms = async (access, formData, tenant) => {
+export const postRooms = async (formData, tenant) => {
   const response = await API.post(`${tenant}/roomdetails/`, formData, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${access}`,
+      // Authorization: `Bearer ${access}`,
     },
   }).catch((err) => console.log(err));
   if (response.response) {
@@ -536,12 +536,12 @@ export const postRooms = async (access, formData, tenant) => {
  * Code Addition by Tejasve Gupta on 21-08-2024
  * Reason - To get room types from backend
  */
-export const getRoomTypes = async (access, tenant, params = {}) => {
+export const getRoomTypes = async ( tenant, params = {}) => {
   try {
-    const response = await API.get(`${tenant}/roomdetails/`, {
+    const response = await API.get(`${tenant}/roomdetail/`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${access}`,
+        // Authorization: `Bearer ${access}`,
       },
       params: params
     });
@@ -1329,3 +1329,18 @@ export const getHotelByPriceRange = async (params) => {
   }
 };
 
+export const getUserBookingDetails = async (access, tenant, userId) => {
+  try {
+    const response = await API.get(`${tenant}/user-bookings/${userId}/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user booking details:", error);
+    throw error;
+  }
+};
